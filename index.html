@@ -23,7 +23,7 @@
     <nav class="nav-tabs">
         <div class="nav-item active" data-tab="home-dashboard">首页</div>
         <div class="nav-item" data-tab="business-flow">业务全流程</div>
-        <div class="nav-item" data-tab="approval-center">审批中心<span class="badge">5</span></div>
+        <div class="nav-item" data-tab="approval-center">审批中心<span class="badge">7</span></div>
         <div class="nav-item" data-tab="invest-management">投放管理</div>
         <div class="nav-item" data-tab="client-library">客户库</div>
         <div class="nav-item" data-tab="photo-library">照片库</div>
@@ -35,7 +35,7 @@
                 <div class="dashboard-section message-section">
                     <div class="section-heading">
                         <h2>消息中心</h2>
-                        <span>共 5 项待办</span>
+                        <span>共 7 项待办</span>
                     </div>
                     <div class="message-list">
                         <div class="message-item">
@@ -64,11 +64,19 @@
                         </div>
                         <div class="message-item">
                             <div>
-                                <strong>投后审批</strong>
-                                <span>投后管理审批待处理</span>
+                                <strong>投后回访</strong>
+                                <span>投后回访待处理</span>
                             </div>
-                            <em>0</em>
-                            <button class="message-btn" onclick="switchToApprovalSub('post-invest-approval')">查看</button>
+                            <em>1</em>
+                            <button class="message-btn" onclick="switchToApprovalSub('post-visit-approval')">查看</button>
+                        </div>
+                        <div class="message-item">
+                            <div>
+                                <strong>五级分类</strong>
+                                <span>五级分类待审批</span>
+                            </div>
+                            <em>1</em>
+                            <button class="message-btn" onclick="switchToApprovalSub('classification-approval')">查看</button>
                         </div>
                         <div class="message-item">
                             <div>
@@ -247,7 +255,8 @@
             <div class="center-tab active" data-subtab="business-approval">业务审批<span class="center-badge">3</span></div>
             <div class="center-tab" data-subtab="loan-management">放款审批<span class="center-badge">1</span></div>
             <div class="center-tab" data-subtab="report-approval">报表上报审批<span class="center-badge">1</span></div>
-            <div class="center-tab" data-subtab="post-invest-approval">投后审批<span class="center-badge">0</span></div>
+            <div class="center-tab" data-subtab="post-visit-approval">投后回访<span class="center-badge">1</span></div>
+            <div class="center-tab" data-subtab="classification-approval">五级分类<span class="center-badge">1</span></div>
             <div class="center-tab" data-subtab="repayment-approval">还款审批<span class="center-badge">0</span></div>
         </div>
         <div class="center-content active" id="business-approval">
@@ -530,11 +539,192 @@
         </div>
     </div>
 
-        <div class="center-content" id="post-invest-approval">
-            <div style="padding:40px;text-align:center;color:#999">暂无投后审批数据</div>
+        <div class="center-content" id="post-visit-approval">
+            <div class="post-approval-page post-visit-approval-page">
+                <div class="post-approval-header">
+                    <div class="post-approval-title">
+                        <span>←</span>
+                        <strong>投后回访</strong>
+                        <em>济南金控小额贷款有限公司</em>
+                    </div>
+                    <button class="handled-record-btn" onclick="showPostVisitRecordModal()">已办理记录</button>
+                </div>
+                <div class="post-approval-toolbar">
+                    <span>共 1 条记录</span>
+                    <div>
+                        <input type="text" placeholder="请输入项目名称" class="post-filter-input">
+                        <button class="search-btn">查询</button>
+                        <button class="reset-btn">重置</button>
+                    </div>
+                </div>
+                <div class="post-approval-list">
+                    <article class="post-approval-card">
+                        <div class="post-approval-card-main">
+                            <strong>李霖 <a href="#">[ 非现场检查 ]</a></strong>
+                            <span>客户名称：李霖 / 11010119800120005X</span>
+                        </div>
+                        <div class="post-approval-submit">
+                            <span>提交人</span>
+                            <strong>济南金控小额贷款有限公司 / 王晨晨</strong>
+                        </div>
+                        <div class="post-approval-submit">
+                            <span>提交时间</span>
+                            <strong>2026-07-08 17:23:39</strong>
+                        </div>
+                        <button class="orange-handle-btn">去处理</button>
+                    </article>
+                </div>
+                <div class="post-manage-pagination">
+                    <select><option>10条/页</option></select>
+                    <button class="page-btn disabled">‹</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn disabled">›</button>
+                    <span>前往</span><input type="text" value="1"><span>页</span>
+                </div>
+            </div>
+        </div>
+        <div class="center-content" id="classification-approval">
+            <div class="post-approval-page classification-approval-page">
+                <div class="post-approval-header">
+                    <div class="post-approval-title">
+                        <span>←</span>
+                        <strong>五级分类</strong>
+                        <em>信贷一部</em>
+                    </div>
+                    <button class="handled-record-btn" onclick="showClassificationRecordModal()">已办理记录</button>
+                </div>
+                <div class="post-approval-toolbar">
+                    <button class="batch-approve-btn">批量审批</button>
+                    <div>
+                        <input type="text" placeholder="请输入项目名称" class="post-filter-input">
+                        <button class="search-btn">查询</button>
+                        <button class="reset-btn">重置</button>
+                    </div>
+                </div>
+                <div class="post-approval-list">
+                    <article class="post-approval-card classification-approval-card">
+                        <label class="post-check"><input type="radio"></label>
+                        <div class="post-approval-card-main">
+                            <strong><span class="asset-tag normal">正常资产</span> 林一夏</strong>
+                            <span>客户名称：林一夏 / 110101198001200092</span>
+                        </div>
+                        <div class="post-approval-submit">
+                            <span>提交人</span>
+                            <strong>济南金控小额贷款有限公司 / 王晨晨</strong>
+                        </div>
+                        <div class="post-approval-submit">
+                            <span>提交时间</span>
+                            <strong>2026-07-08 17:26:35</strong>
+                        </div>
+                        <button class="blue-handle-btn">去审批</button>
+                        <button class="more-action-btn">⋮</button>
+                    </article>
+                </div>
+                <div class="post-manage-pagination">
+                    <span>共 1 条</span>
+                    <select><option>10条/页</option></select>
+                    <button class="page-btn disabled">‹</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn disabled">›</button>
+                    <span>前往</span><input type="text" value="1"><span>页</span>
+                </div>
+            </div>
         </div>
         <div class="center-content" id="repayment-approval">
             <div style="padding:40px;text-align:center;color:#999">暂无还款审批数据</div>
+        </div>
+    </div>
+
+    <div id="post-visit-record-modal" class="modal handled-record-modal">
+        <div class="modal-content handled-record-content">
+            <div class="handled-record-title">
+                <span>已办理记录</span>
+                <button onclick="closePostVisitRecordModal()">×</button>
+            </div>
+            <div class="handled-record-body">
+                <div class="handled-record-top">
+                    <span>共 0 条记录</span>
+                    <div>
+                        <input type="text" placeholder="请输入项目名称" class="post-filter-input">
+                        <button class="search-btn">查询</button>
+                        <button class="reset-btn">重置</button>
+                    </div>
+                </div>
+                <div class="handled-table-wrap">
+                    <table class="handled-table">
+                        <thead>
+                            <tr>
+                                <th>项目名称</th>
+                                <th>检查时间</th>
+                                <th>客户名称</th>
+                                <th>法定代表人</th>
+                                <th>合同号</th>
+                                <th>合同金额(元)</th>
+                                <th>在投余额(元)</th>
+                                <th>合同截止日</th>
+                                <th>提交时间</th>
+                                <th>当前审批人</th>
+                                <th>审批完成时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody><tr><td colspan="13">暂无数据</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="post-manage-pagination">
+                    <button class="page-btn disabled">‹</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn disabled">›</button>
+                    <span>前往</span><input type="text" value="1"><span>页</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="classification-record-modal" class="modal handled-record-modal">
+        <div class="modal-content handled-record-content">
+            <div class="handled-record-title">
+                <span>已办理记录</span>
+                <button onclick="closeClassificationRecordModal()">×</button>
+            </div>
+            <div class="handled-record-body">
+                <div class="handled-record-top">
+                    <span>共 0 条记录</span>
+                    <div>
+                        <input type="text" placeholder="请输入项目名称" class="post-filter-input">
+                        <button class="search-btn">查询</button>
+                        <button class="reset-btn">重置</button>
+                    </div>
+                </div>
+                <div class="handled-table-wrap">
+                    <table class="handled-table">
+                        <thead>
+                            <tr>
+                                <th>项目名称</th>
+                                <th>认定时间</th>
+                                <th>五级分类</th>
+                                <th>在投余额(元)</th>
+                                <th>合同金额(元)</th>
+                                <th>合同截止日</th>
+                                <th>提交时间</th>
+                                <th>当前审批人</th>
+                                <th>审批完成时间</th>
+                                <th>客户类型</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody><tr><td colspan="12">暂无数据</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="post-manage-pagination">
+                    <button class="page-btn disabled">‹</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn disabled">›</button>
+                    <span>前往</span><input type="text" value="1"><span>页</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -550,16 +740,12 @@
                     <div class="center-tab" data-subtab="five-classification">五级分类</div>
                 </div>
                 <div class="post-manage-actions">
-                    <span class="post-action-mask"></span>
-                    <span class="post-action-mask short"></span>
-                    <button class="post-todo-btn" type="button">待办理<span>1</span></button>
+                    <button class="post-todo-btn" type="button" onclick="openPostTodo()">待办理<span>1</span></button>
                 </div>
             </div>
 
             <div class="center-content active" id="post-invest-visit">
                 <div class="post-manage-filter visit-filter">
-                    <span class="post-filter-mask wide"></span>
-                    <span class="post-filter-mask"></span>
                     <input type="text" placeholder="请输入项目名称/客户名称" class="post-filter-input">
                     <select class="post-filter-input"><option>请选择风险级别</option><option>正常</option><option>关注</option></select>
                     <button class="search-btn">查询</button>
@@ -615,7 +801,6 @@
             <div class="center-content" id="five-classification">
                 <div class="post-manage-filter classify-filter">
                     <input type="text" placeholder="请输入名称/信用代码" class="post-filter-input">
-                    <span class="post-filter-mask wide"></span>
                     <button class="search-btn">查询</button>
                     <button class="reset-btn">重置</button>
                 </div>

@@ -150,6 +150,14 @@
         }
     };
 
+    window.openPostTodo = function() {
+        var activePostTab = document.querySelector('#invest-management .post-manage-tabs .center-tab.active');
+        var subtabId = activePostTab && activePostTab.getAttribute('data-subtab') === 'five-classification'
+            ? 'classification-approval'
+            : 'post-visit-approval';
+        window.switchToApprovalSub(subtabId);
+    };
+
     function initStageTabs() {
         var stageTabs = document.querySelectorAll('.stage-tabs .stage-tab');
         var stagePanels = document.querySelectorAll('.stage-tab-content');
@@ -543,6 +551,22 @@
         closeActionModal('report-record-modal');
     };
 
+    window.showPostVisitRecordModal = function() {
+        showActionModal('post-visit-record-modal');
+    };
+
+    window.closePostVisitRecordModal = function() {
+        closeActionModal('post-visit-record-modal');
+    };
+
+    window.showClassificationRecordModal = function() {
+        showActionModal('classification-record-modal');
+    };
+
+    window.closeClassificationRecordModal = function() {
+        closeActionModal('classification-record-modal');
+    };
+
     window.showLoanApprovalRecordModal = function() {
         showActionModal('loan-approval-record-modal');
     };
@@ -689,6 +713,8 @@
         var recordModal = document.getElementById('record-modal');
         var loanRecordModal = document.getElementById('loan-record-modal');
         var reportRecordModal = document.getElementById('report-record-modal');
+        var postVisitRecordModal = document.getElementById('post-visit-record-modal');
+        var classificationRecordModal = document.getElementById('classification-record-modal');
         var loanApprovalRecordModal = document.getElementById('loan-approval-record-modal');
         var loanWithdrawModal = document.getElementById('loan-withdraw-modal');
         var approveModal = document.getElementById('approve-modal');
@@ -706,6 +732,14 @@
 
         if (reportRecordModal && event.target === reportRecordModal) {
             closeReportRecordModal();
+        }
+
+        if (postVisitRecordModal && event.target === postVisitRecordModal) {
+            closePostVisitRecordModal();
+        }
+
+        if (classificationRecordModal && event.target === classificationRecordModal) {
+            closeClassificationRecordModal();
         }
 
         if (loanApprovalRecordModal && event.target === loanApprovalRecordModal) {
@@ -739,6 +773,8 @@
             closeRecordModal();
             closeLoanRecordModal();
             closeReportRecordModal();
+            closePostVisitRecordModal();
+            closeClassificationRecordModal();
             closeLoanApprovalRecordModal();
             closeLoanWithdrawModal();
             closeApproveModal();
