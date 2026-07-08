@@ -107,7 +107,7 @@
 
     function activateCenterTab(tab) {
         var tabBar = tab.closest('.center-tabs');
-        var owner = tabBar ? tabBar.parentElement : document;
+        var owner = tabBar ? (tabBar.closest('.post-manage-page, .tab-content') || tabBar.parentElement) : document;
         var tabs = tabBar ? tabBar.querySelectorAll('.center-tab') : document.querySelectorAll('.center-tab');
         var centerContents = getDirectCenterContents(owner);
 
@@ -694,7 +694,7 @@
         var approveModal = document.getElementById('approve-modal');
         var backModal = document.getElementById('back-modal');
         var rejectModal = document.getElementById('reject-modal');
-        var photoPreviewModal = document.getElementById('photo-preview-modal');
+        var photoDetailModal = document.getElementById('photo-detail-modal');
         
         if (recordModal && event.target === recordModal) {
             closeRecordModal();
@@ -728,8 +728,8 @@
             closeRejectModal();
         }
 
-        if (photoPreviewModal && event.target === photoPreviewModal) {
-            closePhotoPreviewModal();
+        if (photoDetailModal && event.target === photoDetailModal) {
+            closePhotoDetailModal();
         }
     });
 
@@ -744,7 +744,7 @@
             closeApproveModal();
             closeBackModal();
             closeRejectModal();
-            closePhotoPreviewModal();
+            closePhotoDetailModal();
         }
     });
 
@@ -842,47 +842,36 @@
     }
 
     var currentPhotoContext = null;
-    var currentPhotoImage = null;
-    var currentPhotoWatermark = null;
+    var photoStore = {};
 
     function initPhotoLibrary() {
         var photoLibrary = document.getElementById('photo-library');
-        var captureInput = document.getElementById('photo-capture-input');
+        var uploadInput = document.getElementById('photo-upload-input');
 
-        if (!photoLibrary || !captureInput) {
+        if (!photoLibrary || !uploadInput) {
             return;
         }
 
-        var uploadButtons = photoLibrary.querySelectorAll('.photo-upload-btn[data-client]');
-        for (var i = 0; i < uploadButtons.length; i++) {
-            uploadButtons[i].addEventListener('click', function() {
+        var detailButtons = photoLibrary.querySelectorAll('.photo-detail-btn[data-client]');
+        for (var i = 0; i < detailButtons.length; i++) {
+            detailButtons[i].addEventListener('click', function() {
                 currentPhotoContext = {
                     client: this.getAttribute('data-client') || '--',
                     manager: this.getAttribute('data-manager') || '--',
                     stage: this.getAttribute('data-stage') || '--',
                     button: this
                 };
-                captureInput.value = '';
-                captureInput.click();
+                openPhotoDetailModal();
             });
         }
 
-        captureInput.addEventListener('change', function() {
-            var file = this.files && this.files[0];
-            if (!file || !currentPhotoContext) {
+        uploadInput.addEventListener('change', function() {
+            var files = Array.prototype.slice.call(this.files || []);
+            if (!files.length || !currentPhotoContext) {
                 return;
             }
-
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                var image = new Image();
-                image.onload = function() {
-                    currentPhotoImage = image;
-                    openPhotoPreview(file);
-                };
-                image.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
+            this.value = '';
+            addPhotosToCurrentContext(files);
         });
     }
 
@@ -906,47 +895,75 @@
         }
     }
 
-    function openPhotoPreview(file) {
-        var modal = document.getElementById('photo-preview-modal');
+    function getPhotoStoreKey() {
+        if (!currentPhotoContext) {
+            return '';
+        }
+        return currentPhotoContext.client + '|' + currentPhotoContext.stage;
+    }
+
+    function getPhotoList() {
+        var key = getPhotoStoreKey();
+        if (!key) {
+            return [];
+        }
+        if (!photoStore[key]) {
+            photoStore[key] = [];
+        }
+        return photoStore[key];
+    }
+
+    function openPhotoDetailModal() {
+        var modal = document.getElementById('photo-detail-modal');
         var note = document.getElementById('photo-location-note');
-        var takenAt = formatPhotoTime(new Date());
-
-        currentPhotoWatermark = {
-            client: currentPhotoContext.client,
-            manager: currentPhotoContext.manager,
-            stage: currentPhotoContext.stage,
-            time: takenAt,
-            location: '经度/纬度：获取中...'
-        };
-
+        if (!currentPhotoContext || !modal) {
+            return;
+        }
         setPhotoPreviewText('photo-preview-client', currentPhotoContext.client);
         setPhotoPreviewText('photo-preview-manager', currentPhotoContext.manager);
         setPhotoPreviewText('photo-preview-stage', currentPhotoContext.stage);
-        setPhotoPreviewText('photo-preview-time', takenAt);
-        setPhotoPreviewText('photo-preview-location', '获取中...');
+        if (note) {
+            note.textContent = '上传时会写入拍摄时间；若授权定位，将同步写入经度/纬度水印。';
+        }
+        renderPhotoUploadList();
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.triggerPhotoUpload = function() {
+        var uploadInput = document.getElementById('photo-upload-input');
+        if (uploadInput) {
+            uploadInput.click();
+        }
+    };
+
+    function addPhotosToCurrentContext(files) {
+        var note = document.getElementById('photo-location-note');
         if (note) {
             note.textContent = '正在获取实时坐标，请允许浏览器定位。';
         }
 
-        drawWatermarkedPhoto();
-
-        if (modal) {
-            modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
         if (!navigator.geolocation) {
-            updatePhotoLocation('当前浏览器不支持定位', '无法获取经纬度，已保留拍摄时间水印。');
+            processPhotoFiles(files, '定位不可用');
+            if (note) {
+                note.textContent = '当前浏览器不支持定位，已保留拍摄时间水印。';
+            }
             return;
         }
 
         navigator.geolocation.getCurrentPosition(function(position) {
             var longitude = position.coords.longitude.toFixed(6);
             var latitude = position.coords.latitude.toFixed(6);
-            updatePhotoLocation('经度 ' + longitude + ' / 纬度 ' + latitude, '坐标已实时获取，并写入照片水印。');
+            processPhotoFiles(files, '经度 ' + longitude + ' / 纬度 ' + latitude);
+            if (note) {
+                note.textContent = '坐标已实时获取，并写入照片水印。';
+            }
         }, function(error) {
             var message = error && error.code === 1 ? '定位未授权' : '定位获取失败';
-            updatePhotoLocation(message, '无法获取经纬度，已保留拍摄时间水印。');
+            processPhotoFiles(files, message);
+            if (note) {
+                note.textContent = '无法获取经纬度，已保留拍摄时间水印。';
+            }
         }, {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -954,35 +971,40 @@
         });
     }
 
-    function updatePhotoLocation(locationText, noteText) {
-        var note = document.getElementById('photo-location-note');
-        setPhotoPreviewText('photo-preview-location', locationText);
-        if (note) {
-            note.textContent = noteText;
+    function processPhotoFiles(files, locationText) {
+        for (var i = 0; i < files.length; i++) {
+            createWatermarkedPhoto(files[i], locationText, function(photo) {
+                getPhotoList().push(photo);
+                renderPhotoUploadList();
+            });
         }
-        if (currentPhotoWatermark) {
-            currentPhotoWatermark.location = locationText;
-        }
-        drawWatermarkedPhoto();
     }
 
-    function drawWatermarkedPhoto() {
-        var canvas = document.getElementById('photo-watermark-canvas');
-        if (!canvas || !currentPhotoImage || !currentPhotoWatermark) {
-            return;
-        }
+    function createWatermarkedPhoto(file, locationText, done) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var image = new Image();
+            image.onload = function() {
+                done(drawPhotoToDataUrl(image, file.name, locationText));
+            };
+            image.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 
-        var image = currentPhotoImage;
+    function drawPhotoToDataUrl(image, fileName, locationText) {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
         var maxWidth = 1080;
         var scale = Math.min(1, maxWidth / image.width);
         var width = Math.max(1, Math.round(image.width * scale));
         var height = Math.max(1, Math.round(image.height * scale));
-        var ctx = canvas.getContext('2d');
+        var takenAt = formatPhotoTime(new Date());
         var lines = [
-            '客户名称：' + currentPhotoWatermark.client,
-            '所属环节：' + currentPhotoWatermark.stage,
-            '拍摄时间：' + currentPhotoWatermark.time,
-            '地点坐标：' + currentPhotoWatermark.location
+            '客户名称：' + currentPhotoContext.client,
+            '所属环节：' + currentPhotoContext.stage,
+            '拍摄时间：' + takenAt,
+            '地点坐标：' + locationText
         ];
         var fontSize = Math.max(16, Math.round(width * 0.032));
         var padding = Math.max(16, Math.round(width * 0.028));
@@ -1001,22 +1023,54 @@
         for (var i = 0; i < lines.length; i++) {
             ctx.fillText(lines[i], padding, height - panelHeight + padding + i * lineHeight);
         }
+
+        return {
+            name: fileName || '照片',
+            time: takenAt,
+            location: locationText,
+            src: canvas.toDataURL('image/jpeg', 0.86)
+        };
     }
 
-    window.closePhotoPreviewModal = function() {
-        var modal = document.getElementById('photo-preview-modal');
+    function renderPhotoUploadList() {
+        var list = document.getElementById('photo-upload-list');
+        var photos = getPhotoList();
+        if (!list) {
+            return;
+        }
+        if (!photos.length) {
+            list.innerHTML = '<div class="photo-empty">暂无照片，请点击“上传照片”。</div>';
+            return;
+        }
+        var html = '';
+        for (var i = 0; i < photos.length; i++) {
+            html += '<div class="photo-upload-item">';
+            html += '<img src="' + photos[i].src + '" alt="' + photos[i].name + '">';
+            html += '<div><strong>' + photos[i].name + '</strong><span>' + photos[i].time + '</span><em>' + photos[i].location + '</em></div>';
+            html += '<button type="button" onclick="deleteUploadedPhoto(' + i + ')">删除</button>';
+            html += '</div>';
+        }
+        list.innerHTML = html;
+    }
+
+    window.deleteUploadedPhoto = function(index) {
+        var photos = getPhotoList();
+        if (index >= 0 && index < photos.length) {
+            photos.splice(index, 1);
+        }
+        renderPhotoUploadList();
+    };
+
+    window.closePhotoDetailModal = function() {
+        var modal = document.getElementById('photo-detail-modal');
         if (modal) {
             modal.classList.remove('show');
         }
         document.body.style.overflow = '';
     };
 
-    window.confirmPhotoUpload = function() {
-        if (currentPhotoContext && currentPhotoContext.button) {
-            currentPhotoContext.button.textContent = '重新上传';
-            currentPhotoContext.button.classList.add('uploaded');
-        }
-        window.closePhotoPreviewModal();
+    window.closePhotoPreviewModal = function() {
+        window.closePhotoDetailModal();
     };
 
     function initPagedLists() {
@@ -1217,8 +1271,16 @@ window.closeStageDetail = function() {
                 }
             }
         }
-        if (navItems[stageIndex]) {
-            navItems[stageIndex].classList.add('active');
+        var targetNav = document.querySelector('.stage-nav-item[data-stage-index="' + stageIndex + '"]');
+        if (!targetNav && navItems[stageIndex]) {
+            targetNav = navItems[stageIndex];
+        }
+        if (targetNav) {
+            targetNav.classList.add('active');
+            var targetDot = targetNav.querySelector('.stage-dot');
+            if (targetDot) {
+                targetDot.classList.add('active');
+            }
         }
 
         var html = '';
