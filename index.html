@@ -540,6 +540,7 @@
     <div id="invest-management" class="tab-content">
         <div class="center-tabs">
             <div class="center-tab active" data-subtab="post-invest-visit">投后回访</div>
+            <div class="center-tab" data-subtab="post-invest-gallery">照片库</div>
             <div class="center-tab" data-subtab="five-classification">五级分类</div>
         </div>
         <div class="center-content active" id="post-invest-visit">
@@ -550,7 +551,7 @@
                     <button class="reset-btn">重置</button>
                 </div>
             </div>
-            <div class="loan-table-wrapper" style="margin-top:12px">
+            <div class="loan-table-wrapper data-table-scroll" style="margin-top:12px">
                 <table class="loan-table">
                     <thead><tr><th>客户名称</th><th>合同号</th><th>回访日期</th><th>回访方式</th><th>回访结果</th><th>风险分类</th><th>回访人</th></tr></thead>
                     <tbody>
@@ -561,6 +562,49 @@
             </div>
             <div class="pagination"><span class="total">共 2 条</span><div class="page-controls"><button class="page-btn disabled">上一页</button><button class="page-btn active">1</button><button class="page-btn disabled">下一页</button></div></div>
         </div>
+        <div class="center-content" id="post-invest-gallery">
+            <div class="list-toolbar-card">
+                <div class="photo-toolbar">
+                    <input type="text" placeholder="请输入客户名称/照片说明" class="search-input">
+                    <button class="search-btn">查询</button>
+                    <button class="reset-btn">重置</button>
+                    <button class="photo-upload-btn" type="button">上传照片</button>
+                </div>
+            </div>
+            <div class="photo-gallery">
+                <div class="photo-card">
+                    <div class="photo-thumb photo-thumb-blue">
+                        <span>现场回访</span>
+                    </div>
+                    <div class="photo-info">
+                        <strong>北京易诚互动网络技术股份有限公司</strong>
+                        <span>经营场所照片 / 2025-07-15</span>
+                        <em>上传人：董瑾</em>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-thumb photo-thumb-green">
+                        <span>资料核验</span>
+                    </div>
+                    <div class="photo-info">
+                        <strong>浙江臻善科技股份有限公司</strong>
+                        <span>合同资料照片 / 2025-07-18</span>
+                        <em>上传人：张伟</em>
+                    </div>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-thumb photo-thumb-cyan">
+                        <span>设备巡查</span>
+                    </div>
+                    <div class="photo-info">
+                        <strong>云集数字科技（山东）股份有限公司</strong>
+                        <span>生产设备照片 / 2026-06-20</span>
+                        <em>上传人：李娜</em>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination"><span class="total">共 3 条</span><div class="page-controls"><button class="page-btn disabled">上一页</button><button class="page-btn active">1</button><button class="page-btn disabled">下一页</button></div></div>
+        </div>
         <div class="center-content" id="five-classification">
             <div class="list-toolbar-card">
                 <div class="search-bar" style="margin-bottom:0">
@@ -569,7 +613,7 @@
                     <button class="reset-btn">重置</button>
                 </div>
             </div>
-            <div class="loan-table-wrapper" style="margin-top:12px">
+            <div class="loan-table-wrapper data-table-scroll" style="margin-top:12px">
                 <table class="loan-table">
                     <thead><tr><th>客户名称</th><th>合同号</th><th>贷款金额</th><th>五级分类结果</th><th>分类日期</th><th>分类依据</th></tr></thead>
                     <tbody>
@@ -1655,46 +1699,159 @@
         </div>
     </div>
 
-    <div id="stage-detail-page" class="detail-page">
-        <div class="detail-page-content">
-            <div class="modal-header">
+    <div id="stage-detail-page" class="detail-page stage-detail-page">
+        <div class="detail-page-content stage-mobile-content">
+            <div class="modal-header stage-mobile-header">
                 <button class="back-btn" onclick="closeStageDetail()">
                     <span class="back-icon">←</span>
                     <span>返回</span>
                 </button>
-                <span class="modal-title" id="stage-company-title">项目详情</span>
+                <div class="stage-title-group">
+                    <span class="modal-title" id="stage-company-title">项目详情</span>
+                    <span class="stage-status-tag" id="stage-phase-tag">尽调调查</span>
+                </div>
                 <span class="stage-current-label" id="stage-current-label">当前：尽调阶段</span>
             </div>
-            <div class="modal-body">
-                <div class="stage-left">
-                    <div class="stage-info-card">
-                        <div class="stage-card-header">
-                            <span class="tag emergency-tag">小额贷款</span>
-                            <span class="stage-card-title" id="stage-header-company">--</span>
-                            <span class="stage-status-tag" id="stage-status-tag">进行中</span>
-                        </div>
-                        <div class="stage-detail-table" id="stage-detail-table">
-                            <div class="info-row"><span class="label">环节名称：</span><span class="value">--</span></div>
-                            <div class="info-row"><span class="label">处理时间：</span><span class="value">--</span></div>
-                            <div class="info-row"><span class="label">处理人：</span><span class="value">--</span></div>
-                            <div class="info-row"><span class="label">状态：</span><span class="value">--</span></div>
-                            <div class="info-row"><span class="label">客户名称：</span><span class="value">--</span></div>
-                            <div class="info-row"><span class="label">负责部门：</span><span class="value">业务部</span></div>
-                            <div class="info-row"><span class="label">主办业务经理：</span><span class="value">董瑾</span></div>
-                        </div>
-                    </div>
+
+            <div class="stage-mobile-body">
+                <div class="stage-meta-row">
+                    <span class="stage-card-title" id="stage-header-company">--</span>
+                    <span>主办业务经理：董瑾</span>
                 </div>
-                <div class="stage-sidebar">
-                    <div class="stage-sidebar-title">业务环节</div>
-                    <div class="stage-nav-list">
-                        <div class="stage-nav-item active" data-stage="0" onclick="switchStage(0)"><span class="stage-dot completed"></span>立项</div>
-                        <div class="stage-nav-item" data-stage="1" onclick="switchStage(1)"><span class="stage-dot completed"></span>尽调</div>
-                        <div class="stage-nav-item" data-stage="2" onclick="switchStage(2)"><span class="stage-dot active"></span>审批</div>
-                        <div class="stage-nav-item" data-stage="3" onclick="switchStage(3)"><span class="stage-dot"></span>合同</div>
-                        <div class="stage-nav-item" data-stage="4" onclick="switchStage(4)"><span class="stage-dot"></span>放款</div>
-                        <div class="stage-nav-item" data-stage="5" onclick="switchStage(5)"><span class="stage-dot"></span>还款</div>
-                        <div class="stage-nav-item" data-stage="6" onclick="switchStage(6)"><span class="stage-dot"></span>结清</div>
-                    </div>
+
+                <div class="stage-tabs">
+                    <button class="stage-tab active" type="button" data-stage-panel="stage-project-info">项目信息</button>
+                    <button class="stage-tab" type="button" data-stage-panel="stage-customer-info">客户信息</button>
+                    <button class="stage-tab" type="button" data-stage-panel="stage-risk-report">风险报告</button>
+                </div>
+
+                <div class="stage-layout">
+                    <main class="stage-left">
+                        <div class="stage-tab-content active" id="stage-project-info">
+                            <section class="stage-form-card">
+                                <div class="stage-section-title-row">
+                                    <h3 class="stage-section-title" id="stage-process-title">尽调信息</h3>
+                                    <span class="stage-status-tag" id="stage-status-tag">进行中</span>
+                                </div>
+
+                                <div class="stage-detail-table stage-summary-list" id="stage-detail-table">
+                                    <div class="info-row"><span class="label">环节名称：</span><span class="value" id="stage-phase-name">--</span></div>
+                                    <div class="info-row"><span class="label">处理时间：</span><span class="value" id="stage-handler-time">--</span></div>
+                                    <div class="info-row"><span class="label">处理人：</span><span class="value" id="stage-handler-name">--</span></div>
+                                    <div class="info-row"><span class="label">状态：</span><span class="value" id="stage-handler-status">--</span></div>
+                                </div>
+
+                                <div class="mobile-form-grid">
+                                    <label class="mobile-form-item required">
+                                        <span>尽调时间</span>
+                                        <input type="text" value="2025-06-15" readonly>
+                                    </label>
+                                    <label class="mobile-form-item required">
+                                        <span>详细担保方式</span>
+                                        <select disabled><option>保证担保</option></select>
+                                    </label>
+                                    <label class="mobile-form-item required">
+                                        <span>主担保方式</span>
+                                        <select disabled><option>企业连带责任保证</option></select>
+                                    </label>
+                                    <label class="mobile-form-item">
+                                        <span>投放行业</span>
+                                        <select disabled><option>软件和信息技术服务业</option></select>
+                                    </label>
+                                    <label class="mobile-form-item">
+                                        <span>企业规模</span>
+                                        <select disabled><option>中型企业</option></select>
+                                    </label>
+                                    <label class="mobile-form-item">
+                                        <span>是否涉农</span>
+                                        <select disabled><option>否</option></select>
+                                    </label>
+                                    <label class="mobile-form-item required">
+                                        <span>业务模式</span>
+                                        <select disabled><option>流动资金贷款</option></select>
+                                    </label>
+                                    <label class="mobile-form-item file-field required">
+                                        <span>尽调报告</span>
+                                        <button type="button">尽调报告.pdf</button>
+                                    </label>
+                                    <label class="mobile-form-item file-field required">
+                                        <span>征信情况</span>
+                                        <button type="button">企业征信.pdf</button>
+                                    </label>
+                                    <label class="mobile-form-item file-field">
+                                        <span>其他资料</span>
+                                        <button type="button">现场照片.zip</button>
+                                    </label>
+                                    <label class="mobile-form-item required">
+                                        <span>上年末总资产</span>
+                                        <input type="text" value="12,800.00 万元" readonly>
+                                    </label>
+                                    <label class="mobile-form-item">
+                                        <span>上年末纳税总额</span>
+                                        <input type="text" value="320.00 万元" readonly>
+                                    </label>
+                                    <label class="mobile-form-item required">
+                                        <span>上年末净资产</span>
+                                        <input type="text" value="6,500.00 万元" readonly>
+                                    </label>
+                                    <label class="mobile-form-item required">
+                                        <span>上年营业收入</span>
+                                        <input type="text" value="18,600.00 万元" readonly>
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="stage-tab-content" id="stage-customer-info">
+                            <section class="stage-form-card">
+                                <h3 class="stage-section-title">客户信息</h3>
+                                <div class="mobile-info-list">
+                                    <div><span>统一社会信用代码</span><strong>911101085996989854</strong></div>
+                                    <div><span>客户号</span><strong>E2025061100001</strong></div>
+                                    <div><span>客户类型</span><strong>首次合作</strong></div>
+                                    <div><span>负责部门</span><strong>业务部</strong></div>
+                                    <div><span>注册地址</span><strong>北京市海淀区</strong></div>
+                                    <div><span>经营范围</span><strong>软件开发、信息技术咨询服务、数据处理服务</strong></div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="stage-tab-content" id="stage-risk-report">
+                            <section class="stage-form-card">
+                                <h3 class="stage-section-title">风险报告</h3>
+                                <div class="risk-card-list">
+                                    <div class="risk-card">
+                                        <span>经营风险</span>
+                                        <strong>低</strong>
+                                        <p>企业经营稳定，近一年收入和现金流表现正常。</p>
+                                    </div>
+                                    <div class="risk-card">
+                                        <span>担保风险</span>
+                                        <strong>中</strong>
+                                        <p>担保方式有效，需持续关注保证人代偿能力。</p>
+                                    </div>
+                                    <div class="risk-card">
+                                        <span>征信风险</span>
+                                        <strong>低</strong>
+                                        <p>未发现重大逾期或异常负面记录。</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </main>
+
+                    <aside class="stage-sidebar">
+                        <div class="stage-sidebar-title">业务环节</div>
+                        <div class="stage-nav-list">
+                            <div class="stage-nav-item active" data-stage="0" onclick="switchStage(0)"><span class="stage-dot active"></span>立项</div>
+                            <div class="stage-nav-item" data-stage="1" onclick="switchStage(1)"><span class="stage-dot"></span>尽调</div>
+                            <div class="stage-nav-item" data-stage="2" onclick="switchStage(2)"><span class="stage-dot"></span>审批</div>
+                            <div class="stage-nav-item" data-stage="3" onclick="switchStage(3)"><span class="stage-dot"></span>合同</div>
+                            <div class="stage-nav-item" data-stage="4" onclick="switchStage(4)"><span class="stage-dot"></span>放款</div>
+                            <div class="stage-nav-item" data-stage="5" onclick="switchStage(5)"><span class="stage-dot"></span>还款</div>
+                            <div class="stage-nav-item" data-stage="6" onclick="switchStage(6)"><span class="stage-dot"></span>结清</div>
+                        </div>
+                    </aside>
                 </div>
             </div>
         </div>
@@ -1714,7 +1871,7 @@
                     <button class="reset-btn">重置</button>
                 </div>
             </div>
-            <div class="loan-table-wrapper" style="margin-top:12px">
+            <div class="loan-table-wrapper data-table-scroll" style="margin-top:12px">
                 <table class="loan-table">
                     <thead>
                         <tr>
@@ -1763,7 +1920,7 @@
                     <button class="reset-btn">重置</button>
                 </div>
             </div>
-            <div class="loan-table-wrapper" style="margin-top:12px">
+            <div class="loan-table-wrapper data-table-scroll" style="margin-top:12px">
                 <table class="loan-table">
                     <thead>
                         <tr>
