@@ -9,6 +9,7 @@
         initLoanDetailTabs();
         initChangeDetailTabs();
         initSidebarNav();
+        initStageTabs();
         initHandleButtons();
         initSearchFunction();
         initRadioButtons();
@@ -75,26 +76,52 @@
     }
 
     function initCenterTabs() {
-        var centerTabs = document.querySelectorAll('.center-tab');
-        var centerContents = document.querySelectorAll('.center-content');
+        var tabBars = document.querySelectorAll('.center-tabs');
 
-        for (var i = 0; i < centerTabs.length; i++) {
-            (function(index) {
-                centerTabs[index].addEventListener('click', function() {
-                    for (var j = 0; j < centerTabs.length; j++) {
-                        centerTabs[j].classList.remove('active');
-                    }
-                    for (var k = 0; k < centerContents.length; k++) {
-                        centerContents[k].classList.remove('active');
-                    }
-                    this.classList.add('active');
-                    var subtabId = this.getAttribute('data-subtab');
-                    var targetContent = document.getElementById(subtabId);
-                    if (targetContent) {
-                        targetContent.classList.add('active');
-                    }
+        for (var i = 0; i < tabBars.length; i++) {
+            var centerTabs = tabBars[i].querySelectorAll('.center-tab');
+
+            for (var j = 0; j < centerTabs.length; j++) {
+                centerTabs[j].addEventListener('click', function() {
+                    activateCenterTab(this);
                 });
-            })(i);
+            }
+        }
+    }
+
+    function getDirectCenterContents(container) {
+        var contents = [];
+        if (!container || !container.children) {
+            return contents;
+        }
+
+        for (var i = 0; i < container.children.length; i++) {
+            if (container.children[i].classList.contains('center-content')) {
+                contents.push(container.children[i]);
+            }
+        }
+
+        return contents;
+    }
+
+    function activateCenterTab(tab) {
+        var tabBar = tab.closest('.center-tabs');
+        var owner = tabBar ? tabBar.parentElement : document;
+        var tabs = tabBar ? tabBar.querySelectorAll('.center-tab') : document.querySelectorAll('.center-tab');
+        var centerContents = getDirectCenterContents(owner);
+
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+        }
+        for (var j = 0; j < centerContents.length; j++) {
+            centerContents[j].classList.remove('active');
+        }
+
+        tab.classList.add('active');
+        var subtabId = tab.getAttribute('data-subtab');
+        var targetContent = document.getElementById(subtabId);
+        if (targetContent) {
+            targetContent.classList.add('active');
         }
     }
 
@@ -103,8 +130,9 @@
         if (targetNav) {
             targetNav.click();
         }
-        var centerTabs = document.querySelectorAll('.center-tab');
-        var centerContents = document.querySelectorAll('.center-content');
+        var approvalCenter = document.getElementById('approval-center');
+        var centerTabs = approvalCenter ? approvalCenter.querySelectorAll('.center-tabs .center-tab') : document.querySelectorAll('.center-tab');
+        var centerContents = approvalCenter ? getDirectCenterContents(approvalCenter) : document.querySelectorAll('.center-content');
         for (var j = 0; j < centerTabs.length; j++) {
             centerTabs[j].classList.remove('active');
         }
@@ -120,6 +148,29 @@
             content.classList.add('active');
         }
     };
+
+    function initStageTabs() {
+        var stageTabs = document.querySelectorAll('.stage-tabs .stage-tab');
+        var stagePanels = document.querySelectorAll('.stage-tab-content');
+
+        for (var i = 0; i < stageTabs.length; i++) {
+            stageTabs[i].addEventListener('click', function() {
+                for (var j = 0; j < stageTabs.length; j++) {
+                    stageTabs[j].classList.remove('active');
+                }
+                for (var k = 0; k < stagePanels.length; k++) {
+                    stagePanels[k].classList.remove('active');
+                }
+
+                this.classList.add('active');
+                var panelId = this.getAttribute('data-stage-panel');
+                var panel = document.getElementById(panelId);
+                if (panel) {
+                    panel.classList.add('active');
+                }
+            });
+        }
+    }
 
     window.toggleDotMenu = function(event, btn) {
         event.stopPropagation();
@@ -925,7 +976,7 @@ window.openStageDetail = function(clientId, stepClass) {
     var titleEl = document.getElementById('stage-company-title');
     var headerCompany = document.getElementById('stage-header-company');
 
-    if (titleEl) { titleEl.textContent = data.companyName + ' - 项目详情'; }
+    if (titleEl) { titleEl.textContent = data.companyName; }
     if (headerCompany) { headerCompany.textContent = data.companyName; }
 
     var navItems = document.querySelectorAll('.nav-tabs .nav-item');
@@ -954,6 +1005,13 @@ window.closeStageDetail = function() {
     window.goBack();
 };
 
+    function setText(id, text) {
+        var node = document.getElementById(id);
+        if (node) {
+            node.textContent = text;
+        }
+    }
+
     window.switchStage = function(stageIndex) {
         var data = stageData[currentStageClientId];
         if (!data) { return; }
@@ -963,19 +1021,29 @@ window.closeStageDetail = function() {
 
         for (var i = 0; i < navItems.length; i++) {
             navItems[i].classList.remove('active');
+            var dot = navItems[i].querySelector('.stage-dot');
+            if (dot) {
+                dot.classList.remove('active');
+                dot.classList.remove('completed');
+                if (i < stageIndex) {
+                    dot.classList.add('completed');
+                } else if (i === stageIndex) {
+                    dot.classList.add('active');
+                }
+            }
         }
         if (navItems[stageIndex]) {
             navItems[stageIndex].classList.add('active');
         }
 
         var html = '';
-        html += '<div class="info-row"><span class="label">环节名称：</span><span class="value">' + stage.label + '</span></div>';
-        html += '<div class="info-row"><span class="label">处理时间：</span><span class="value">' + stage.time + '</span></div>';
-        html += '<div class="info-row"><span class="label">处理人：</span><span class="value">' + stage.operator + '</span></div>';
-    html += '<div class="info-row"><span class="label">状态：</span><span class="value">' + stage.status + '</span></div>';
-    html += '<div class="info-row"><span class="label">客户名称：</span><span class="value">' + data.companyName + '</span></div>';
-    html += '<div class="info-row"><span class="label">负责部门：</span><span class="value">业务部</span></div>';
-    html += '<div class="info-row"><span class="label">主办业务经理：</span><span class="value">董瑾</span></div>';
+        html += '<div class="info-row"><span class="label">环节名称：</span><span class="value" id="stage-phase-name">' + stage.label + '</span></div>';
+        html += '<div class="info-row"><span class="label">处理时间：</span><span class="value" id="stage-handler-time">' + stage.time + '</span></div>';
+        html += '<div class="info-row"><span class="label">处理人：</span><span class="value" id="stage-handler-name">' + stage.operator + '</span></div>';
+        html += '<div class="info-row"><span class="label">状态：</span><span class="value" id="stage-handler-status">' + stage.status + '</span></div>';
+        html += '<div class="info-row"><span class="label">客户名称：</span><span class="value">' + data.companyName + '</span></div>';
+        html += '<div class="info-row"><span class="label">负责部门：</span><span class="value">业务部</span></div>';
+        html += '<div class="info-row"><span class="label">主办业务经理：</span><span class="value">董瑾</span></div>';
         if (table) { table.innerHTML = html; }
 
         var statusTag = document.getElementById('stage-status-tag');
@@ -983,5 +1051,12 @@ window.closeStageDetail = function() {
 
         var currentLabel = document.getElementById('stage-current-label');
         if (currentLabel) { currentLabel.textContent = '当前：' + stage.label + '阶段'; }
+
+        setText('stage-phase-tag', stage.label === '尽调' ? '尽调调查' : stage.label + '阶段');
+        setText('stage-phase-name', stage.label);
+        setText('stage-handler-time', stage.time);
+        setText('stage-handler-name', stage.operator);
+        setText('stage-handler-status', stage.status);
+        setText('stage-process-title', stage.label + '信息');
     };
 })();
