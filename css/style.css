@@ -4899,24 +4899,6 @@ textarea:focus {
     gap: 8px;
 }
 
-.post-action-mask,
-.post-filter-mask {
-    display: inline-block;
-    height: 32px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #c8d3ea, #2c6ff0, #c8d3ea);
-    filter: blur(3px);
-    opacity: 0.85;
-}
-
-.post-action-mask {
-    width: 112px;
-}
-
-.post-action-mask.short {
-    width: 92px;
-}
-
 .post-todo-btn {
     position: relative;
     height: 34px;
@@ -4959,15 +4941,6 @@ textarea:focus {
     background-color: #fff;
     color: #667085;
     font-size: 12px;
-}
-
-.post-filter-mask {
-    width: 160px;
-    height: 28px;
-}
-
-.post-filter-mask.wide {
-    width: 360px;
 }
 
 .post-manage-filter .search-btn,
@@ -5265,6 +5238,267 @@ textarea:focus {
     font-size: 12px;
 }
 
+/* ===== 投后回访/五级分类审批待办与已办理弹窗 ===== */
+.post-approval-page {
+    position: relative;
+    overflow: hidden;
+    margin: -12px;
+    min-height: 430px;
+    background-color: #fff;
+}
+
+.post-approval-page::before,
+.handled-record-content::before {
+    content: '内部资料，请勿外传     王晨晨     王大鹏信贷';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    color: rgba(120, 132, 150, 0.13);
+    font-size: 28px;
+    line-height: 120px;
+    word-spacing: 120px;
+    transform: rotate(-16deg);
+    pointer-events: none;
+    white-space: pre-wrap;
+}
+
+.post-approval-header,
+.post-approval-toolbar,
+.post-approval-list,
+.post-approval-page .post-manage-pagination,
+.handled-record-title,
+.handled-record-body {
+    position: relative;
+    z-index: 1;
+}
+
+.post-approval-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 58px;
+    padding: 0 8px;
+    border-bottom: 1px solid #d8deea;
+    background-color: rgba(255,255,255,0.94);
+}
+
+.post-approval-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.post-approval-title span {
+    color: #111827;
+    font-size: 22px;
+}
+
+.post-approval-title strong {
+    color: #0f172a;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.post-approval-title em {
+    color: #0b65d8;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.handled-record-btn {
+    height: 34px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 18px;
+    background-color: #4b5cff;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.post-approval-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 8px;
+    color: #667085;
+}
+
+.post-approval-toolbar > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.post-approval-list {
+    display: grid;
+    gap: 12px;
+    padding: 0 8px;
+}
+
+.post-approval-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.7fr) minmax(180px, 0.5fr) 150px;
+    gap: 18px;
+    align-items: center;
+    min-height: 78px;
+    padding: 16px;
+    border: 1px solid #d1dbe9;
+    border-radius: 14px;
+    background-color: rgba(255,255,255,0.75);
+}
+
+.post-approval-card-main {
+    display: grid;
+    gap: 12px;
+}
+
+.post-approval-card-main strong {
+    color: #111827;
+    font-size: 16px;
+}
+
+.post-approval-card-main a {
+    color: #1677ff;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.post-approval-card-main span,
+.post-approval-submit span {
+    color: #667085;
+    font-size: 13px;
+}
+
+.post-approval-submit {
+    display: grid;
+    gap: 8px;
+}
+
+.post-approval-submit strong {
+    color: #111827;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.orange-handle-btn,
+.blue-handle-btn,
+.batch-approve-btn {
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.orange-handle-btn {
+    background-color: #ff6b2a;
+}
+
+.blue-handle-btn,
+.batch-approve-btn {
+    background-color: #2867f0;
+}
+
+.batch-approve-btn {
+    width: 74px;
+}
+
+.classification-approval-card {
+    grid-template-columns: 22px minmax(0, 1.5fr) minmax(220px, 0.7fr) minmax(180px, 0.5fr) 110px 34px;
+}
+
+.more-action-btn {
+    border: none;
+    background: none;
+    color: #98a2b3;
+    font-size: 22px;
+}
+
+.handled-record-modal.show {
+    display: flex;
+}
+
+.handled-record-content {
+    position: relative;
+    width: min(1630px, calc(100vw - 80px));
+    max-height: 82vh;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.handled-record-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    background-color: #123fc5;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.handled-record-title button {
+    position: absolute;
+    right: 16px;
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 26px;
+}
+
+.handled-record-body {
+    padding: 18px;
+}
+
+.handled-record-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    color: #667085;
+}
+
+.handled-record-top div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.handled-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #e3e8f2;
+    background-color: rgba(255,255,255,0.72);
+}
+
+.handled-table {
+    min-width: 1500px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.handled-table th {
+    height: 38px;
+    border-right: 1px solid #e3e8f2;
+    background-color: #f1f4fc;
+    color: #667085;
+    font-weight: 600;
+}
+
+.handled-table td {
+    height: 82px;
+    border-top: 1px solid #e3e8f2;
+    color: #667085;
+    text-align: center;
+}
+
 @media (max-width: 767px) {
     .stage-shot-header {
         flex-wrap: wrap;
@@ -5344,9 +5578,7 @@ textarea:focus {
         padding: 10px;
     }
 
-    .post-filter-input,
-    .post-filter-mask,
-    .post-filter-mask.wide {
+    .post-filter-input {
         width: 100%;
     }
 
