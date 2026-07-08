@@ -367,36 +367,51 @@
         window.goBack();
     };
 
-    window.showRecordModal = function() {
-        var modal = document.getElementById('record-modal');
+    function syncBodyOverflow() {
+        document.body.style.overflow = document.querySelector('.modal.show') ? 'hidden' : '';
+    }
+
+    function showModalById(modalId) {
+        var modal = document.getElementById(modalId);
         if (modal) {
             modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
+            syncBodyOverflow();
         }
+    }
+
+    function closeModalById(modalId) {
+        var modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('show');
+            syncBodyOverflow();
+        }
+    }
+
+    function closeTopModal() {
+        var modals = document.querySelectorAll('.modal.show');
+        if (!modals.length) {
+            return false;
+        }
+
+        modals[modals.length - 1].classList.remove('show');
+        syncBodyOverflow();
+        return true;
+    }
+
+    window.showRecordModal = function() {
+        showModalById('record-modal');
     };
 
     window.closeRecordModal = function() {
-        var modal = document.getElementById('record-modal');
-        if (modal) {
-            modal.classList.remove('show');
-            document.body.style.overflow = '';
-        }
+        closeModalById('record-modal');
     };
 
     window.showLoanRecordModal = function() {
-        var modal = document.getElementById('loan-record-modal');
-        if (modal) {
-            modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
+        showModalById('loan-record-modal');
     };
 
     window.closeLoanRecordModal = function() {
-        var modal = document.getElementById('loan-record-modal');
-        if (modal) {
-            modal.classList.remove('show');
-            document.body.style.overflow = '';
-        }
+        closeModalById('loan-record-modal');
     };
 
     window.showReportRecordModal = function() {
@@ -428,19 +443,11 @@
     };
 
     function showActionModal(modalId) {
-        var modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
+        showModalById(modalId);
     }
 
     function closeActionModal(modalId) {
-        var modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('show');
-            document.body.style.overflow = '';
-        }
+        closeModalById(modalId);
     }
 
     window.showApproveModal = function() {
@@ -569,15 +576,14 @@
 
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-            closeModal();
-            closeRecordModal();
-            closeLoanRecordModal();
-            closeReportRecordModal();
-            closeLoanApprovalRecordModal();
-            closeLoanWithdrawModal();
-            closeApproveModal();
-            closeBackModal();
-            closeRejectModal();
+            event.preventDefault();
+            if (closeTopModal()) {
+                return;
+            }
+
+            if (document.querySelector('.detail-page.show')) {
+                window.goBack();
+            }
         }
     });
 
@@ -612,11 +618,12 @@
         for (var i = 0; i < radioItems.length; i++) {
             (function(index) {
                 radioItems[index].addEventListener('click', function(e) {
-                    if (e.target.tagName === 'INPUT') {
+                    var radioGroup = this.parentElement;
+                    var input = this.querySelector('input[type="radio"]');
+                    if (!radioGroup || !input || input.disabled) {
                         return;
                     }
 
-                    var radioGroup = this.parentElement;
                     var radios = radioGroup.querySelectorAll('.radio-item');
 
                     for (var j = 0; j < radios.length; j++) {
@@ -624,10 +631,7 @@
                     }
 
                     this.classList.add('active');
-                    var input = this.querySelector('input[type="radio"]');
-                    if (input) {
-                        input.checked = true;
-                    }
+                    input.checked = true;
                 });
             })(i);
         }
