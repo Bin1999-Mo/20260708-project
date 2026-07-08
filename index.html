@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no">
+    <title>应急转贷业务管理系统</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <img src="images/logo.png" alt="logo" class="logo" onerror="this.style.display='none'">
+            <span class="title">应急转贷业务管理系统</span>
+        </div>
+        <div class="header-right">
+            <img src="images/avatar.png" alt="用户头像" class="avatar" onerror="this.style.display='none'">
+        </div>
+    </header>
+
+    <nav class="nav-tabs">
+        <div class="nav-item active" data-tab="home-dashboard">首页</div>
+        <div class="nav-item" data-tab="business-flow">业务全流程</div>
+        <div class="nav-item" data-tab="business-approval">业务审批<span class="badge">3</span></div>
+        <div class="nav-item" data-tab="loan-management">放款审批<span class="badge">1</span></div>
+        <div class="nav-item" data-tab="report-approval">报表上报审批<span class="badge">1</span></div>
+    </nav>
+
+    <div id="home-dashboard" class="tab-content active">
+        <div class="dashboard-page">
+            <section class="dashboard-top-grid">
+                <div class="dashboard-section message-section">
+                    <div class="section-heading">
+                        <h2>消息中心</h2>
+                        <span>共 5 项待办</span>
+                    </div>
+                    <div class="message-list">
+                        <div class="message-item">
+                            <div>
+                                <strong>业务审批</strong>
+                                <span>授信审批、业务变更待处理</span>
+                            </div>
+                            <em>3</em>
+                            <button class="message-btn" onclick="switchToTab('business-approval')">查看</button>
+                        </div>
+                        <div class="message-item">
+                            <div>
+                                <strong>放款审批</strong>
+                                <span>待审批放款申请</span>
+                            </div>
+                            <em>1</em>
+                            <button class="message-btn" onclick="switchToTab('loan-management')">查看</button>
+                        </div>
+                        <div class="message-item">
+                            <div>
+                                <strong>报表上报审批</strong>
+                                <span>月度经营指标报表待审核</span>
+                            </div>
+                            <em>1</em>
+                            <button class="message-btn" onclick="switchToTab('report-approval')">查看</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section metric-section">
+                <div class="section-heading">
+                    <h2>运行指标</h2>
+                    <span>本月 / 本年</span>
+                </div>
+                <div class="metric-grid compact">
+                    <div class="metric-card metric-blue">
+                        <span class="metric-label">新增投放项目数</span>
+                        <div class="metric-orbit"><strong>17%</strong><span>同比</span></div>
+                        <div class="metric-values">
+                            <span><strong>8</strong><em>本月</em></span>
+                            <span><strong>46</strong><em>本年</em></span>
+                        </div>
+                        <div class="metric-track"><i style="width: 58%"></i></div>
+                    </div>
+                    <div class="metric-card metric-cyan">
+                        <span class="metric-label">回收项目数</span>
+                        <div class="metric-orbit"><strong>9%</strong><span>环比</span></div>
+                        <div class="metric-values">
+                            <span><strong>5</strong><em>本月</em></span>
+                            <span><strong>31</strong><em>本年</em></span>
+                        </div>
+                        <div class="metric-track"><i style="width: 44%"></i></div>
+                    </div>
+                    <div class="metric-card metric-green">
+                        <span class="metric-label">在投项目数</span>
+                        <div class="metric-orbit"><strong>62</strong><span>年度</span></div>
+                        <div class="metric-values">
+                            <span><strong>18</strong><em>本月</em></span>
+                            <span><strong>62</strong><em>本年</em></span>
+                        </div>
+                        <div class="metric-track"><i style="width: 72%"></i></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section">
+                <div class="section-heading">
+                    <h2>累计服务成效</h2>
+                    <span>项目数 / 项目金额</span>
+                </div>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="service-icon">重</div>
+                        <div>
+                            <span>累计服务重点项目</span>
+                            <strong>126</strong>
+                            <em>项目金额 18.62 亿元</em>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon green">实</div>
+                        <div>
+                            <span>服务实体经济项目</span>
+                            <strong>94</strong>
+                            <em>项目金额 12.38 亿元</em>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon cyan">平</div>
+                        <div>
+                            <span>服务平台类项目</span>
+                            <strong>32</strong>
+                            <em>项目金额 6.24 亿元</em>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="business-flow" class="tab-content">
+        <div class="search-bar">
+            <input type="text" placeholder="请输入名称/信用代码" class="search-input">
+            <button class="search-btn">查询</button>
+            <button class="reset-btn">重置</button>
+        </div>
+
+        <div class="business-list">
+            <div class="business-card" data-id="1">
+                <div class="card-header">
+                    <span class="tag emergency-tag">应急转贷</span>
+                    <span class="company-name">北京易诚互动网络技术股份有限公司</span>
+                </div>
+                <div class="card-body">
+                    <div class="info-row">
+                        <span class="label">客户名称：</span>
+                        <span class="value">北京易诚互动网络技术股份有限公司/911101085996989854</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">客户号：</span>
+                        <span class="value">E2025061100001</span>
+                    </div>
+                    <div class="process-bar step-1">
+                        <div class="process-item active"><div class="process-dot"></div><span class="process-label">授信</span></div>
+                        <div class="process-item"><div class="process-dot"></div><span class="process-label">合同放款</span></div>
+                        <div class="process-item"><div class="process-dot"></div><span class="process-label">还款</span></div>
+                        <div class="process-item"><div class="process-dot"></div><span class="process-label">结清</span></div>
+                    </div>
+                    <div class="process-info">
+                        <span class="dept">负责部门: 业务部</span>
+                        <span class="manager">负责人: 董瑾</span>
+                    </div>
+                    <div class="time-info">
+                        <span>授信开始时间: 2025-06-11</span>
+                        <span class="main-manager">主办业务经理: 董瑾</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="business-card" data-id="2">
+                <div class="card-header">
+                    <span class="tag emergency-tag">应急转贷</span>
+                    <span class="company-name">浙江臻善科技股份有限公司</span>
+                </div>
+                <div class="card-body">
+                    <div class="info-row">
+                        <span class="label">客户名称：</span>
+                        <span class="value">浙江臻善科技股份有限公司/91330110736036137L</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">客户号：</span>
+                        <span class="value">E2025061100003</span>
+                    </div>
+                    <div class="process-bar step-1">
+                        <div class="process-item active"><div class="process-dot"></div><span class="process-label">授信</span></div>
+                        <div class="process-item"><div class="process-dot"></div><span class="process-label">合同放款</span></div>
+                        <div class="process-item"><div class="process-dot"></div><span class="process-label">还款</span></div>
+                        <div class="process-item"><div class="process-dot"></div><span class="process-label">结清</span></div>
+                    </div>
+                    <div class="process-info">
+                        <span class="dept">负责部门: 业务部</span>
+                        <span class="manager">负责人: 董瑾</span>
+                    </div>
+                    <div class="time-info">
+                        <span>授信开始时间: --</span>
+                        <span class="main-manager">主办业务经理: 董瑾</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <span class="total">共 2 条</span>
+            <div class="page-controls">
+                <button class="page-btn disabled">上一页</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn disabled">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="business-approval" class="tab-content">
+        <div class="list-toolbar-card">
+            <div class="approval-header-bar">
+                <span class="view-record" onclick="showRecordModal()">已办理记录</span>
+            </div>
+        </div>
+        <div class="approval-list">
+            <div class="approval-card" data-id="1">
+                <div class="approval-header">
+                    <span class="tag approval-tag">授信审批</span>
+                    <span class="company-name">北京易诚互动网络技术股份有限公司</span>
+                </div>
+                <div class="approval-body">
+                    <div class="approval-info">
+                        <div class="info-item">
+                            <span class="label">提交人：</span>
+                            <span class="value">业务部 董瑾</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">提交时间：</span>
+                            <span class="value">2025-06-11 11:01:28</span>
+                        </div>
+                    </div>
+                    <button class="handle-btn" data-id="1">去处理</button>
+                </div>
+            </div>
+
+            <div class="approval-card" data-id="2">
+                <div class="approval-header">
+                    <span class="tag approval-tag">授信审批</span>
+                    <span class="company-name">浙江臻善科技股份有限公司</span>
+                </div>
+                <div class="approval-body">
+                    <div class="approval-info">
+                        <div class="info-item">
+                            <span class="label">提交人：</span>
+                            <span class="value">业务部 董瑾</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">提交时间：</span>
+                            <span class="value">2025-06-11 10:26:44</span>
+                        </div>
+                    </div>
+                    <button class="handle-btn" data-id="2">去处理</button>
+                </div>
+            </div>
+
+            <div class="approval-card change-approval-card" data-id="3">
+                <div class="approval-header">
+                    <span class="tag change-tag">业务变更</span>
+                    <span class="company-name">云集数字科技（山东）股份有限公司</span>
+                </div>
+                <div class="approval-body">
+                    <div class="approval-info">
+                        <div class="info-item">
+                            <span class="label">客户名称：</span>
+                            <span class="value">云集数字科技（山东）股份有限公司 / 91110108MA00BKBJ7F</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">提交人：</span>
+                            <span class="value">业务部 董瑾</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">提交时间：</span>
+                            <span class="value">2026-05-08 11:33:10</span>
+                        </div>
+                    </div>
+                    <button class="handle-btn change-approve-btn" onclick="openChangeDetailPage()">去处理</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <span class="total">共 3 条</span>
+            <div class="page-controls">
+                <button class="page-btn disabled">上一页</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn disabled">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loan-management" class="tab-content">
+        <div class="loan-page">
+            <div class="list-toolbar-card">
+                <div class="loan-toolbar">
+                    <span class="view-record loan-record-link" onclick="showLoanRecordModal()">操作记录</span>
+                </div>
+                <div class="loan-filter">
+                    <input class="loan-filter-input" type="text" placeholder="请输入客户名称/合同号">
+                    <input class="loan-filter-input" type="text" placeholder="请输入提交人">
+                    <input class="loan-filter-input date-input" type="text" placeholder="提交时间    至    提交时间">
+                    <button class="search-btn">查询</button>
+                    <button class="reset-btn">重置</button>
+                </div>
+            </div>
+            <div class="loan-card-list">
+                <div class="approval-card loan-approval-card">
+                    <div class="approval-header">
+                        <span class="tag approval-tag">放款审批</span>
+                        <span class="company-name">云集数字科技（山东）股份有限公司</span>
+                    </div>
+                    <div class="approval-body">
+                        <div class="approval-info">
+                            <div class="info-item">
+                                <span class="label">合同号：</span>
+                                <span class="value">1</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">放款金额：</span>
+                                <span class="value">1.00 万元</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">提交人：</span>
+                                <span class="value">董瑾</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">提交时间：</span>
+                                <span class="value">2026-05-08 10:16:55</span>
+                            </div>
+                        </div>
+                        <button class="handle-btn loan-approve-btn" onclick="openLoanDetailPage()">去审批</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination">
+                <span class="total">共 1 条</span>
+                <div class="page-controls">
+                    <button class="page-btn disabled">上一页</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn disabled">下一页</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="report-approval" class="tab-content">
+        <div class="report-page">
+            <div class="list-toolbar-card">
+                <div class="report-topbar">
+                    <span class="view-record report-record-link" onclick="showReportRecordModal()">操作记录</span>
+                </div>
+                <div class="report-filter">
+                    <label class="report-filter-label">报表期</label>
+                    <select class="loan-filter-input">
+                        <option>报表期</option>
+                        <option>2025-06期</option>
+                    </select>
+                    <button class="search-btn">查询</button>
+                    <button class="reset-btn">重置</button>
+                </div>
+            </div>
+
+            <div class="report-card-list">
+                <div class="approval-card report-approval-card">
+                    <div class="approval-header">
+                        <span class="tag approval-tag">报表上报</span>
+                        <span class="company-name">月度经营指标完成情况</span>
+                    </div>
+                    <div class="approval-body">
+                        <div class="approval-info">
+                            <div class="info-item">
+                                <span class="label">报表期：</span>
+                                <span class="value">2025-06期</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">上报时间：</span>
+                                <span class="value">2026-05-08 12:06:12</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">报表名称：</span>
+                                <span class="value report-name-link">月度经营指标完成情况</span>
+                            </div>
+                        </div>
+                        <button class="handle-btn" onclick="openReportDetailPage()">去审核</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <span class="total">共 1 条</span>
+                <div class="page-controls">
+                    <button class="page-btn disabled">上一页</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn disabled">下一页</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="report-detail-page" class="detail-page report-detail-page">
+        <div class="detail-page-content">
+            <div class="report-detail-header">
+                <div class="report-detail-title">
+                    <button class="back-btn" onclick="goBack()"></button>
+                    <span class="report-module-title">报表上报</span>
+                    <span class="report-dept">业务部</span>
+                </div>
+                <div class="report-title-pill">济南金控月度经营指标完成情况表</div>
+                <div class="report-detail-actions">
+                    <button class="btn btn-approve" onclick="showApproveModal()">通过</button>
+                    <button class="btn btn-back" onclick="showBackModal()">退回</button>
+                </div>
+            </div>
+
+            <div class="report-detail-body">
+                <h2 class="report-main-title">济南金控 2025年6月 经营指标完成情况表</h2>
+                <div class="report-toolbar">
+                    <div class="report-submitter">提报人:dongjin1</div>
+                    <div class="report-tools">
+                        <div class="unit-switch">
+                            <button>元</button>
+                            <button class="active">万元</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-update-time">导入更新时间:2026-05-08 12:06:01</div>
+                <div class="report-table-wrap">
+                    <table class="report-detail-table">
+                        <thead>
+                            <tr>
+                                <th>指标项目</th>
+                                <th>2025年计划数</th>
+                                <th>2025年6月计划数</th>
+                                <th>截至18日，6月当月完成数</th>
+                                <th>2025年6月预计完成数</th>
+                                <th>2025年6月完成数</th>
+                                <th>完成6月计划比例</th>
+                                <th>2025年1-6月完成数</th>
+                                <th>1-6月完成2025年计划比例</th>
+                                <th>下季度计划数</th>
+                                <th>07月计划数</th>
+                                <th>08月计划数</th>
+                                <th>09月计划数</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="section-row"><td colspan="14">一、主要经营指标</td></tr>
+                            <tr><td>营业收入</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>其中:金融企业口径</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>投资收益</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>其他收入</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>利润总额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>一般准备金计提金额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>新增投放额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>其中：首次投放金额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>服务济南重点项目金额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>新增服务客户数</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>新增首次合作客户数</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>正常项目经营回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>存量逾期项目回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>新增逾期项目回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>个性指标1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>个性指标2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>个性指标3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="report-note">期货公司分别填写（日均客户权益总额；开发机构账户（户）；办理交割、质押、期转现等现货类业务（吨））3项指标完成情况；资产运营公司填写出租出售大厦1项指标完成情况；投资板块填写新增投资数目1项指标完成情况；供应链公司填写新增核心客户1项指标完成情况。</p>
+                <div class="detail-section report-opinion-section">
+                    <h3 class="section-title">审批意见</h3>
+                    <div class="credit-opinion-list">
+                        <div class="credit-opinion-row">
+                            <div class="credit-opinion-person">
+                                <span class="comment-avatar success">✓</span>
+                                <span>董瑾</span>
+                            </div>
+                            <div class="credit-opinion-content">
+                                <p>1</p>
+                                <p>暂无附件~</p>
+                            </div>
+                            <div class="credit-opinion-time">2026-05-08 12:06:12</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="report-record-modal" class="modal loan-record-modal">
+        <div class="modal-content loan-record-content report-record-content">
+            <div class="loan-record-header">
+                <span>操作记录</span>
+                <button class="loan-record-close" onclick="closeReportRecordModal()">×</button>
+            </div>
+            <div class="loan-record-body">
+                <div class="report-record-filter">
+                    <select class="loan-filter-input">
+                        <option>报表名称</option>
+                        <option>月度经营指标完成情况</option>
+                    </select>
+                    <input class="loan-filter-input date-input" type="text" placeholder="报表期">
+                    <select class="loan-filter-input">
+                        <option>选择状态</option>
+                        <option>审批中</option>
+                    </select>
+                    <button class="search-btn">查询</button>
+                    <button class="reset-btn">重置</button>
+                </div>
+                <div class="report-record-card-list">
+                    <div class="approval-card report-record-card">
+                        <div class="approval-header">
+                            <span class="tag approval-tag">审批中</span>
+                            <span class="company-name">月度经营指标完成情况</span>
+                        </div>
+                        <div class="approval-body">
+                            <div class="approval-info">
+                                <div class="info-item">
+                                    <span class="label">报表期：</span>
+                                    <span class="value">2025-06</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">上报时间：</span>
+                                    <span class="value">2026-05-08 12:06:12</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">提交人：</span>
+                                    <span class="value">董瑾</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">当前审批人：</span>
+                                    <span class="value">董瑾</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">审批时间：</span>
+                                    <span class="value">2026-05-08 12:06:12</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="loan-pagination">
+                    <span>共 1 条</span>
+                    <select class="page-size-select">
+                        <option>10条/页</option>
+                    </select>
+                    <button class="page-icon disabled">‹</button>
+                    <button class="page-number active">1</button>
+                    <button class="page-icon disabled">›</button>
+                    <span>前往</span>
+                    <input class="page-input" value="1">
+                    <span>页</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="record-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeRecordModal()">
+                    <span class="close-icon">×</span>
+                </button>
+                <span class="modal-title">已办理记录</span>
+            </div>
+            <div class="modal-body">
+                <div class="record-list">
+                    <div class="record-item">
+                        <div class="record-header">
+                            <span class="tag emergency-tag">授信审批</span>
+                            <span class="record-company">云集数字科技（山东）股份有限公司</span>
+                        </div>
+                        <div class="record-info">
+                            <span class="record-label">客户名称：</span>
+                            <span class="record-value">云集数字科技（山东）股份有限公司/91370100MA3R8K8L7F</span>
+                        </div>
+                        <div class="record-meta">
+                            <span class="record-node">节点名称：发起节点</span>
+                            <span class="record-time">提交时间：2026-05-06 11:42:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination">
+                    <span class="total">共 1 条</span>
+                    <div class="page-controls">
+                        <button class="page-btn disabled">上一页</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn disabled">下一页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loan-record-modal" class="modal loan-record-modal">
+        <div class="modal-content loan-record-content">
+            <div class="loan-record-header">
+                <span>放款记录</span>
+                <button class="loan-record-close" onclick="closeLoanRecordModal()">×</button>
+            </div>
+            <div class="loan-record-body">
+                <div class="loan-record-filter">
+                    <input class="loan-filter-input" type="text" placeholder="请输入客户名称">
+                    <select class="loan-filter-input">
+                        <option>请选择状态</option>
+                    </select>
+                    <input class="loan-filter-input date-input" type="text" placeholder="合同起始日    至    合同起始日">
+                    <button class="search-btn">查询</button>
+                    <button class="reset-btn">重置</button>
+                </div>
+                <div class="loan-record-card-list">
+                    <div class="approval-card loan-record-card">
+                        <div class="approval-header">
+                            <span class="tag approval-tag">放款记录</span>
+                            <span class="company-name">云集数字科技（山东）股份有限公司</span>
+                        </div>
+                        <div class="approval-body">
+                            <div class="approval-info">
+                                <div class="info-item">
+                                    <span class="label">放款金额：</span>
+                                    <span class="value">1.00 万元</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">借款天数：</span>
+                                    <span class="value">16 天</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">日利率：</span>
+                                    <span class="value">0.08%</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">合同起始日：</span>
+                                    <span class="value">2026-05-08</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">合同到期日：</span>
+                                    <span class="value">2026-05-23</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">提交时间：</span>
+                                    <span class="value">2026-05-08 10:16:55</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">提交人：</span>
+                                    <span class="value">董瑾</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">当前审批人：</span>
+                                    <span class="value">董瑾</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">状态：</span>
+                                    <span class="value"><span class="loan-status-tag">审批中</span></span>
+                                </div>
+                            </div>
+                            <div class="loan-record-actions">
+                                <button class="record-action-btn" onclick="showLoanApprovalRecordModal()">审批记录</button>
+                                <button class="record-action-btn withdraw" onclick="showLoanWithdrawModal()">撤回</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="loan-pagination">
+                    <span>共 1 条</span>
+                    <select class="page-size-select">
+                        <option>10条/页</option>
+                    </select>
+                    <button class="page-btn disabled">‹</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn disabled">›</button>
+                    <span>前往</span>
+                    <input class="page-jump-input" value="1">
+                    <span>页</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loan-approval-record-modal" class="modal loan-approval-record-modal">
+        <div class="modal-content approval-record-content">
+            <div class="approval-record-header">
+                <span>审批记录</span>
+                <button class="approval-record-close" onclick="closeLoanApprovalRecordModal()">×</button>
+            </div>
+            <div class="approval-record-body">
+                <div class="approval-timeline">
+                    <div class="timeline-icon">✎</div>
+                    <div class="timeline-main">
+                        <div class="timeline-time">2026-05-08 10:16:55</div>
+                        <div class="timeline-card">
+                            <p>项目申请人： 业务部/董瑾</p>
+                            <p>审批节点： 发起节点(所有人)</p>
+                            <p>审批意见： fangk</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loan-withdraw-modal" class="modal withdraw-modal">
+        <div class="modal-content withdraw-content">
+            <div class="withdraw-header">
+                <span>提示</span>
+                <button class="withdraw-close" onclick="closeLoanWithdrawModal()">×</button>
+            </div>
+            <div class="withdraw-body">
+                <span class="warning-icon">!</span>
+                <span>请确认是否将此审批进行撤回操作?</span>
+            </div>
+            <div class="withdraw-footer">
+                <button class="btn btn-cancel" onclick="closeLoanWithdrawModal()">取消</button>
+                <button class="btn btn-confirm" onclick="confirmLoanWithdraw()">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="change-detail-page" class="detail-page change-detail-page">
+        <div class="detail-page-content">
+            <div class="modal-header">
+                <button class="back-btn" onclick="goBack()"></button>
+                <span class="modal-title">云集数字科技（山东）股份有限公司</span>
+                <span class="tag approval-tag">还款</span>
+            </div>
+
+            <div class="modal-body">
+                <div class="detail-tabs change-detail-tabs">
+                    <div class="detail-tab active" data-change-detail-tab="change-business">业务变更</div>
+                    <div class="detail-tab" data-change-detail-tab="change-project">项目信息</div>
+                    <div class="detail-tab" data-change-detail-tab="change-credit">授信信息</div>
+                    <div class="detail-tab" data-change-detail-tab="change-enterprise">企业信息</div>
+                    <div class="detail-tab" data-change-detail-tab="change-customer">客户信息</div>
+                </div>
+
+                <div id="change-business" class="change-detail-content active">
+                    <div class="detail-section">
+                        <h3 class="section-title">项目信息</h3>
+                        <div class="form-grid">
+                            <div class="form-item">
+                                <label class="form-label">客户名称</label>
+                                <input class="form-control" value="云集数字科技（山东）股份有限公司">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">客户经理</label>
+                                <input class="form-control" value="董瑾">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-section">
+                        <h3 class="section-title">变更记录</h3>
+                        <div class="change-table-wrap">
+                            <table class="change-table">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>模块</th>
+                                        <th>变更项</th>
+                                        <th>变更前</th>
+                                        <th>变更后</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td><td rowspan="11">抵押物信息</td><td>权利证号</td><td>——</td><td class="changed-value">22</td>
+                                    </tr>
+                                    <tr><td>2</td><td>承兑人</td><td>1</td><td class="changed-value">33</td></tr>
+                                    <tr><td>3</td><td>担保价值</td><td>1</td><td class="changed-value">122</td></tr>
+                                    <tr><td>4</td><td>附件</td><td>145234.png;屏幕截图 2024-11-12</td><td>屏幕截图 2024-11-12 145234.png</td></tr>
+                                    <tr><td>5</td><td>评估价值</td><td>——</td><td class="changed-value">22</td></tr>
+                                    <tr><td>6</td><td>所在位置</td><td>——</td><td class="changed-value">22</td></tr>
+                                    <tr><td>7</td><td>是否一押</td><td>否</td><td class="changed-value">是</td></tr>
+                                    <tr><td>8</td><td>房产性质</td><td></td><td class="changed-value">住宅</td></tr>
+                                    <tr><td>9</td><td>面积</td><td>——</td><td class="changed-value">22</td></tr>
+                                    <tr><td>10</td><td>城市</td><td>——</td><td class="changed-value">22</td></tr>
+                                    <tr><td>11</td><td>备注</td><td>——</td><td class="changed-value">22</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="change-summary">
+                            <div class="change-summary-item">
+                                <span class="label">变更时间：</span>
+                                <span class="value">2026-05-08 11:33:11</span>
+                            </div>
+                            <div class="change-summary-item">
+                                <span class="label">变更理由：</span>
+                                <span class="value">新增抵押物等</span>
+                            </div>
+                            <div class="change-summary-item">
+                                <span class="label">变更附件：</span>
+                                <span class="value">业务.png</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="change-project" class="change-detail-content">
+                    <div id="change-project-content"></div>
+                </div>
+
+                <div id="change-credit" class="change-detail-content">
+                    <div id="change-credit-content"></div>
+                </div>
+
+                <div id="change-enterprise" class="change-detail-content">
+                    <div id="change-enterprise-content"></div>
+                </div>
+
+                <div id="change-customer" class="change-detail-content">
+                    <div id="change-customer-content"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer approval-action-bar">
+                <button class="btn btn-approve" onclick="showApproveModal()">同意</button>
+                <button class="btn btn-back" onclick="showBackModal()">退回</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loan-detail-page" class="detail-page loan-detail-page">
+        <div class="detail-page-content">
+            <div class="modal-header">
+                <button class="back-btn" onclick="goBack()"></button>
+                <span class="modal-title">云集数字科技（山东）股份有限公司</span>
+                <span class="tag approval-tag">合同-放款</span>
+            </div>
+
+            <div class="modal-body">
+                <div class="detail-tabs loan-detail-tabs">
+                    <div class="detail-tab active" data-loan-detail-tab="loan-project">项目信息</div>
+                    <div class="detail-tab" data-loan-detail-tab="loan-credit">授信信息</div>
+                    <div class="detail-tab" data-loan-detail-tab="loan-enterprise">企业信息</div>
+                    <div class="detail-tab" data-loan-detail-tab="loan-customer">客户信息</div>
+                </div>
+
+                <div id="loan-project" class="loan-detail-content active">
+                    <div class="detail-section">
+                        <h3 class="section-title">放款信息</h3>
+                        <div class="form-grid">
+                            <div class="form-item">
+                                <label class="form-label">合同号*</label>
+                                <input type="text" class="form-control" value="1">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">业务类型*</label>
+                                <select class="form-control">
+                                    <option>标准化业务</option>
+                                </select>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">是否配资</label>
+                                <div class="radio-group">
+                                    <label class="radio-item">
+                                        <input type="radio" name="isFunded" value="是">
+                                        <span>是</span>
+                                    </label>
+                                    <label class="radio-item active">
+                                        <input type="radio" name="isFunded" value="否" checked>
+                                        <span>否</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">放款金额*</label>
+                                <input type="text" class="form-control" value="1.00">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">授信剩余额度*</label>
+                                <input type="text" class="form-control" value="0.00">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">合同起始日*</label>
+                                <input type="date" class="form-control" value="2026-05-08">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">合同到期日*</label>
+                                <input type="date" class="form-control" value="2026-05-23">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">放款日期*</label>
+                                <input type="date" class="form-control" value="2026-05-08">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">借款天数*</label>
+                                <input type="text" class="form-control" value="16">
+                                <span class="unit">天</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">预收服务费*</label>
+                                <input type="text" class="form-control" value="0.010000">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">合作机构(全称)*</label>
+                                <input type="text" class="form-control" value="1">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">放款条件*</label>
+                                <input type="text" class="form-control" value="1">
+                            </div>
+                            <div class="form-item full-width">
+                                <label class="form-label">计息方式*</label>
+                                <div class="radio-group">
+                                    <label class="radio-item active">
+                                        <input type="radio" name="interestMode" value="普通计息" checked>
+                                        <span>普通计息</span>
+                                    </label>
+                                    <label class="radio-item">
+                                        <input type="radio" name="interestMode" value="分段计息">
+                                        <span>分段计息</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">日利率*</label>
+                                <input type="text" class="form-control" value="0.08">
+                                <span class="unit">%</span>
+                            </div>
+                            <div class="form-item full-width">
+                                <label class="form-label">资金用途</label>
+                                <input type="text" class="form-control" value="1">
+                            </div>
+                            <div class="form-item full-width">
+                                <label class="form-label">联系单*</label>
+                                <div class="risk-file-item loan-file-item">
+                                    <span class="file-icon">📎</span>
+                                    <span class="file-name">屏幕截图 2024-11-12 180433.png</span>
+                                </div>
+                            </div>
+                            <div class="form-item full-width">
+                                <label class="form-label">合同附件*</label>
+                                <div class="risk-file-item loan-file-item">
+                                    <span class="file-icon">📎</span>
+                                    <span class="file-name">屏幕截图 2024-11-12 180433.png</span>
+                                </div>
+                            </div>
+                            <div class="form-item full-width">
+                                <label class="form-label">决策文件等其他资料*</label>
+                                <div class="risk-file-item loan-file-item">
+                                    <span class="file-icon">📎</span>
+                                    <span class="file-name">屏幕截图 2024-11-12 180433.png</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="section-title">资产信息</h3>
+                        <div class="loan-subsection-title">抵押物信息</div>
+                        <div class="loan-mini-table-wrap">
+                            <table class="loan-mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th><th>类别</th><th>权利证号</th><th>权利人</th><th>城市</th><th>坐落</th><th>面积(㎡)</th><th>预评估价值(万元)</th><th>评估公司</th><th>是否一押</th><th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td><td>土地</td><td>1</td><td>1</td><td>山东省济南市高新区</td><td>1</td><td>1.00</td><td>1.00</td><td>1</td><td>是</td><td><button class="mini-btn">修改</button><button class="mini-btn danger">删除</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="loan-subsection-title">质押物信息</div>
+                        <div class="loan-mini-table-wrap">
+                            <table class="loan-mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th><th>类别</th><th>出票人</th><th>收票人</th><th>出票日期</th><th>票据编号</th><th>汇票到期日</th><th>承兑人</th><th>票据金额(万元)</th><th>承兑日期</th><th>能否转让</th><th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td><td>银承</td><td>1</td><td>1</td><td>2026-05-08</td><td>1</td><td>2026-05-09</td><td>1</td><td>1.00</td><td>2026-05-09</td><td>是</td><td><button class="mini-btn">修改</button><button class="mini-btn danger">删除</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="section-title">担保信息</h3>
+                        <div class="loan-subsection-title">担保人信息</div>
+                        <div class="loan-mini-table-wrap">
+                            <table class="loan-mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th><th>担保人姓名</th><th>身份证号</th><th>年龄</th><th>联系方式</th><th>与客户关系</th><th>担保人描述</th><th>联系地址</th><th>家庭资产（元）</th><th>备注</th><th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td><td>1</td><td>152122199103190927</td><td>35</td><td>17661272375</td><td>1</td><td>1</td><td>山东省济南市高...</td><td>1.00</td><td>1</td><td><button class="mini-btn">修改</button><button class="mini-btn danger">删除</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="loan-subsection-title">担保信息</div>
+                        <div class="loan-mini-table-wrap">
+                            <table class="loan-mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th><th>担保名称</th><th>统一社会信用代码</th><th>与客户关系</th><th>近一年收入（万元）</th><th>担保价值（万元）</th><th>担保描述</th><th>所在位置</th><th>调查时间</th><th>备注</th><th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td><td>1</td><td>1</td><td>1</td><td>1.00</td><td>1.00</td><td>1</td><td>山东省济南市高...</td><td>2026-05-08</td><td>1</td><td><button class="mini-btn">修改</button><button class="mini-btn danger">删除</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="section-title">放款审批意见</h3>
+                        <div class="credit-opinion-list loan-opinion-list">
+                            <div class="credit-opinion-row">
+                                <div class="credit-opinion-person">
+                                    <span class="comment-avatar success">✓</span>
+                                    <span>业务部/董瑾</span>
+                                </div>
+                                <div class="credit-opinion-content">
+                                    <p>fangk</p>
+                                    <p>暂无附件~</p>
+                                </div>
+                                <div class="credit-opinion-time">2026-05-08 10:16:55</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loan-credit" class="loan-detail-content">
+                    <div id="loan-credit-content"></div>
+                </div>
+
+                <div id="loan-enterprise" class="loan-detail-content">
+                    <div id="loan-enterprise-content"></div>
+                </div>
+
+                <div id="loan-customer" class="loan-detail-content">
+                    <div id="loan-customer-content"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer approval-action-bar">
+                <button class="btn btn-approve" onclick="showApproveModal()">同意</button>
+                <button class="btn btn-back" onclick="showBackModal()">退回</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="detail-page" class="detail-page">
+        <div class="detail-page-content">
+            <div class="modal-header">
+                <button class="back-btn" onclick="goBack()"></button>
+                <button class="close-btn" onclick="closeModal()">
+                    <span class="close-icon">×</span>
+                </button>
+                <span class="modal-title">北京易诚互动网络技术股份有限公司</span>
+                <span class="tag approval-tag">授信审批</span>
+            </div>
+
+            <div class="modal-body">
+                <div class="detail-tabs">
+                    <div class="detail-tab active" data-detail-tab="project">项目信息</div>
+                    <div class="detail-tab" data-detail-tab="enterprise">企业信息</div>
+                    <div class="detail-tab" data-detail-tab="customer">客户信息</div>
+                </div>
+
+                <div id="project" class="detail-content active">
+                    <div class="detail-section">
+                        <h3 class="section-title">授信信息</h3>
+                        <div class="form-grid">
+                            <div class="form-item">
+                                <label class="form-label">业务类型*</label>
+                                <select class="form-control">
+                                    <option>标准化业务</option>
+                                </select>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">授信金额*</label>
+                                <input type="text" class="form-control" value="1.00">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">上年末净资产</label>
+                                <input type="text" class="form-control" value="1.00">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">上年末总资产</label>
+                                <input type="text" class="form-control" value="1.00">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">上年营业收入</label>
+                                <input type="text" class="form-control" value="1.00">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">上年净利润</label>
+                                <input type="text" class="form-control" value="1.00">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">上缴税费总额</label>
+                                <input type="text" class="form-control" value="1.00">
+                                <span class="unit">万元</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">授信起始时间*</label>
+                                <div class="date-range">
+                                    <input type="date" class="form-control date-input" value="2025-06-11">
+                                    <span class="date-separator">至</span>
+                                    <input type="date" class="form-control date-input" value="2025-06-30">
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">授信利率*</label>
+                                <input type="text" class="form-control" value="0.08">
+                                <span class="unit">%</span>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">是否循环*</label>
+                                <div class="radio-group">
+                                    <label class="radio-item">
+                                        <input type="radio" name="isCycle" value="是">
+                                        <span>是</span>
+                                    </label>
+                                    <label class="radio-item active">
+                                        <input type="radio" name="isCycle" value="否" checked>
+                                        <span>否</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">业务模式*</label>
+                                <div class="radio-group">
+                                    <label class="radio-item active">
+                                        <input type="radio" name="businessMode" value="单笔" checked>
+                                        <span>单笔</span>
+                                    </label>
+                                    <label class="radio-item">
+                                        <input type="radio" name="businessMode" value="授信">
+                                        <span>授信</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">是否平台类企业*</label>
+                                <div class="radio-group">
+                                    <label class="radio-item">
+                                        <input type="radio" name="isPlatform" value="是">
+                                        <span>是</span>
+                                    </label>
+                                    <label class="radio-item active">
+                                        <input type="radio" name="isPlatform" value="否" checked>
+                                        <span>否</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">授信编号</label>
+                                <input type="text" class="form-control" value="1">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label">区县*</label>
+                                <select class="form-control">
+                                    <option>所属地域</option>
+                                </select>
+                            </div>
+                            <div class="form-item full-width">
+                                <label class="form-label">征信情况*</label>
+                                <div class="upload-area readonly">
+                                    <div class="uploaded-file">
+                                        <span class="file-icon">📄</span>
+                                        <span class="file-name">焦化蒸汽发票13933491.2元.pdf</span>
+                                        <button class="remove-file">×</button>
+                                    </div>
+                                    <div class="uploaded-file">
+                                        <span class="file-icon">🖼️</span>
+                                        <span class="file-name">企业营业执照.jpg</span>
+                                        <button class="remove-file">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-item full-width">
+                                <label class="form-label">尽调报告*</label>
+                                <div class="upload-area">
+                                    <div class="uploaded-file">
+                                        <span class="file-icon">📄</span>
+                                        <span class="file-name">尽调报告20250611.pdf</span>
+                                        <button class="remove-file">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-item full-width">
+                                <label class="form-label">其他资料</label>
+                                <div class="upload-area">
+                                    <div class="no-file">暂无文件</div>
+                                </div>
+                            </div>
+                            <div class="form-item full-width">
+                                <div class="risk-report-panel">
+                                    <h3 class="risk-report-title">授信风控报告</h3>
+                                    <div class="risk-report-body">
+                                        <label class="form-label risk-report-label">风控报告<span class="required">*</span></label>
+                                        <div class="risk-upload-row">
+                                            <div class="risk-file-item">
+                                                <span class="file-icon">📎</span>
+                                                <span class="file-name">业务.png</span>
+                                                <button class="remove-file" type="button">×</button>
+                                            </div>
+                                            <button class="risk-upload-btn" type="button">
+                                                <span class="upload-icon">↑</span>
+                                                <span>点击上传</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-item full-width">
+                                <div class="credit-opinion-panel">
+                                    <h3 class="risk-report-title">授信审批意见</h3>
+                                    <div class="credit-opinion-list">
+                                        <div class="credit-opinion-row">
+                                            <div class="credit-opinion-person">
+                                                <span class="comment-avatar success">✓</span>
+                                                <span>业务部/董瑾</span>
+                                            </div>
+                                            <div class="credit-opinion-content">
+                                                <p>去</p>
+                                                <p>暂无附件~</p>
+                                            </div>
+                                            <div class="credit-opinion-time">2026-05-06 11:42:00</div>
+                                        </div>
+                                        <div class="credit-opinion-row">
+                                            <div class="credit-opinion-person">
+                                                <span class="comment-avatar success">✓</span>
+                                                <span>济南财信投贸服务有限公司/丛海</span>
+                                            </div>
+                                            <div class="credit-opinion-content">
+                                                <p>1</p>
+                                                <p><span class="file-icon">📎</span><span class="file-name opinion-file">业务.png</span></p>
+                                            </div>
+                                            <div class="credit-opinion-time">2026-05-08 09:59:07</div>
+                                        </div>
+                                        <div class="credit-opinion-row">
+                                            <div class="credit-opinion-person">
+                                                <span class="comment-avatar success">✓</span>
+                                                <span>济南财信投贸服务有限公司/连琳</span>
+                                            </div>
+                                            <div class="credit-opinion-content">
+                                                <p>1</p>
+                                                <p><span class="file-icon">📎</span><span class="file-name opinion-file">c8177f3e6709c93defe136738d3df8dcd1005426.png</span></p>
+                                            </div>
+                                            <div class="credit-opinion-time">2026-05-08 10:03:14</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="enterprise" class="detail-content">
+                    <div class="detail-section">
+                        <h3 class="section-title">企业信息</h3>
+                        <div class="info-table">
+                            <div class="table-row">
+                                <span class="table-label">统一社会信用代码</span>
+                                <span class="table-value">911101085996989854</span>
+                                <span class="table-label">企业名称</span>
+                                <span class="table-value">北京易诚互动网络技术股份有限公司</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">法定代表人</span>
+                                <span class="table-value">曾硕</span>
+                                <span class="table-label">实际控制人</span>
+                                <span class="table-value">——</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">注册资本</span>
+                                <span class="table-value">7000万元</span>
+                                <span class="table-label">实收资本</span>
+                                <span class="table-value">7000万元</span>
+                                <span class="table-label">经营状态</span>
+                                <span class="table-value">存续（在营、开业、在册）</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">企业类型</span>
+                                <span class="table-value">股份有限公司（非上市、自然人投资或控股）</span>
+                                <span class="table-label">所属行业</span>
+                                <span class="table-value">信息传输、软件和信息技术服务业</span>
+                                <span class="table-label">企业规模</span>
+                                <span class="table-value">大型</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">人员规模</span>
+                                <span class="table-value">300-399人</span>
+                                <span class="table-label">社保参保人数</span>
+                                <span class="table-value">397</span>
+                                <span class="table-label">公积金参保人数</span>
+                                <span class="table-value">-</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">注册地址</span>
+                                <span class="table-value" colspan="5">北京市海淀区西小口路66号中关村东升科技园A-1号楼二层201B室</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">经营范围</span>
+                                <span class="table-value" colspan="5">技术开发、技术咨询、技术转让、技术服务；应用软件服务；计算机系统服务；版权转让；版权代理；经济贸易咨询；数据处理（数据处理中的银行卡中心、PUE值在1.5以上的云计算数据中心除外）；计算机技术培训（不得面向全国招生）；销售计算机、软件及辅助设备、工艺品、电子产品、文化用品、体育用品、针纺织品、服装、日用品、通讯设备、玩具；互联网信息服务。（市场主体依法自主选择经营项目，开展经营活动；互联网信息服务以及依法须经批准的项目，经相关部门批准后依批准的内容开展经营活动；不得从事国家和本市产业政策禁止和限制类项目的经营活动。）</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="customer" class="detail-content">
+                    <div class="detail-section">
+                        <h3 class="section-title">客户信息</h3>
+                        <div class="info-table">
+                            <div class="table-row">
+                                <span class="table-label">统一社会信用代码</span>
+                                <span class="table-value">91110108MA00BK8J7F</span>
+                                <span class="table-label">社保参保人数</span>
+                                <span class="table-value">75</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">企业名称</span>
+                                <span class="table-value">云集数字科技（山东）股份有限公司</span>
+                                <span class="table-label">公积金参保人数</span>
+                                <span class="table-value">-</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">法定代表人</span>
+                                <span class="table-value">刘金友</span>
+                                <span class="table-label">法定代表人联系方式</span>
+                                <span class="table-value">17661272375</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">经营状态</span>
+                                <span class="table-value">在营（开业）企业</span>
+                                <span class="table-label">客户性质</span>
+                                <span class="table-value">国企</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">职工人数</span>
+                                <span class="table-value">50-99人</span>
+                                <span class="table-label">注册资本</span>
+                                <span class="table-value">2567.3869万元</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">成立日期</span>
+                                <span class="table-value">2017-01-25</span>
+                                <span class="table-label">所属行业</span>
+                                <span class="table-value">金融业/货币金融服务/中央银行服务</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">实控人类型</span>
+                                <span class="table-value">个人</span>
+                                <span class="table-label">实际控制人</span>
+                                <span class="table-value">1</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">实控人号码</span>
+                                <span class="table-value">152159103190927</span>
+                                <span class="table-label">实收资本</span>
+                                <span class="table-value">2567.3869万元</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">注册地址</span>
+                                <span class="table-value">山东省济南市市辖区</span>
+                                <span class="table-label">法人身份证号</span>
+                                <span class="table-value"></span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">上市情况</span>
+                                <span class="table-value">未上市</span>
+                                <span class="table-label">企业划型</span>
+                                <span class="table-value">大型企业</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">客户类型</span>
+                                <span class="table-value">首次合作</span>
+                                <span class="table-label">机构类别</span>
+                                <span class="table-value">企业</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">企业类型</span>
+                                <span class="table-value">央企</span>
+                                <span class="table-label">客户业务类型</span>
+                                <span class="table-value">地方国有平台</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">服务类型</span>
+                                <span class="table-value">国企</span>
+                                <span class="table-label">注册类型</span>
+                                <span class="table-value">国家</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">高新技术企业</span>
+                                <span class="table-value">国家</span>
+                                <span class="table-label">企业标签</span>
+                                <span class="table-value">瞪羚/独角兽企业</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">六大产业共同体</span>
+                                <span class="table-value">集成电路</span>
+                                <span class="table-label">招商引资企业</span>
+                                <span class="table-value">否</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">专精特新类型</span>
+                                <span class="table-value">国家级专精特新小巨人企业</span>
+                                <span class="table-label">制造业单项冠军</span>
+                                <span class="table-value">国家级</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">上游产业</span>
+                                <span class="table-value"></span>
+                                <span class="table-label">下游产业</span>
+                                <span class="table-value"></span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">是否服务重点项目</span>
+                                <span class="table-value">请选择</span>
+                                <span class="table-label">是否涉农</span>
+                                <span class="table-value">否</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">所属济南市四大主导产业</span>
+                                <span class="table-value">大数据与新一代信息技术</span>
+                                <span class="table-label">所属济南十大标志性产业集群</span>
+                                <span class="table-value">新一代信息技术产业集群</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="table-label">经营范围</span>
+                                <span class="table-value" colspan="3">一般项目：软件开发；技术开发、技术咨询、技术转让、技术推广；软件外包服务；通讯设备销售；电子产品销售；计算机软硬件及辅助设备批发；计算机软硬件及辅助设备零售；仪器仪表修理；信息技术咨询服务；信息咨询服务（不含许可类信息咨询服务）；数据处理服务；业务培训（不含教育培训、职业技能培训等需取得许可的培训）；普通货物仓储服务（不含危险化学品等需许可审批的项目）；知识产权服务（专利代理服务除外）；物业管理；非居住房地产租赁；机械设备租赁；互联网信息服务（依法须经批准的项目，经相关部门批准后方可开展经营活动，具体经营项目以相关部门批准文件或许可证件为准）</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-sidebar">
+                    <div class="sidebar-section">
+                        <p>主办业务经理: 董瑾</p>
+                    </div>
+                    <div class="sidebar-nav">
+                        <div class="nav-item active" data-side-nav="credit">授信信息</div>
+                        <div class="nav-item" data-side-nav="enterprise">企业信息</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer approval-action-bar">
+                <button class="btn btn-approve" onclick="showApproveModal()">同意</button>
+                <button class="btn btn-back" onclick="showBackModal()">退回</button>
+                <button class="btn btn-reject" onclick="showRejectModal()">拒绝</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="approve-modal" class="modal action-modal">
+        <div class="modal-content action-modal-content">
+            <div class="modal-header approve-header">
+                <span class="modal-title">同意</span>
+            </div>
+            <div class="action-form">
+                <textarea class="action-textarea" placeholder="请输入您的意见"></textarea>
+                <div class="attachment-row">
+                    <span class="attachment-label">附件:</span>
+                    <button class="attachment-upload-box" type="button">
+                        <span class="upload-plus">+</span>
+                        <span>点击上传附件</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer action-footer">
+                <button class="btn btn-confirm" onclick="confirmAction('approve')">确定</button>
+                <button class="btn btn-cancel" onclick="closeApproveModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="back-modal" class="modal action-modal">
+        <div class="modal-content action-modal-content">
+            <div class="modal-header back-header">
+                <span class="modal-title">退回</span>
+            </div>
+            <div class="action-warning">您即将把项目【王龙】退回至</div>
+            <div class="node-row">
+                <span class="node-label">节点:</span>
+                <label class="node-option">
+                    <input type="radio" name="backNode" checked>
+                    <span>发起节点(所有人)</span>
+                </label>
+            </div>
+            <div class="action-form">
+                <textarea class="action-textarea" placeholder="请输入您的意见"></textarea>
+                <div class="attachment-row">
+                    <span class="attachment-label">附件:</span>
+                    <button class="attachment-upload-box" type="button">
+                        <span class="upload-plus">+</span>
+                        <span>点击上传附件</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer action-footer">
+                <button class="btn btn-confirm" onclick="confirmAction('back')">确定</button>
+                <button class="btn btn-cancel" onclick="closeBackModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reject-modal" class="modal action-modal">
+        <div class="modal-content action-modal-content">
+            <div class="modal-header reject-header">
+                <span class="modal-title">拒绝</span>
+            </div>
+            <div class="action-warning">您即将终止项目【王龙】的审批流程!</div>
+            <div class="action-form">
+                <textarea class="action-textarea" placeholder="请输入您的意见"></textarea>
+                <div class="attachment-row">
+                    <span class="attachment-label">附件:</span>
+                    <button class="attachment-upload-box" type="button">
+                        <span class="upload-plus">+</span>
+                        <span>点击上传附件</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer action-footer">
+                <button class="btn btn-confirm" onclick="confirmAction('reject')">确定</button>
+                <button class="btn btn-cancel" onclick="closeRejectModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
