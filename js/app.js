@@ -15,6 +15,7 @@
         initRadioButtons();
         initRemoveFile();
         initFormButtons();
+        initPhotoLibrary();
         initPagedLists();
         initCloseAllMenus();
         hideZeroBadges();
@@ -693,6 +694,7 @@
         var approveModal = document.getElementById('approve-modal');
         var backModal = document.getElementById('back-modal');
         var rejectModal = document.getElementById('reject-modal');
+        var photoPreviewModal = document.getElementById('photo-preview-modal');
         
         if (recordModal && event.target === recordModal) {
             closeRecordModal();
@@ -725,6 +727,10 @@
         if (rejectModal && event.target === rejectModal) {
             closeRejectModal();
         }
+
+        if (photoPreviewModal && event.target === photoPreviewModal) {
+            closePhotoPreviewModal();
+        }
     });
 
     document.addEventListener('keydown', function(event) {
@@ -738,6 +744,7 @@
             closeApproveModal();
             closeBackModal();
             closeRejectModal();
+            closePhotoPreviewModal();
         }
     });
 
@@ -833,6 +840,184 @@
             });
         }
     }
+
+    var currentPhotoContext = null;
+    var currentPhotoImage = null;
+    var currentPhotoWatermark = null;
+
+    function initPhotoLibrary() {
+        var photoLibrary = document.getElementById('photo-library');
+        var captureInput = document.getElementById('photo-capture-input');
+
+        if (!photoLibrary || !captureInput) {
+            return;
+        }
+
+        var uploadButtons = photoLibrary.querySelectorAll('.photo-upload-btn[data-client]');
+        for (var i = 0; i < uploadButtons.length; i++) {
+            uploadButtons[i].addEventListener('click', function() {
+                currentPhotoContext = {
+                    client: this.getAttribute('data-client') || '--',
+                    manager: this.getAttribute('data-manager') || '--',
+                    stage: this.getAttribute('data-stage') || '--',
+                    button: this
+                };
+                captureInput.value = '';
+                captureInput.click();
+            });
+        }
+
+        captureInput.addEventListener('change', function() {
+            var file = this.files && this.files[0];
+            if (!file || !currentPhotoContext) {
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var image = new Image();
+                image.onload = function() {
+                    currentPhotoImage = image;
+                    openPhotoPreview(file);
+                };
+                image.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function formatPhotoTime(date) {
+        function pad(num) {
+            return num < 10 ? '0' + num : '' + num;
+        }
+
+        return date.getFullYear() + '-' +
+            pad(date.getMonth() + 1) + '-' +
+            pad(date.getDate()) + ' ' +
+            pad(date.getHours()) + ':' +
+            pad(date.getMinutes()) + ':' +
+            pad(date.getSeconds());
+    }
+
+    function setPhotoPreviewText(id, text) {
+        var node = document.getElementById(id);
+        if (node) {
+            node.textContent = text;
+        }
+    }
+
+    function openPhotoPreview(file) {
+        var modal = document.getElementById('photo-preview-modal');
+        var note = document.getElementById('photo-location-note');
+        var takenAt = formatPhotoTime(new Date());
+
+        currentPhotoWatermark = {
+            client: currentPhotoContext.client,
+            manager: currentPhotoContext.manager,
+            stage: currentPhotoContext.stage,
+            time: takenAt,
+            location: '经度/纬度：获取中...'
+        };
+
+        setPhotoPreviewText('photo-preview-client', currentPhotoContext.client);
+        setPhotoPreviewText('photo-preview-manager', currentPhotoContext.manager);
+        setPhotoPreviewText('photo-preview-stage', currentPhotoContext.stage);
+        setPhotoPreviewText('photo-preview-time', takenAt);
+        setPhotoPreviewText('photo-preview-location', '获取中...');
+        if (note) {
+            note.textContent = '正在获取实时坐标，请允许浏览器定位。';
+        }
+
+        drawWatermarkedPhoto();
+
+        if (modal) {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        if (!navigator.geolocation) {
+            updatePhotoLocation('当前浏览器不支持定位', '无法获取经纬度，已保留拍摄时间水印。');
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var longitude = position.coords.longitude.toFixed(6);
+            var latitude = position.coords.latitude.toFixed(6);
+            updatePhotoLocation('经度 ' + longitude + ' / 纬度 ' + latitude, '坐标已实时获取，并写入照片水印。');
+        }, function(error) {
+            var message = error && error.code === 1 ? '定位未授权' : '定位获取失败';
+            updatePhotoLocation(message, '无法获取经纬度，已保留拍摄时间水印。');
+        }, {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        });
+    }
+
+    function updatePhotoLocation(locationText, noteText) {
+        var note = document.getElementById('photo-location-note');
+        setPhotoPreviewText('photo-preview-location', locationText);
+        if (note) {
+            note.textContent = noteText;
+        }
+        if (currentPhotoWatermark) {
+            currentPhotoWatermark.location = locationText;
+        }
+        drawWatermarkedPhoto();
+    }
+
+    function drawWatermarkedPhoto() {
+        var canvas = document.getElementById('photo-watermark-canvas');
+        if (!canvas || !currentPhotoImage || !currentPhotoWatermark) {
+            return;
+        }
+
+        var image = currentPhotoImage;
+        var maxWidth = 1080;
+        var scale = Math.min(1, maxWidth / image.width);
+        var width = Math.max(1, Math.round(image.width * scale));
+        var height = Math.max(1, Math.round(image.height * scale));
+        var ctx = canvas.getContext('2d');
+        var lines = [
+            '客户名称：' + currentPhotoWatermark.client,
+            '所属环节：' + currentPhotoWatermark.stage,
+            '拍摄时间：' + currentPhotoWatermark.time,
+            '地点坐标：' + currentPhotoWatermark.location
+        ];
+        var fontSize = Math.max(16, Math.round(width * 0.032));
+        var padding = Math.max(16, Math.round(width * 0.028));
+        var lineHeight = Math.round(fontSize * 1.45);
+        var panelHeight = padding * 2 + lineHeight * lines.length;
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(image, 0, 0, width, height);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.58)';
+        ctx.fillRect(0, Math.max(0, height - panelHeight), width, panelHeight);
+        ctx.font = fontSize + 'px Arial, Microsoft YaHei, sans-serif';
+        ctx.fillStyle = '#fff';
+        ctx.textBaseline = 'top';
+
+        for (var i = 0; i < lines.length; i++) {
+            ctx.fillText(lines[i], padding, height - panelHeight + padding + i * lineHeight);
+        }
+    }
+
+    window.closePhotoPreviewModal = function() {
+        var modal = document.getElementById('photo-preview-modal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+        document.body.style.overflow = '';
+    };
+
+    window.confirmPhotoUpload = function() {
+        if (currentPhotoContext && currentPhotoContext.button) {
+            currentPhotoContext.button.textContent = '重新上传';
+            currentPhotoContext.button.classList.add('uploaded');
+        }
+        window.closePhotoPreviewModal();
+    };
 
     function initPagedLists() {
         setupPagedList({

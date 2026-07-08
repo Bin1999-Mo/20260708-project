@@ -4563,7 +4563,8 @@ textarea:focus {
 
 /* ===== 移动端原型增强 ===== */
 #invest-management .data-table-scroll,
-#client-library .data-table-scroll {
+#client-library .data-table-scroll,
+#photo-library .data-table-scroll {
     width: 100%;
     overflow-x: auto !important;
     overflow-y: hidden;
@@ -4588,19 +4589,26 @@ textarea:focus {
     min-width: 1080px;
 }
 
+#photo-library .data-table-scroll .loan-table {
+    min-width: 760px;
+}
+
 #invest-management .data-table-scroll::-webkit-scrollbar,
-#client-library .data-table-scroll::-webkit-scrollbar {
+#client-library .data-table-scroll::-webkit-scrollbar,
+#photo-library .data-table-scroll::-webkit-scrollbar {
     height: 12px;
 }
 
 #invest-management .data-table-scroll::-webkit-scrollbar-track,
-#client-library .data-table-scroll::-webkit-scrollbar-track {
+#client-library .data-table-scroll::-webkit-scrollbar-track,
+#photo-library .data-table-scroll::-webkit-scrollbar-track {
     background-color: #edf2f7;
     border-radius: 999px;
 }
 
 #invest-management .data-table-scroll::-webkit-scrollbar-thumb,
-#client-library .data-table-scroll::-webkit-scrollbar-thumb {
+#client-library .data-table-scroll::-webkit-scrollbar-thumb,
+#photo-library .data-table-scroll::-webkit-scrollbar-thumb {
     background-color: #9aa8bd;
     border: 3px solid #edf2f7;
     border-radius: 999px;
@@ -4624,6 +4632,102 @@ textarea:focus {
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
+}
+
+.photo-upload-btn.uploaded {
+    background-color: #1a5bc4;
+}
+
+.photo-filter-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.photo-table th,
+.photo-table td {
+    white-space: nowrap;
+}
+
+.photo-table th:last-child,
+.photo-table td:last-child {
+    width: 120px;
+    text-align: center;
+}
+
+.photo-upload-tip {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border: 1px dashed #b8c8dd;
+    border-radius: 8px;
+    background-color: #f8fbff;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.photo-capture-input {
+    display: none;
+}
+
+.photo-preview-modal.show {
+    display: flex;
+}
+
+.photo-preview-content {
+    width: min(720px, calc(100vw - 24px));
+    max-height: min(88vh, 820px);
+    overflow: hidden;
+}
+
+.photo-preview-body {
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+    overflow-y: auto;
+    max-height: calc(88vh - 132px);
+}
+
+.photo-preview-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.photo-preview-meta div {
+    display: grid;
+    gap: 4px;
+    padding: 10px;
+    border: 1px solid #e3ebf5;
+    border-radius: 8px;
+    background-color: #f8fbff;
+}
+
+.photo-preview-meta span {
+    color: #7a8594;
+    font-size: 12px;
+}
+
+.photo-preview-meta strong {
+    color: #14213d;
+    font-size: 13px;
+    line-height: 1.5;
+    word-break: break-all;
+}
+
+.photo-watermark-canvas {
+    width: 100%;
+    max-height: 52vh;
+    border-radius: 8px;
+    background-color: #0f172a;
+    object-fit: contain;
+}
+
+.photo-location-note {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
 }
 
 .photo-gallery {
@@ -4947,9 +5051,10 @@ textarea:focus {
     }
 
     .nav-item {
-        flex: 1 1 20%;
+        flex: 1 1 16.66%;
         min-width: 0;
-        padding: 11px 2px 8px;
+        padding: 11px 1px 8px;
+        font-size: 11px;
         white-space: normal;
         line-height: 1.2;
     }
@@ -4996,11 +5101,13 @@ textarea:focus {
         font-size: 11px;
     }
 
-    .photo-toolbar {
+    .photo-toolbar,
+    .photo-filter-bar {
         grid-template-columns: 1fr 1fr;
     }
 
-    .photo-toolbar .search-input {
+    .photo-toolbar .search-input,
+    .photo-filter-bar .search-input {
         grid-column: 1 / -1;
     }
 
@@ -5009,11 +5116,30 @@ textarea:focus {
     }
 
     #invest-management .data-table-scroll,
-    #client-library .data-table-scroll {
+    #client-library .data-table-scroll,
+    #photo-library .data-table-scroll {
         margin-left: -2px;
         margin-right: -2px;
         max-height: none;
         overflow-y: hidden;
+    }
+
+    .photo-preview-content {
+        width: calc(100vw - 20px);
+        max-height: 90vh;
+    }
+
+    .photo-preview-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-preview-body {
+        max-height: calc(90vh - 132px);
+        padding: 12px;
+    }
+
+    .photo-watermark-canvas {
+        max-height: 46vh;
     }
 
     .stage-detail-page .modal-header {
