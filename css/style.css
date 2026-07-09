@@ -5499,6 +5499,1647 @@ textarea:focus {
     text-align: center;
 }
 
+/* ===== 业务审批待办、已办理记录与审批详情 ===== */
+.business-approval-page {
+    position: relative;
+    min-height: 520px;
+    margin: -12px;
+    padding: 0 14px 12px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.business-approval-page::before,
+.business-record-content::before,
+.business-detail-body::before {
+    content: '内部资料，请勿外传     王晨晨';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    color: rgba(120, 132, 150, 0.14);
+    font-size: 27px;
+    line-height: 120px;
+    word-spacing: 130px;
+    transform: rotate(-16deg);
+    pointer-events: none;
+    white-space: pre-wrap;
+}
+
+.business-approval-top,
+.business-approval-list,
+.business-pagination,
+.business-record-title,
+.business-record-body,
+.business-detail-body > * {
+    position: relative;
+    z-index: 1;
+}
+
+.business-approval-top {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 32px;
+}
+
+.business-record-link {
+    border: none;
+    background: transparent;
+    color: #667085;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.business-record-link:hover {
+    color: #2867f0;
+}
+
+.business-approval-list {
+    display: grid;
+    gap: 12px;
+}
+
+.business-approval-card {
+    display: grid;
+    grid-template-columns: minmax(420px, 1fr) minmax(240px, 0.42fr) 180px 110px 32px;
+    gap: 24px;
+    align-items: center;
+    min-height: 82px;
+    padding: 14px 15px;
+    border: 1px solid #d2dbe9;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: none;
+    overflow: visible;
+}
+
+.business-approval-main,
+.business-record-main {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+}
+
+.business-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.business-approval-tag {
+    flex: 0 0 auto;
+    min-width: 66px;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+}
+
+.business-approval-tag.tag-blue {
+    background-color: #4aa3ff;
+}
+
+.business-approval-tag.tag-orange {
+    background-color: #ff842f;
+}
+
+.business-approval-tag.tag-gold {
+    background-color: #e4aa14;
+}
+
+.business-company {
+    min-width: 0;
+    overflow: hidden;
+    color: #0f172a;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.business-customer {
+    overflow: hidden;
+    color: #475467;
+    font-size: 12px;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.business-meta-field {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+    color: #0f172a;
+}
+
+.business-meta-field span {
+    color: #667085;
+    font-size: 12px;
+}
+
+.business-meta-field strong {
+    overflow: hidden;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.business-handle-btn {
+    width: 110px;
+    height: 35px;
+    padding: 0;
+    border-radius: 5px;
+    background-color: #2867f0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.business-approval-card .three-dot-wrapper,
+.business-record-item .three-dot-wrapper {
+    justify-self: center;
+    margin-left: 0;
+}
+
+.business-approval-card .three-dot-btn,
+.business-record-item .three-dot-btn {
+    color: #98a2b3;
+    font-size: 22px;
+}
+
+.business-approval-card .dot-menu,
+.business-record-item .dot-menu {
+    top: 32px;
+    right: -8px;
+    min-width: 112px;
+}
+
+.business-pagination,
+.business-record-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    color: #344054;
+    font-size: 12px;
+}
+
+.business-pagination {
+    min-height: 52px;
+    padding-top: 14px;
+}
+
+.business-pagination .page-size-select,
+.business-record-pagination .page-size-select {
+    height: 24px;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+.business-pagination .page-icon,
+.business-record-pagination .page-icon,
+.business-pagination .page-number,
+.business-record-pagination .page-number {
+    width: 26px;
+    height: 24px;
+    border-radius: 2px;
+}
+
+.business-pagination .page-input,
+.business-record-pagination .page-input {
+    width: 38px;
+    height: 24px;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+.business-record-modal.show {
+    padding-top: 15px;
+}
+
+.business-record-content {
+    position: relative;
+    width: min(1440px, calc(100vw - 112px));
+    max-width: none;
+    max-height: 82vh;
+    margin: 0;
+    overflow: visible;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.business-record-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    border-radius: 8px 8px 0 0;
+    background-color: #143fc2;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.business-record-title button {
+    position: absolute;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.business-record-body {
+    padding: 16px 18px 14px;
+}
+
+.business-record-list {
+    display: grid;
+    gap: 12px;
+}
+
+.business-record-item {
+    display: grid;
+    grid-template-columns: minmax(480px, 1fr) 220px 210px 34px;
+    gap: 24px;
+    align-items: center;
+    min-height: 82px;
+    padding: 14px;
+    border: 1px solid #d2dbe9;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.78);
+    overflow: visible;
+}
+
+.business-record-pagination {
+    min-height: 42px;
+    padding-top: 14px;
+}
+
+.business-detail-modal.show {
+    align-items: flex-start;
+    padding: 0 14px;
+}
+
+.business-detail-content {
+    width: 100%;
+    max-width: none;
+    min-height: calc(100vh - 30px);
+    margin: 2px 0 0;
+    border-radius: 0;
+    background-color: #fff;
+}
+
+.business-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 54px;
+    padding: 0 10px 0 16px;
+    border-bottom: 1px solid #d8deea;
+    background-color: #fff;
+}
+
+.business-detail-header strong {
+    color: #0f172a;
+    font-size: 20px;
+}
+
+.business-detail-header button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background-color: transparent;
+    color: #344054;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.business-detail-tabs {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 42px;
+    padding: 0 16px;
+    border-bottom: 1px solid #edf1f7;
+    background-color: #fff;
+}
+
+.business-detail-tabs button {
+    height: 42px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background-color: transparent;
+    color: #344054;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.business-detail-tabs button.active {
+    border-bottom-color: #1677ff;
+    color: #1677ff;
+}
+
+.business-detail-body {
+    position: relative;
+    min-height: calc(100vh - 128px);
+    overflow: auto;
+    background-color: #fff;
+}
+
+.flow-detail-body {
+    padding: 24px 18px 34px;
+}
+
+.flow-legend {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: max-content;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #eef2f7;
+    color: #344054;
+    font-size: 12px;
+}
+
+.flow-legend span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.legend-dot.done {
+    background-color: #67c23a;
+}
+
+.legend-dot.current {
+    background-color: #1677ff;
+}
+
+.legend-dot.pending {
+    background-color: #c0c4cc;
+}
+
+.flow-zoom {
+    position: absolute;
+    top: 24px;
+    right: 14px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #344054;
+    font-size: 12px;
+}
+
+.flow-zoom button {
+    width: 22px;
+    height: 22px;
+    border: 1px solid #cfd6e2;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #667085;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.flow-diagram {
+    position: relative;
+    width: 740px;
+    height: 590px;
+    margin: -6px auto 0;
+}
+
+.flow-branch-zone {
+    position: absolute;
+    top: 150px;
+    left: 96px;
+    z-index: 1;
+    width: 548px;
+    height: 330px;
+    background-color: #eef2f8;
+}
+
+.flow-node {
+    position: absolute;
+    z-index: 3;
+    width: 184px;
+    min-height: 68px;
+    border: 1px solid #d6dce8;
+    background-color: #fff;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, 0.22);
+}
+
+.flow-start {
+    top: 0;
+    left: 278px;
+}
+
+.flow-left-condition {
+    top: 176px;
+    left: 136px;
+}
+
+.flow-right-condition {
+    top: 176px;
+    left: 420px;
+}
+
+.flow-left-approval {
+    top: 328px;
+    left: 136px;
+}
+
+.flow-right-approval {
+    top: 328px;
+    left: 420px;
+}
+
+.flow-node-title {
+    height: 26px;
+    padding: 0 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 26px;
+}
+
+.flow-node-title.green {
+    background-color: #60bf35;
+}
+
+.flow-node-title.blue {
+    background-color: #1689ff;
+}
+
+.flow-node-title.gray {
+    background-color: #bfbfbf;
+}
+
+.flow-node-title.condition {
+    background-color: #fff;
+    color: #0bb15c;
+}
+
+.flow-node-text {
+    padding: 11px 8px 12px;
+    color: #344054;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.flow-line {
+    position: absolute;
+    z-index: 2;
+    background-color: #9fb4d8;
+}
+
+.flow-line.vertical {
+    width: 1px;
+}
+
+.flow-line.horizontal {
+    height: 1px;
+}
+
+.top-line {
+    top: 68px;
+    left: 370px;
+    height: 82px;
+}
+
+.branch-line {
+    top: 150px;
+    left: 228px;
+    width: 284px;
+}
+
+.left-branch-line {
+    top: 150px;
+    left: 228px;
+    height: 330px;
+}
+
+.right-branch-line {
+    top: 150px;
+    left: 512px;
+    height: 330px;
+}
+
+.end-line {
+    top: 480px;
+    left: 370px;
+    height: 88px;
+}
+
+.left-branch-line::after,
+.right-branch-line::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 174px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #9fb4d8;
+}
+
+.flow-end-dot {
+    position: absolute;
+    top: 564px;
+    left: 365px;
+    z-index: 3;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #a8bad8;
+}
+
+.flow-end-label {
+    position: absolute;
+    top: 582px;
+    left: 342px;
+    z-index: 3;
+    color: #344054;
+    font-size: 12px;
+}
+
+.business-record-detail-body {
+    padding: 44px 24px;
+}
+
+.approval-audit-timeline {
+    display: flex;
+    gap: 14px;
+}
+
+.approval-audit-icon {
+    width: 20px;
+    color: #1677ff;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.approval-audit-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.approval-audit-time {
+    margin-bottom: 12px;
+    color: #667085;
+    font-size: 14px;
+}
+
+.approval-audit-card {
+    min-height: 96px;
+    padding: 16px 18px;
+    border: 1px solid #dce2ec;
+    background-color: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.approval-audit-card p {
+    margin-bottom: 9px;
+    color: #344054;
+    font-size: 13px;
+}
+
+.approval-audit-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== 授信审批去处理详情页 ===== */
+.credit-approval-detail {
+    padding: 0;
+    background-color: #fff;
+}
+
+.credit-detail-content {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.credit-detail-content::before {
+    content: '内部资料，请勿外传     王晨晨';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    color: rgba(120, 132, 150, 0.13);
+    font-size: 28px;
+    line-height: 118px;
+    word-spacing: 128px;
+    transform: rotate(-16deg);
+    pointer-events: none;
+    white-space: pre-wrap;
+}
+
+.credit-detail-header,
+.credit-detail-tabs,
+.credit-detail-layout,
+.credit-detail-footer {
+    position: relative;
+    z-index: 1;
+}
+
+.credit-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 68px;
+    padding: 0 28px 0 8px;
+    border-bottom: 1px solid #d9dfeb;
+    background-color: rgba(255, 255, 255, 0.96);
+}
+
+.credit-detail-title {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 10px;
+}
+
+.credit-back-btn {
+    width: 18px;
+    height: 32px;
+    border: none;
+    background-color: transparent;
+    color: #0f172a;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.credit-detail-title strong {
+    overflow: hidden;
+    color: #0f172a;
+    font-size: 18px;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.credit-manager {
+    flex: 0 0 auto;
+    color: #0045d9;
+    font-size: 14px;
+}
+
+.credit-detail-tabs.detail-tabs {
+    display: flex;
+    gap: 0;
+    height: 34px;
+    margin: 0 24px 14px;
+    border-bottom: 1px solid #cfd8ea;
+}
+
+.credit-detail-tabs .detail-tab {
+    min-width: 82px;
+    height: 34px;
+    padding: 0 16px;
+    border: 1px solid #d5ddea;
+    border-bottom: none;
+    background-color: #fff;
+    color: #0f172a;
+    font-size: 13px;
+    line-height: 34px;
+    text-align: center;
+}
+
+.credit-detail-tabs .detail-tab + .detail-tab {
+    border-left: none;
+}
+
+.credit-detail-tabs .detail-tab.active {
+    color: #0f172a;
+    font-weight: 500;
+}
+
+.credit-detail-tabs .detail-tab.active::after {
+    display: none;
+}
+
+.credit-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 238px;
+    gap: 0;
+    padding: 0 18px 0 24px;
+}
+
+.credit-detail-main {
+    min-width: 0;
+    padding-right: 12px;
+}
+
+.credit-stage-sidebar {
+    position: sticky;
+    top: 18px;
+    align-self: start;
+    min-height: calc(100vh - 116px);
+    border-left: 1px solid #d8deea;
+    background-color: rgba(255, 255, 255, 0.62);
+}
+
+.credit-stage-list {
+    display: grid;
+    gap: 14px;
+    width: 122px;
+    margin: 34px auto 0;
+}
+
+.credit-stage-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 24px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 24px;
+}
+
+.credit-stage-item span {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    border: 1px solid #174ee5;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.credit-stage-item:not(:last-child) span::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 10px;
+    width: 1px;
+    height: 22px;
+    background-color: #98a2b3;
+}
+
+.credit-stage-item.active {
+    color: #fff;
+    font-weight: 700;
+}
+
+.credit-stage-item.active span {
+    background-color: #174ee5;
+}
+
+.credit-stage-item.active::after {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 0;
+    z-index: -1;
+    width: 86px;
+    height: 24px;
+    background-color: #1749c7;
+    clip-path: polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%);
+}
+
+.credit-section {
+    margin-bottom: 16px;
+    border: 1px solid #cbd6ec;
+    background-color: rgba(255, 255, 255, 0.72);
+}
+
+.credit-section-title {
+    height: 42px;
+    margin: 0;
+    padding: 0 16px;
+    background-color: #edf2fc;
+    color: #003fbc;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 42px;
+}
+
+.credit-form-panel {
+    padding: 18px 17px 28px;
+}
+
+.credit-form-grid {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+    gap: 12px 42px;
+    align-items: end;
+}
+
+.credit-field {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.credit-field.required > span::after {
+    content: '*';
+    color: #e60012;
+}
+
+.credit-field.half {
+    grid-column: 1 / -1;
+    width: calc((100% - 42px) / 2);
+}
+
+.credit-field.file-field {
+    grid-column: 1 / 2;
+}
+
+.credit-field.full {
+    grid-column: 1 / -1;
+}
+
+.credit-field input,
+.credit-field select,
+.credit-empty-file {
+    width: 100%;
+    height: 34px;
+    min-width: 0;
+    padding: 0 12px;
+    border: 1px solid #d4dbe8;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.78);
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.credit-field select {
+    color: #0f172a;
+}
+
+.credit-input-icon {
+    position: relative;
+}
+
+.credit-input-icon::before {
+    content: '◷';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    color: #98a2b3;
+    font-size: 12px;
+    transform: translateY(-50%);
+}
+
+.credit-input-icon input {
+    padding-left: 26px;
+}
+
+.credit-file-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.credit-file-row a {
+    display: inline-flex;
+    align-items: center;
+    max-width: 132px;
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid #d4dbe8;
+    border-radius: 3px;
+    color: #1677ff;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.credit-file-row a::before {
+    content: '⌕';
+    margin-right: 5px;
+    color: #344054;
+}
+
+.credit-file-row button {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #d4dbe8;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #475467;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.credit-empty-file {
+    display: flex;
+    align-items: center;
+    color: #98a2b3;
+}
+
+.credit-unit-input {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 34px;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #d4dbe8;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.78);
+}
+
+.credit-unit-input input {
+    border: none;
+    background-color: transparent;
+}
+
+.credit-unit-input em {
+    color: #0f172a;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+}
+
+.credit-amount-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.credit-amount-line .credit-unit-input {
+    width: 176px;
+    flex: 0 0 176px;
+}
+
+.credit-amount-line b {
+    color: #475467;
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.credit-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 16px;
+    color: #344054;
+    font-size: 14px;
+}
+
+.credit-subtitle::before {
+    content: '▣';
+    color: #1689ff;
+    font-size: 14px;
+}
+
+.credit-table-scroll {
+    margin: 0 10px 18px;
+    overflow-x: auto;
+    border: 1px solid #e1e7f2;
+    background-color: rgba(255, 255, 255, 0.64);
+    scrollbar-width: auto;
+    scrollbar-color: #d8dce3 #f4f6fa;
+}
+
+.credit-table-scroll::-webkit-scrollbar {
+    height: 12px;
+}
+
+.credit-table-scroll::-webkit-scrollbar-track {
+    background-color: #f4f6fa;
+}
+
+.credit-table-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background-color: #d8dce3;
+}
+
+.credit-empty-table {
+    min-width: 1260px;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.credit-empty-table.wide {
+    min-width: 1580px;
+}
+
+.credit-empty-table th,
+.credit-empty-table td {
+    height: 42px;
+    border-right: 1px solid #e5eaf3;
+    border-bottom: 1px solid #e5eaf3;
+    color: #667085;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.credit-empty-table th {
+    background-color: #f0f3fb;
+}
+
+.credit-empty-table tbody td {
+    height: 82px;
+    background-color: rgba(255, 255, 255, 0.42);
+    color: #667085;
+}
+
+.table-add-btn {
+    width: 66px;
+    height: 24px;
+    border: none;
+    border-radius: 3px;
+    background-color: #8bc5ff;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.table-add-btn::before {
+    content: '□';
+    margin-right: 4px;
+}
+
+.credit-opinion-section {
+    margin-bottom: 28px;
+}
+
+.credit-approval-opinion {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) 180px;
+    align-items: stretch;
+    margin: 18px;
+    border: 1px solid #d8deea;
+    background-color: rgba(255, 255, 255, 0.62);
+    color: #0f172a;
+    font-size: 13px;
+}
+
+.credit-opinion-person-cell,
+.credit-opinion-text,
+.credit-opinion-date {
+    min-height: 46px;
+    padding: 8px 12px;
+}
+
+.credit-opinion-person-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-right: 1px solid #d8deea;
+    background-color: #f5f7fc;
+}
+
+.credit-check-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #52c41a;
+    color: #fff;
+    font-size: 9px;
+    line-height: 12px;
+    text-align: center;
+}
+
+.credit-opinion-text {
+    display: grid;
+    align-content: center;
+    gap: 5px;
+}
+
+.credit-opinion-text p {
+    margin: 0;
+}
+
+.credit-opinion-date {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    color: #667085;
+}
+
+.credit-placeholder {
+    min-height: 180px;
+    padding: 24px;
+    color: #667085;
+}
+
+.credit-detail-footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 34px;
+    height: 78px;
+    padding: 0 66px;
+    border-top: 1px solid #e4e7ef;
+    background-color: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.06);
+    z-index: 1;
+}
+
+.credit-detail-footer .btn {
+    flex: 0 0 78px;
+    width: 78px;
+    height: 37px;
+    padding: 0;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.credit-submit-btn {
+    background-color: #2867f0;
+    color: #fff;
+}
+
+.credit-back-action {
+    background-color: #fff0d9;
+    color: #ff6d00;
+}
+
+.credit-reject-action {
+    background-color: #ffd9dc;
+    color: #d92d20;
+}
+
+/* ===== 业务审批立项去处理页面 ===== */
+.project-approval-detail {
+    padding: 0;
+    background-color: #fff;
+}
+
+.project-detail-content {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.project-detail-content::before {
+    content: '内部资料，请勿外传     王晨晨';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    color: rgba(120, 132, 150, 0.13);
+    font-size: 28px;
+    line-height: 118px;
+    word-spacing: 128px;
+    transform: rotate(-16deg);
+    pointer-events: none;
+    white-space: pre-wrap;
+}
+
+.project-detail-header,
+.project-detail-tabs,
+.project-detail-layout,
+.project-detail-footer {
+    position: relative;
+    z-index: 1;
+}
+
+.project-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 36px;
+    padding: 0 30px 0 8px;
+    background-color: rgba(255, 255, 255, 0.96);
+}
+
+.project-detail-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.project-back-btn {
+    width: 18px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    color: #0f172a;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.project-detail-title strong {
+    overflow: hidden;
+    color: #0f172a;
+    font-size: 18px;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.project-manager {
+    color: #0045d9;
+    font-size: 14px;
+}
+
+.project-detail-tabs {
+    display: flex;
+    align-items: flex-end;
+    height: 35px;
+    margin: 0 20px 10px;
+    border-bottom: 1px solid #cfd8ea;
+}
+
+.project-detail-tabs button {
+    width: 62px;
+    height: 26px;
+    border: 1px solid #d5ddea;
+    border-bottom: none;
+    background-color: #fff;
+    color: #0f172a;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.project-detail-tabs button + button {
+    border-left: none;
+}
+
+.project-detail-tabs button.active {
+    color: #0045d9;
+}
+
+.project-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: 0;
+    padding: 0 18px 0 20px;
+}
+
+.project-detail-main {
+    min-width: 0;
+    padding-right: 12px;
+}
+
+.project-tab-panel {
+    display: none;
+}
+
+.project-tab-panel.active {
+    display: block;
+}
+
+.project-section {
+    min-height: 610px;
+    border: 1px solid #cbd6ec;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.project-section-title {
+    height: 32px;
+    margin: 0;
+    padding: 0 14px;
+    background-color: #edf2fc;
+    color: #0045d9;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 32px;
+}
+
+.project-form-panel {
+    padding: 16px 13px 22px;
+}
+
+.project-form-grid {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+    gap: 12px 34px;
+}
+
+.project-field {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+    color: #0f172a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.project-field.required > span::after {
+    content: '*';
+    color: #e60012;
+}
+
+.project-field input,
+.project-field select,
+.project-field textarea {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid #d4dbe8;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.78);
+    color: #0f172a;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.project-field input,
+.project-field select {
+    height: 26px;
+    padding: 0 10px;
+}
+
+.project-field textarea {
+    min-height: 58px;
+    padding: 8px 10px;
+    resize: vertical;
+}
+
+.project-input-icon {
+    position: relative;
+}
+
+.project-input-icon::before {
+    content: '▣';
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    color: #98a2b3;
+    font-size: 10px;
+    transform: translateY(-50%);
+}
+
+.project-input-icon input {
+    padding-left: 24px;
+}
+
+.project-unit-input {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 32px;
+    align-items: center;
+    width: 130px;
+    border: 1px solid #d4dbe8;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.78);
+}
+
+.project-unit-input input {
+    border: none;
+    background: transparent;
+}
+
+.project-unit-input em {
+    color: #0f172a;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+}
+
+.project-location-field {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 7px 34px;
+}
+
+.project-location-field > span {
+    grid-column: 1 / -1;
+}
+
+.project-radio-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-height: 24px;
+}
+
+.project-radio-row label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #0f172a;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.project-radio-row input {
+    width: 12px;
+    height: 12px;
+    margin: 0;
+}
+
+.project-radio-row input:checked + em {
+    color: #1677ff;
+}
+
+.project-radio-row em {
+    font-style: normal;
+}
+
+.project-report-field,
+.project-upload-wide {
+    grid-column: 1 / 2;
+}
+
+.project-upload-line {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 62px;
+    width: 100%;
+}
+
+.project-upload-line input {
+    border-radius: 2px 0 0 2px;
+}
+
+.project-upload-line button {
+    height: 26px;
+    border: none;
+    border-radius: 0 2px 2px 0;
+    background-color: #0d48c9;
+    color: #fff;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.project-upload-line button::before {
+    content: '↥';
+    margin-right: 3px;
+}
+
+.project-field.full {
+    grid-column: 1 / -1;
+}
+
+.project-placeholder {
+    min-height: 180px;
+    padding: 24px;
+    color: #667085;
+}
+
+.project-stage-sidebar {
+    min-height: 610px;
+    border-left: 1px solid #d8deea;
+    background-color: rgba(255, 255, 255, 0.58);
+}
+
+.project-stage-list {
+    display: grid;
+    gap: 17px;
+    width: 110px;
+    margin: 52px auto 0;
+}
+
+.project-stage-item {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 24px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.project-stage-item span {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    border: 1px solid #174ee5;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.project-stage-item:not(:last-child) span::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 10px;
+    width: 1px;
+    height: 24px;
+    background-color: #98a2b3;
+}
+
+.project-stage-item.active {
+    isolation: isolate;
+    color: #fff;
+    font-weight: 700;
+}
+
+.project-stage-item.active span {
+    background-color: #174ee5;
+}
+
+.project-stage-item.active::after {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 0;
+    z-index: -1;
+    width: 82px;
+    height: 24px;
+    background-color: #1749c7;
+    clip-path: polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%);
+}
+
+
+.project-detail-footer {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-height: 78px;
+    padding: 14px 50px;
+    border-top: 1px solid #e4e7ef;
+    background-color: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.06);
+}
+
+.project-detail-footer .btn {
+    flex: 0 0 auto;
+    width: 126px;
+    height: 28px;
+    padding: 0;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+.project-start-btn {
+    background-color: #0d48c9;
+    color: #fff;
+}
+
+.project-save-btn {
+    border: 1px solid #0d48c9;
+    background-color: #fff;
+    color: #0d48c9;
+}
+
+@media (max-width: 1024px) {
+    .business-approval-page {
+        overflow-x: auto;
+    }
+
+    .business-approval-list,
+    .business-pagination {
+        min-width: 980px;
+    }
+
+    .business-record-content {
+        width: calc(100vw - 24px);
+        overflow-x: auto;
+    }
+
+    .business-record-list,
+    .business-record-pagination {
+        min-width: 880px;
+    }
+
+    .business-detail-modal.show {
+        padding: 0 10px;
+    }
+
+    .business-detail-header strong {
+        font-size: 16px;
+    }
+
+    .flow-detail-body {
+        overflow-x: auto;
+    }
+
+    .credit-detail-layout {
+        grid-template-columns: minmax(980px, 1fr) 180px;
+        overflow-x: auto;
+    }
+
+    .credit-stage-sidebar {
+        min-height: 520px;
+    }
+
+    .project-detail-layout {
+        grid-template-columns: minmax(980px, 1fr) 180px;
+        overflow-x: auto;
+    }
+}
+
 @media (max-width: 767px) {
     .stage-shot-header {
         flex-wrap: wrap;
