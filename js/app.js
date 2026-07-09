@@ -6,6 +6,7 @@
         initTabs();
         initCenterTabs();
         initDetailTabs();
+        initProjectApprovalTabs();
         initLoanDetailTabs();
         initChangeDetailTabs();
         initSidebarNav();
@@ -47,6 +48,7 @@
                     this.classList.add('active');
                     var tabId = this.getAttribute('data-tab');
                     var detailPage = document.getElementById('detail-page');
+                    var projectApprovalPage = document.getElementById('project-approval-page');
                     var loanDetailPage = document.getElementById('loan-detail-page');
                     var changeDetailPage = document.getElementById('change-detail-page');
                     var reportDetailPage = document.getElementById('report-detail-page');
@@ -55,6 +57,9 @@
                     }
                     if (detailPage) {
                         detailPage.classList.remove('show');
+                    }
+                    if (projectApprovalPage) {
+                        projectApprovalPage.classList.remove('show');
                     }
                     if (loanDetailPage) {
                         loanDetailPage.classList.remove('show');
@@ -268,16 +273,100 @@
             handleButtons[i].addEventListener('click', function(e) {
                 e.preventDefault();
                 var businessId = this.getAttribute('data-id');
+                if (businessId === '4' || businessId === '5') {
+                    openProjectApprovalPage(this);
+                    return;
+                }
                 openDetailPage(businessId);
             });
         }
     }
 
+    function openProjectApprovalPage(trigger) {
+        var appHeader = document.querySelector('.header');
+        var navTabs = document.querySelector('.nav-tabs');
+        var tabContents = document.querySelectorAll('.tab-content');
+        var projectPage = document.getElementById('project-approval-page');
+        var card = trigger ? trigger.closest('.business-approval-card') : null;
+        var company = card ? card.querySelector('.business-company') : null;
+        var companyName = company ? company.textContent.trim() : '滨州农村商业银行股份有限公司';
+        currentDetailSource = 'business-approval';
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
+
+        if (navTabs) {
+            navTabs.style.display = 'none';
+        }
+
+        for (var i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+
+        setText('project-approval-company', companyName);
+        var projectName = document.getElementById('project-approval-name');
+        if (projectName) {
+            projectName.value = companyName;
+        }
+
+        if (projectPage) {
+            resetProjectApprovalTabs();
+            projectPage.classList.add('show');
+            document.body.style.overflow = '';
+            window.scrollTo(0, 0);
+        }
+    }
+
+    function initProjectApprovalTabs() {
+        var tabs = document.querySelectorAll('#project-approval-page .project-detail-tabs button');
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].addEventListener('click', function() {
+                var targetId = this.getAttribute('data-project-tab');
+                var allTabs = document.querySelectorAll('#project-approval-page .project-detail-tabs button');
+                var panels = document.querySelectorAll('#project-approval-page .project-tab-panel');
+                for (var j = 0; j < allTabs.length; j++) {
+                    allTabs[j].classList.remove('active');
+                }
+                for (var k = 0; k < panels.length; k++) {
+                    panels[k].classList.remove('active');
+                }
+                this.classList.add('active');
+                var target = document.getElementById(targetId);
+                if (target) {
+                    target.classList.add('active');
+                }
+            });
+        }
+    }
+
+    function resetProjectApprovalTabs() {
+        var tabs = document.querySelectorAll('#project-approval-page .project-detail-tabs button');
+        var panels = document.querySelectorAll('#project-approval-page .project-tab-panel');
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+        }
+        for (var j = 0; j < panels.length; j++) {
+            panels[j].classList.remove('active');
+        }
+        if (tabs[0]) {
+            tabs[0].classList.add('active');
+        }
+        if (panels[0]) {
+            panels[0].classList.add('active');
+        }
+    }
+
     function openDetailPage(businessId) {
+        var appHeader = document.querySelector('.header');
         var navTabs = document.querySelector('.nav-tabs');
         var tabContents = document.querySelectorAll('.tab-content');
         var detailPage = document.getElementById('detail-page');
         currentDetailSource = 'business-approval';
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
 
         if (navTabs) {
             navTabs.style.display = 'none';
@@ -291,6 +380,7 @@
             resetBusinessDetailTabs();
             detailPage.classList.add('show');
             document.body.style.overflow = '';
+            window.scrollTo(0, 0);
         }
     }
 
@@ -527,6 +617,28 @@
         }
     };
 
+    window.showBusinessApprovalFlow = function() {
+        closeAllDotMenus();
+        closeRecordModal();
+        closeActionModal('business-approval-record-detail-modal');
+        showActionModal('business-approval-flow-modal');
+    };
+
+    window.closeBusinessApprovalFlow = function() {
+        closeActionModal('business-approval-flow-modal');
+    };
+
+    window.showBusinessApprovalRecord = function() {
+        closeAllDotMenus();
+        closeRecordModal();
+        closeActionModal('business-approval-flow-modal');
+        showActionModal('business-approval-record-detail-modal');
+    };
+
+    window.closeBusinessApprovalRecord = function() {
+        closeActionModal('business-approval-record-detail-modal');
+    };
+
     window.showLoanRecordModal = function() {
         var modal = document.getElementById('loan-record-modal');
         if (modal) {
@@ -635,10 +747,12 @@
     };
 
     window.goBack = function() {
+        var appHeader = document.querySelector('.header');
         var navTabs = document.querySelector('.nav-tabs');
         var navItems = document.querySelectorAll('.nav-tabs .nav-item');
         var tabContents = document.querySelectorAll('.tab-content');
         var detailPage = document.getElementById('detail-page');
+        var projectApprovalPage = document.getElementById('project-approval-page');
         var loanDetailPage = document.getElementById('loan-detail-page');
         var changeDetailPage = document.getElementById('change-detail-page');
         var reportDetailPage = document.getElementById('report-detail-page');
@@ -646,6 +760,10 @@
 
         if (detailPage) {
             detailPage.classList.remove('show');
+        }
+
+        if (projectApprovalPage) {
+            projectApprovalPage.classList.remove('show');
         }
 
         if (loanDetailPage) {
@@ -665,6 +783,10 @@
 
         if (navTabs) {
             navTabs.style.display = '';
+        }
+
+        if (appHeader) {
+            appHeader.style.display = '';
         }
 
         for (var i = 0; i < navItems.length; i++) {
@@ -716,6 +838,8 @@
         var postVisitRecordModal = document.getElementById('post-visit-record-modal');
         var classificationRecordModal = document.getElementById('classification-record-modal');
         var loanApprovalRecordModal = document.getElementById('loan-approval-record-modal');
+        var businessApprovalFlowModal = document.getElementById('business-approval-flow-modal');
+        var businessApprovalRecordModal = document.getElementById('business-approval-record-detail-modal');
         var loanWithdrawModal = document.getElementById('loan-withdraw-modal');
         var approveModal = document.getElementById('approve-modal');
         var backModal = document.getElementById('back-modal');
@@ -744,6 +868,14 @@
 
         if (loanApprovalRecordModal && event.target === loanApprovalRecordModal) {
             closeLoanApprovalRecordModal();
+        }
+
+        if (businessApprovalFlowModal && event.target === businessApprovalFlowModal) {
+            closeBusinessApprovalFlow();
+        }
+
+        if (businessApprovalRecordModal && event.target === businessApprovalRecordModal) {
+            closeBusinessApprovalRecord();
         }
 
         if (loanWithdrawModal && event.target === loanWithdrawModal) {
