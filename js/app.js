@@ -52,6 +52,7 @@
                     var loanDetailPage = document.getElementById('loan-detail-page');
                     var changeDetailPage = document.getElementById('change-detail-page');
                     var reportDetailPage = document.getElementById('report-detail-page');
+                    var classificationDetailPage = document.getElementById('classification-detail-page');
                     if (stageDetailPage) {
                         stageDetailPage.classList.remove('show');
                     }
@@ -69,6 +70,9 @@
                     }
                     if (reportDetailPage) {
                         reportDetailPage.classList.remove('show');
+                    }
+                    if (classificationDetailPage) {
+                        classificationDetailPage.classList.remove('show');
                     }
                     document.body.style.overflow = '';
 
@@ -440,12 +444,17 @@
     }
 
     window.openLoanDetailPage = function(businessId) {
+        var appHeader = document.querySelector('.header');
         var navTabs = document.querySelector('.nav-tabs');
         var tabContents = document.querySelectorAll('.tab-content');
         var detailPage = document.getElementById('loan-detail-page');
         currentDetailSource = 'loan-management';
 
         initLoanDetailContent();
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
 
         if (navTabs) {
             navTabs.style.display = 'none';
@@ -459,6 +468,7 @@
             resetLoanDetailTabs();
             detailPage.classList.add('show');
             document.body.style.overflow = '';
+            window.scrollTo(0, 0);
         }
     };
 
@@ -639,6 +649,131 @@
         closeActionModal('business-approval-record-detail-modal');
     };
 
+    window.openEnterpriseClientDetail = function(button) {
+        var modal = document.getElementById('enterprise-client-modal');
+        var row = button ? button.closest('tr') : null;
+        var cells = row ? row.querySelectorAll('td') : [];
+        var enterpriseName = cells[0] ? cells[0].textContent.trim() : '山东泉汇产业发展有限公司';
+        setInputValue('enterprise-client-name', enterpriseName);
+        showActionModal('enterprise-client-modal');
+    };
+
+    window.closeEnterpriseClientDetail = function() {
+        closeActionModal('enterprise-client-modal');
+    };
+
+    window.openIndividualClientDetail = function(button) {
+        var row = button ? button.closest('tr') : null;
+        var cells = row ? row.querySelectorAll('td') : [];
+        setInputValue('individual-client-name', cells[0] ? cells[0].textContent.trim() : '李铁军');
+        setInputValue('individual-client-id', cells[1] ? cells[1].textContent.trim() : '371327198305134112');
+        var modal = document.getElementById('individual-client-modal');
+        var genderSelect = modal ? modal.querySelector('[data-client-field="性别"]') : null;
+        if (genderSelect && cells[2]) {
+            var gender = cells[2].textContent.trim();
+            genderSelect.innerHTML = '<option>' + escapeHtml(gender) + '</option>';
+        }
+        showActionModal('individual-client-modal');
+    };
+
+    window.closeIndividualClientDetail = function() {
+        closeActionModal('individual-client-modal');
+    };
+
+    window.saveClientDetail = function(type) {
+        showClientToast('保存成功');
+        console.log(type === 'enterprise' ? '企业客户信息已保存' : '个人客户信息已保存');
+    };
+
+    window.exportClientDetail = function(type) {
+        var modalId = type === 'enterprise' ? 'enterprise-client-modal' : 'individual-client-modal';
+        var modal = document.getElementById(modalId);
+        if (!modal) {
+            return;
+        }
+
+        var form = modal.querySelector('.client-form-grid');
+        var fields = form ? form.querySelectorAll('[data-client-field]') : [];
+        var title = form ? form.getAttribute('data-client-export-title') : '客户信息';
+        var rows = [];
+
+        for (var i = 0; i < fields.length; i++) {
+            var field = fields[i];
+            var name = field.getAttribute('data-client-field') || '';
+            var value = getFieldValue(field);
+            rows.push([name, value]);
+        }
+
+        var nameField = type === 'enterprise' ? document.getElementById('enterprise-client-name') : document.getElementById('individual-client-name');
+        var fileName = title + '-' + (nameField && nameField.value ? nameField.value : '导出') + '.xls';
+        downloadExcelFile(fileName, title, rows);
+    };
+
+    function setInputValue(id, value) {
+        var input = document.getElementById(id);
+        if (input) {
+            input.value = value;
+        }
+    }
+
+    function getFieldValue(field) {
+        if (!field) {
+            return '';
+        }
+        if (field.tagName === 'SELECT') {
+            return field.options[field.selectedIndex] ? field.options[field.selectedIndex].text : '';
+        }
+        return typeof field.value === 'string' ? field.value : field.textContent.trim();
+    }
+
+    function downloadExcelFile(fileName, title, rows) {
+        var html = '<html><head><meta charset="UTF-8"></head><body>';
+        html += '<table border="1"><thead><tr><th colspan="2">' + escapeHtml(title) + '</th></tr></thead><tbody>';
+        for (var i = 0; i < rows.length; i++) {
+            html += '<tr><td>' + escapeHtml(rows[i][0]) + '</td><td>' + escapeHtml(rows[i][1]) + '</td></tr>';
+        }
+        html += '</tbody></table></body></html>';
+
+        var blob = new Blob(['\ufeff', html], { type: 'application/vnd.ms-excel;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = sanitizeFileName(fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    function sanitizeFileName(fileName) {
+        return fileName.replace(/[\\/:*?"<>|]/g, '_');
+    }
+
+    function escapeHtml(value) {
+        return String(value == null ? '' : value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function showClientToast(message) {
+        var oldToast = document.querySelector('.client-save-toast');
+        if (oldToast) {
+            oldToast.parentNode.removeChild(oldToast);
+        }
+        var toast = document.createElement('div');
+        toast.className = 'client-save-toast';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        window.setTimeout(function() {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 1200);
+    }
+
     window.showLoanRecordModal = function() {
         var modal = document.getElementById('loan-record-modal');
         if (modal) {
@@ -677,6 +812,48 @@
 
     window.closeClassificationRecordModal = function() {
         closeActionModal('classification-record-modal');
+    };
+
+    window.showPostVisitHandleModal = function() {
+        showActionModal('post-visit-handle-modal');
+    };
+
+    window.closePostVisitHandleModal = function() {
+        closeActionModal('post-visit-handle-modal');
+    };
+
+    window.savePostVisitHandle = function() {
+        closePostVisitHandleModal();
+    };
+
+    window.submitPostVisitHandle = function() {
+        closePostVisitHandleModal();
+    };
+
+    window.openClassificationDetailPage = function() {
+        var appHeader = document.querySelector('.header');
+        var navTabs = document.querySelector('.nav-tabs');
+        var tabContents = document.querySelectorAll('.tab-content');
+        var detailPage = document.getElementById('classification-detail-page');
+        currentDetailSource = 'classification-approval';
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
+
+        if (navTabs) {
+            navTabs.style.display = 'none';
+        }
+
+        for (var i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+
+        if (detailPage) {
+            detailPage.classList.add('show');
+            document.body.style.overflow = '';
+            window.scrollTo(0, 0);
+        }
     };
 
     window.showLoanApprovalRecordModal = function() {
@@ -757,6 +934,7 @@
         var changeDetailPage = document.getElementById('change-detail-page');
         var reportDetailPage = document.getElementById('report-detail-page');
         var stageDetailPage = document.getElementById('stage-detail-page');
+        var classificationDetailPage = document.getElementById('classification-detail-page');
 
         if (detailPage) {
             detailPage.classList.remove('show');
@@ -780,6 +958,9 @@
         if (stageDetailPage) {
             stageDetailPage.classList.remove('show');
         }
+        if (classificationDetailPage) {
+            classificationDetailPage.classList.remove('show');
+        }
 
         if (navTabs) {
             navTabs.style.display = '';
@@ -797,7 +978,11 @@
             tabContents[j].classList.remove('active');
         }
 
-        var isApproval = currentDetailSource === 'business-approval' || currentDetailSource === 'loan-management' || currentDetailSource === 'report-approval';
+        var isApproval = currentDetailSource === 'business-approval'
+            || currentDetailSource === 'loan-management'
+            || currentDetailSource === 'report-approval'
+            || currentDetailSource === 'post-visit-approval'
+            || currentDetailSource === 'classification-approval';
         var targetNav = isApproval ? document.querySelector('.nav-tabs .nav-item[data-tab="approval-center"]') : document.querySelector('.nav-tabs .nav-item[data-tab="' + currentDetailSource + '"]');
         var targetContent = isApproval ? document.getElementById('approval-center') : document.getElementById(currentDetailSource);
 
@@ -836,6 +1021,7 @@
         var loanRecordModal = document.getElementById('loan-record-modal');
         var reportRecordModal = document.getElementById('report-record-modal');
         var postVisitRecordModal = document.getElementById('post-visit-record-modal');
+        var postVisitHandleModal = document.getElementById('post-visit-handle-modal');
         var classificationRecordModal = document.getElementById('classification-record-modal');
         var loanApprovalRecordModal = document.getElementById('loan-approval-record-modal');
         var businessApprovalFlowModal = document.getElementById('business-approval-flow-modal');
@@ -845,6 +1031,8 @@
         var backModal = document.getElementById('back-modal');
         var rejectModal = document.getElementById('reject-modal');
         var photoDetailModal = document.getElementById('photo-detail-modal');
+        var enterpriseClientModal = document.getElementById('enterprise-client-modal');
+        var individualClientModal = document.getElementById('individual-client-modal');
         
         if (recordModal && event.target === recordModal) {
             closeRecordModal();
@@ -860,6 +1048,10 @@
 
         if (postVisitRecordModal && event.target === postVisitRecordModal) {
             closePostVisitRecordModal();
+        }
+
+        if (postVisitHandleModal && event.target === postVisitHandleModal) {
+            closePostVisitHandleModal();
         }
 
         if (classificationRecordModal && event.target === classificationRecordModal) {
@@ -897,15 +1089,31 @@
         if (photoDetailModal && event.target === photoDetailModal) {
             closePhotoDetailModal();
         }
+
+        if (enterpriseClientModal && event.target === enterpriseClientModal) {
+            closeEnterpriseClientDetail();
+        }
+
+        if (individualClientModal && event.target === individualClientModal) {
+            closeIndividualClientDetail();
+        }
     });
 
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
+            var enterpriseClientModal = document.getElementById('enterprise-client-modal');
+            var individualClientModal = document.getElementById('individual-client-modal');
+            if ((enterpriseClientModal && enterpriseClientModal.classList.contains('show')) || (individualClientModal && individualClientModal.classList.contains('show'))) {
+                closeEnterpriseClientDetail();
+                closeIndividualClientDetail();
+                return;
+            }
             closeModal();
             closeRecordModal();
             closeLoanRecordModal();
             closeReportRecordModal();
             closePostVisitRecordModal();
+            closePostVisitHandleModal();
             closeClassificationRecordModal();
             closeLoanApprovalRecordModal();
             closeLoanWithdrawModal();
@@ -913,6 +1121,8 @@
             closeBackModal();
             closeRejectModal();
             closePhotoDetailModal();
+            closeEnterpriseClientDetail();
+            closeIndividualClientDetail();
         }
     });
 
