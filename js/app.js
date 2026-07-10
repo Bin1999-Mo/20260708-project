@@ -18,6 +18,7 @@
         initFormButtons();
         initPhotoLibrary();
         initPagedLists();
+        initMobileTableLabels();
         initCloseAllMenus();
         hideZeroBadges();
     });
@@ -217,6 +218,40 @@
         for (var i = 0; i < badges.length; i++) {
             if (badges[i].textContent.trim() === '0') {
                 badges[i].style.display = 'none';
+            }
+        }
+    }
+
+    function initMobileTableLabels() {
+        var tables = document.querySelectorAll([
+            '.loan-workbench-table-wrap .loan-table',
+            '.loan-table-wrapper.data-table-scroll .loan-table',
+            '.loan-record-table-wrap .loan-table',
+            '.handled-table-wrap .handled-table'
+        ].join(','));
+
+        for (var i = 0; i < tables.length; i++) {
+            var table = tables[i];
+            var headers = table.querySelectorAll('thead th');
+
+            if (!headers.length || !table.tBodies.length) {
+                continue;
+            }
+
+            table.classList.add('mobile-card-table');
+
+            for (var bodyIndex = 0; bodyIndex < table.tBodies.length; bodyIndex++) {
+                var rows = table.tBodies[bodyIndex].rows;
+
+                for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                    var cells = rows[rowIndex].cells;
+
+                    for (var cellIndex = 0; cellIndex < cells.length; cellIndex++) {
+                        var header = headers[cellIndex];
+                        var label = header ? header.textContent.replace(/\s+/g, ' ').trim() : '';
+                        cells[cellIndex].setAttribute('data-label', label);
+                    }
+                }
             }
         }
     }

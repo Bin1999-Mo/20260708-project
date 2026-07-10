@@ -9183,3 +9183,640 @@ textarea:focus {
         height: 40px;
     }
 }
+
+/* Mobile layout hardening */
+@media (max-width: 767px) {
+    html,
+    body {
+        width: 100%;
+        min-width: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        max-width: 100%;
+        font-family: inherit;
+    }
+
+    .header-left {
+        flex: 1 1 auto;
+    }
+
+    .header-right {
+        flex: 0 0 auto;
+    }
+
+    .nav-tabs {
+        justify-content: space-around;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60px;
+        word-break: keep-all;
+    }
+
+    .nav-item .badge {
+        top: 5px;
+        right: calc(50% - 20px);
+    }
+
+    .section-heading {
+        margin-bottom: 12px;
+    }
+
+    .metric-card {
+        min-height: 142px;
+        padding: 14px;
+    }
+
+    .metric-label {
+        padding-right: 70px;
+        line-height: 1.4;
+    }
+
+    .metric-orbit {
+        top: 12px;
+        right: 12px;
+        width: 58px;
+        height: 58px;
+    }
+
+    .metric-orbit strong {
+        font-size: 15px;
+    }
+
+    .metric-card strong,
+    .metric-values strong {
+        font-size: 28px;
+    }
+
+    .metric-values {
+        gap: 8px;
+    }
+
+    .metric-values span {
+        min-width: 0;
+        padding: 10px 8px;
+    }
+
+    .service-card {
+        min-height: 0;
+        border-radius: 8px;
+    }
+
+    .card-header {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 12px;
+    }
+
+    .company-name {
+        min-width: 0;
+        white-space: normal;
+        line-height: 1.45;
+    }
+
+    .card-body {
+        padding: 12px;
+    }
+
+    .info-row,
+    .info-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .info-row .value,
+    .info-item .value {
+        width: 100%;
+        overflow: visible;
+        text-overflow: clip;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .process-bar {
+        overflow: visible;
+        padding: 14px 0 8px;
+    }
+
+    .process-item {
+        min-width: 0;
+        flex: 1 1 0;
+    }
+
+    .process-dot {
+        width: 16px;
+        height: 16px;
+    }
+
+    .process-label {
+        font-size: 11px;
+    }
+
+    #approval-center .center-tabs,
+    #client-library .center-tabs {
+        margin-right: -10px;
+        margin-left: -10px;
+        padding: 0 10px;
+    }
+
+    .center-tab {
+        min-width: 72px;
+        padding: 10px 12px;
+    }
+
+    .business-approval-page {
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+        background-color: transparent;
+    }
+
+    .business-approval-top {
+        height: auto;
+        justify-content: flex-start;
+        padding: 2px 0 10px;
+    }
+
+    .business-record-link {
+        min-height: 32px;
+        padding: 0 10px;
+        border: 1px solid #d7dfeb;
+        border-radius: 6px;
+        background-color: #fff;
+    }
+
+    .business-approval-list,
+    .business-pagination {
+        width: 100%;
+        min-width: 0 !important;
+    }
+
+    .business-approval-card {
+        grid-template-columns: minmax(0, 1fr) 36px;
+        gap: 10px 8px;
+        min-height: 0;
+        padding: 12px;
+        border-radius: 8px;
+        overflow: visible;
+    }
+
+    .business-approval-main {
+        grid-column: 1 / -1;
+    }
+
+    .business-title-row {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .business-approval-tag {
+        min-width: 60px;
+        height: 22px;
+        padding: 0 8px;
+        font-size: 12px;
+        line-height: 22px;
+    }
+
+    .business-company,
+    .business-customer {
+        width: 100%;
+        overflow: visible;
+        text-overflow: clip;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .business-company {
+        font-size: 15px;
+    }
+
+    .business-meta-field {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #edf1f6;
+    }
+
+    .business-meta-field strong {
+        overflow: visible;
+        text-overflow: clip;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .business-handle-btn {
+        grid-column: 1 / 2;
+        width: 100%;
+        height: 38px;
+    }
+
+    .business-approval-card .three-dot-wrapper {
+        grid-column: 2 / 3;
+        justify-self: end;
+        align-self: center;
+        width: 36px;
+    }
+
+    .business-approval-card .dot-menu {
+        right: 0;
+    }
+
+    .business-pagination,
+    .loan-pagination,
+    .post-manage-pagination {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 12px 0 0;
+    }
+
+    .pagination {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .page-controls {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    .page-btn {
+        min-height: 34px;
+        padding: 6px 10px;
+    }
+
+    .loan-workbench-head {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        min-height: 0;
+        padding: 12px 0;
+    }
+
+    .loan-workbench-title {
+        flex-wrap: wrap;
+        gap: 4px 8px;
+    }
+
+    .loan-workbench-title span {
+        flex-basis: 100%;
+        white-space: normal;
+    }
+
+    .loan-status-tabs {
+        width: 100%;
+        margin: 0;
+        overflow-x: auto;
+    }
+
+    .loan-status-item {
+        flex: 1 0 86px;
+    }
+
+    .loan-workbench-record {
+        justify-self: stretch;
+        width: 100%;
+    }
+
+    .loan-workbench-filter,
+    .loan-filter,
+    .loan-record-filter,
+    .report-filter,
+    .report-record-filter {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 0;
+    }
+
+    .loan-filter-input,
+    .loan-filter-input.date-input,
+    .loan-workbench-filter .loan-project-filter {
+        width: 100%;
+        min-width: 0;
+        height: 38px;
+    }
+
+    .loan-workbench-filter .search-btn,
+    .loan-workbench-filter .reset-btn,
+    .loan-filter .search-btn,
+    .loan-filter .reset-btn,
+    .report-filter .search-btn,
+    .report-filter .reset-btn {
+        width: 100%;
+        height: 38px;
+    }
+
+    .loan-workbench-table-wrap,
+    .loan-table-wrap,
+    .loan-record-table-wrap,
+    .handled-table-wrap,
+    #invest-management .data-table-scroll,
+    #client-library .data-table-scroll,
+    #photo-library .data-table-scroll {
+        margin: 0;
+        padding-bottom: 0;
+        overflow: visible !important;
+        border: none;
+        border-radius: 0;
+        background-color: transparent;
+    }
+
+    .mobile-card-table {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+        border-collapse: separate;
+        border-spacing: 0;
+        table-layout: auto;
+    }
+
+    .mobile-card-table thead {
+        display: none;
+    }
+
+    .mobile-card-table tbody {
+        display: grid;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .mobile-card-table tr {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #dce6f3;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgba(26, 91, 196, 0.06);
+    }
+
+    .mobile-card-table td {
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 8px;
+        align-items: center;
+        width: 100% !important;
+        height: auto;
+        min-height: 0;
+        padding: 8px 0;
+        border: none;
+        color: #263445;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .mobile-card-table td + td {
+        border-top: 1px solid #eef2f7;
+    }
+
+    .mobile-card-table td::before {
+        content: attr(data-label);
+        color: #7a8594;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.4;
+    }
+
+    .mobile-card-table td:first-child {
+        color: #0f172a;
+        font-weight: 700;
+    }
+
+    .mobile-card-table .text-ellipsis {
+        white-space: normal;
+    }
+
+    .post-approval-page {
+        min-height: 0;
+        margin: 0;
+        overflow: visible;
+        background-color: transparent;
+    }
+
+    .post-approval-header {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+        min-height: 0;
+        padding: 12px;
+        border: 1px solid #dce6f3;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .post-approval-title {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .post-approval-title strong {
+        font-size: 16px;
+    }
+
+    .post-approval-title em {
+        flex-basis: 100%;
+        margin-left: 30px;
+        font-size: 12px;
+    }
+
+    .handled-record-btn {
+        width: 100%;
+        height: 36px;
+    }
+
+    .post-approval-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px 0;
+    }
+
+    .post-approval-toolbar > div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .post-approval-toolbar .post-filter-input {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 36px;
+    }
+
+    .post-approval-toolbar .search-btn,
+    .post-approval-toolbar .reset-btn,
+    .batch-approve-btn {
+        width: 100%;
+        height: 36px;
+    }
+
+    .post-approval-list {
+        padding: 0;
+    }
+
+    .post-approval-card,
+    .classification-approval-card {
+        grid-template-columns: minmax(0, 1fr) 40px;
+        gap: 10px 8px;
+        min-height: 0;
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .post-approval-card .post-check {
+        display: none;
+    }
+
+    .post-approval-card-main {
+        grid-column: 1 / -1;
+        gap: 8px;
+    }
+
+    .post-approval-card-main strong,
+    .post-approval-card-main span {
+        line-height: 1.5;
+        word-break: break-word;
+    }
+
+    .post-approval-submit {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #edf1f6;
+    }
+
+    .post-approval-submit strong {
+        word-break: break-word;
+    }
+
+    .orange-handle-btn,
+    .blue-handle-btn {
+        grid-column: 1 / 2;
+        width: 100%;
+        height: 38px;
+    }
+
+    .more-action-btn {
+        grid-column: 2 / 3;
+        width: 40px;
+        height: 38px;
+    }
+
+    .photo-upload-tip {
+        margin-bottom: 8px;
+    }
+
+    .modal.show {
+        align-items: flex-start;
+        padding: 10px;
+        overflow-y: auto;
+    }
+
+    .modal-content {
+        margin: 0;
+        max-height: calc(100dvh - 20px);
+    }
+
+    .business-record-content,
+    .business-detail-content,
+    .handled-record-content,
+    .loan-record-content,
+    .report-record-content,
+    .post-visit-handle-content,
+    .photo-preview-content {
+        width: 100%;
+        max-width: 100%;
+        max-height: calc(100dvh - 20px);
+    }
+
+    .client-detail-modal.show {
+        align-items: stretch;
+        padding: 0;
+    }
+
+    .client-detail-content {
+        width: 100vw;
+        height: 100dvh;
+        max-height: none;
+        border-radius: 0;
+    }
+
+    .client-detail-header {
+        height: 48px;
+        padding: 0 12px;
+    }
+
+    .client-detail-body {
+        height: calc(100dvh - 48px);
+        padding: 12px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .client-form-grid,
+    .individual-client-form {
+        min-width: 0 !important;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        border: none;
+    }
+
+    .client-form-label,
+    .client-form-control {
+        min-height: 0;
+        border: none;
+    }
+
+    .client-form-label {
+        align-items: flex-start;
+        padding: 0;
+        background-color: transparent;
+        color: #536070;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .client-form-control {
+        padding: 0 0 4px;
+        background-color: transparent;
+    }
+
+    .client-form-control.span-3 {
+        grid-column: auto;
+    }
+
+    .client-form-control input,
+    .client-form-control select {
+        height: 40px;
+        border-radius: 6px;
+    }
+
+    .client-form-control textarea {
+        min-height: 96px;
+        border-radius: 6px;
+    }
+
+    .client-form-control.invalid {
+        padding-bottom: 4px;
+    }
+
+    .client-error {
+        position: static;
+        margin-top: 4px;
+    }
+}
