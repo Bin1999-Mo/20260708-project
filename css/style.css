@@ -1,4 +1,4 @@
-﻿/* 全局样式 */
+/* 全局样式 */
 * {
     margin: 0;
     padding: 0;
@@ -9818,5 +9818,368 @@ textarea:focus {
     .client-error {
         position: static;
         margin-top: 4px;
+    }
+}
+
+/* 投放管理详情与放款审批最终覆盖 */
+.clickable-title {
+    color: #0b65d8;
+    cursor: pointer;
+}
+
+.clickable-title:hover {
+    text-decoration: underline;
+}
+
+.loan-workbench-head {
+    grid-template-columns: minmax(240px, 1fr) auto;
+}
+
+.loan-status-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.loan-status-actions .loan-status-tabs {
+    margin: 0;
+}
+
+.loan-status-actions .loan-workbench-record {
+    justify-self: auto;
+}
+
+.invest-view-content {
+    width: min(1540px, calc(100vw - 16px));
+    max-width: none;
+    height: calc(100vh - 24px);
+}
+
+.invest-view-body {
+    height: calc(100vh - 64px);
+}
+
+.invest-classification-modal.show,
+.invest-record-modal.show {
+    align-items: flex-start;
+    padding: 28px 0;
+}
+
+.invest-classification-content,
+.invest-record-content {
+    position: relative;
+    width: min(1440px, calc(100vw - 70px));
+    max-width: none;
+    max-height: calc(100vh - 56px);
+    margin: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.invest-record-content {
+    width: min(760px, calc(100vw - 70px));
+}
+
+.invest-classification-content::before,
+.invest-record-content::before {
+    content: '内部资料，请勿外传     问题修改     内部资料，请勿外传';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    color: rgba(120, 132, 150, 0.13);
+    font-size: 27px;
+    line-height: 128px;
+    word-spacing: 96px;
+    transform: rotate(-16deg);
+    pointer-events: none;
+    white-space: pre-wrap;
+}
+
+.invest-detail-header,
+.invest-detail-actions,
+.invest-detail-body,
+.approval-flow-body {
+    position: relative;
+    z-index: 1;
+}
+
+.invest-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    background-color: #123fc5;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.invest-detail-header button {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.invest-detail-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 18px 0;
+}
+
+.invest-detail-actions button {
+    height: 34px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 4px;
+    background-color: #123fc5;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.invest-detail-body {
+    max-height: calc(100vh - 116px);
+    padding: 16px 18px 18px;
+    overflow: auto;
+}
+
+.invest-classification-table {
+    background-color: rgba(255, 255, 255, 0.86);
+}
+
+.invest-classification-table em {
+    color: #f5222d;
+    font-style: normal;
+}
+
+.approval-flow-content {
+    height: 410px;
+}
+
+.approval-flow-body {
+    height: calc(100% - 42px);
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.78);
+}
+
+.flow-legend {
+    position: absolute;
+    left: 16px;
+    top: 46px;
+    display: flex;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    background-color: #eef0f4;
+    color: #475467;
+    font-size: 12px;
+}
+
+.flow-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.flow-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.flow-dot.done {
+    background-color: #5cc43b;
+}
+
+.flow-dot.doing {
+    background-color: #1677ff;
+}
+
+.flow-dot.pending {
+    background-color: #b5bdc9;
+}
+
+.flow-zoom {
+    position: absolute;
+    right: 28px;
+    top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #475467;
+    font-size: 12px;
+}
+
+.flow-zoom button {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #d0d5dd;
+    border-radius: 2px;
+    background-color: #fff;
+    color: #475467;
+    line-height: 18px;
+}
+
+.flow-track {
+    position: absolute;
+    left: 50%;
+    top: 58px;
+    display: grid;
+    justify-items: center;
+    gap: 30px;
+    transform: translateX(-50%);
+}
+
+.flow-node {
+    width: 184px;
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+    overflow: hidden;
+}
+
+.flow-node strong,
+.flow-node span {
+    display: block;
+    padding: 8px 12px;
+}
+
+.flow-node strong {
+    background-color: #58bf32;
+    color: #fff;
+    font-size: 13px;
+}
+
+.flow-node span {
+    color: #344054;
+    font-size: 12px;
+}
+
+.flow-track i {
+    width: 1px;
+    height: 42px;
+    background-color: #b7c3d6;
+    position: relative;
+}
+
+.flow-track i::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid #b7c3d6;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    transform: translateX(-50%);
+}
+
+.flow-track em {
+    color: #475467;
+    font-size: 12px;
+    font-style: normal;
+}
+
+@media (max-width: 767px) {
+    .loan-workbench-head {
+        grid-template-columns: 1fr;
+    }
+
+    .loan-status-actions {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        justify-content: stretch;
+        width: 100%;
+    }
+
+    .loan-status-actions .loan-status-tabs {
+        width: 100%;
+    }
+
+    .loan-status-actions .loan-workbench-record {
+        width: auto;
+        min-width: 92px;
+    }
+
+    .loan-workbench-filter {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .loan-workbench-filter .loan-filter-input {
+        grid-column: 1 / -1;
+    }
+
+    .loan-workbench-filter .search-btn,
+    .loan-workbench-filter .reset-btn {
+        width: 100%;
+    }
+
+    .invest-classification-modal.show,
+    .invest-record-modal.show,
+    .invest-view-modal.show {
+        padding: 0;
+    }
+
+    .invest-classification-content,
+    .invest-record-content,
+    .invest-view-content {
+        width: 100vw;
+        max-height: 100dvh;
+        height: 100dvh;
+        border-radius: 0;
+    }
+
+    .invest-detail-actions {
+        padding: 12px;
+    }
+
+    .invest-detail-actions button {
+        flex: 1 1 0;
+        padding: 0 8px;
+    }
+
+    .invest-detail-body,
+    .invest-view-body {
+        max-height: none;
+        height: calc(100dvh - 96px);
+        padding: 12px;
+    }
+
+    .approval-flow-content {
+        height: 100dvh;
+    }
+
+    .approval-flow-body {
+        height: calc(100dvh - 42px);
+        overflow: auto;
+    }
+
+    .flow-legend {
+        position: static;
+        margin: 14px 12px;
+        flex-wrap: wrap;
+    }
+
+    .flow-zoom {
+        right: 14px;
+        top: 58px;
+    }
+
+    .flow-track {
+        top: 150px;
     }
 }

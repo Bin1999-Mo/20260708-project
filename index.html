@@ -43,7 +43,7 @@
                                 <strong>业务审批</strong>
                                 <span>授信审批、业务变更待处理</span>
                             </div>
-                            <em>3</em>
+                            <em>5</em>
                             <button class="message-btn" onclick="switchToApprovalSub('business-approval')">查看</button>
                         </div>
                         <div class="message-item">
@@ -416,11 +416,12 @@
                         <strong>放款/投资管理</strong>
                         <span>济南金控小额贷款有限公司</span>
                     </div>
-                    <div class="loan-status-tabs loan-status-segment">
-                        <button class="loan-status-item" type="button">待放款</button>
-                        <button class="loan-status-item active" type="button">待办理<span class="status-badge">1</span></button>
+                    <div class="loan-status-actions">
+                        <div class="loan-status-tabs loan-status-segment">
+                            <button class="loan-status-item active" type="button">待办理<span class="status-badge">1</span></button>
+                        </div>
+                        <button class="loan-record-btn loan-workbench-record" type="button" onclick="showLoanRecordModal()">操作记录</button>
                     </div>
-                    <button class="loan-record-btn loan-workbench-record" type="button" onclick="showLoanRecordModal()">操作记录</button>
                 </div>
                 <div class="loan-workbench-filter">
                     <input class="loan-filter-input loan-project-filter" type="text" placeholder="请输入项目名称/合同号">
@@ -915,6 +916,242 @@
         </div>
     </div>
 
+    <div id="post-visit-detail-modal" class="modal post-visit-handle-modal invest-view-modal">
+        <div class="modal-content post-visit-handle-content invest-view-content">
+            <div class="post-visit-handle-header">
+                <span>投后回访详情</span>
+                <button type="button" onclick="closePostVisitDetailModal()">×</button>
+            </div>
+            <div class="post-visit-handle-body invest-view-body">
+                <h2>贷后检查工作记录单</h2>
+                <section class="post-visit-section">
+                    <h3>基本信息</h3>
+                    <table class="post-visit-form-table">
+                        <tbody>
+                            <tr>
+                                <th><em>*</em> 检查方式</th>
+                                <td>现场</td>
+                                <th><em>*</em> 检查时间</th>
+                                <td>2026-05-14</td>
+                            </tr>
+                            <tr>
+                                <th>借据号</th>
+                                <td>济金控小贷(2026)额度借第007号-01</td>
+                                <th>借款期限</th>
+                                <td>2026-03-17 - 2026-05-15</td>
+                            </tr>
+                            <tr>
+                                <th>借款人名称</th>
+                                <td colspan="3">山东惠民矿产有限公司</td>
+                            </tr>
+                            <tr>
+                                <th>贷款余额(元)</th>
+                                <td>20000000</td>
+                                <th>部门</th>
+                                <td>信贷一部</td>
+                            </tr>
+                            <tr>
+                                <th>主办客户经理</th>
+                                <td>郭倩倩</td>
+                                <th>协办客户经理</th>
+                                <td>袁启智</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <label class="post-visit-textarea-field required">
+                        <span>本次收集资料明细</span>
+                        <textarea readonly>1,2,</textarea>
+                    </label>
+                </section>
+
+                <section class="post-visit-section">
+                    <h3>借款人情况</h3>
+                    <table class="post-visit-form-table">
+                        <tbody>
+                            <tr>
+                                <th>注册地址</th>
+                                <td colspan="3">山东省济南市商河县城区友谊大街9号</td>
+                            </tr>
+                            <tr>
+                                <th><em>*</em> 实际经营地址</th>
+                                <td>2</td>
+                                <th><em>*</em> 取得方式</th>
+                                <td>自有</td>
+                            </tr>
+                            <tr>
+                                <th><em>*</em> 检查内容及结论</th>
+                                <td colspan="3">1212</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="post-visit-empty-section">
+                    <h3>抵押情况</h3>
+                    <div class="post-empty-state"><span></span><p>暂无数据</p></div>
+                </section>
+                <section class="post-visit-empty-section">
+                    <h3>质押人情况</h3>
+                    <div class="post-empty-state"><span></span><p>暂无数据</p></div>
+                </section>
+                <section class="post-visit-section">
+                    <h3>保证人情况</h3>
+                    <table class="post-visit-form-table">
+                        <tbody>
+                            <tr>
+                                <th>保证人1</th>
+                                <td colspan="3">安华堂</td>
+                            </tr>
+                            <tr>
+                                <th><em>*</em> 检查内容及结论</th>
+                                <td colspan="3">12</td>
+                            </tr>
+                            <tr>
+                                <th>保证人2</th>
+                                <td colspan="3">魏刘刚</td>
+                            </tr>
+                            <tr>
+                                <th><em>*</em> 检查内容及结论</th>
+                                <td colspan="3">12</td>
+                            </tr>
+                            <tr>
+                                <th>保证人3</th>
+                                <td colspan="3">山东汶源投资控股集团有限公司</td>
+                            </tr>
+                            <tr>
+                                <th><em>*</em> 检查内容及结论</th>
+                                <td colspan="3">12</td>
+                            </tr>
+                            <tr>
+                                <th>保证人4</th>
+                                <td colspan="3">济南民生实业有限公司</td>
+                            </tr>
+                            <tr>
+                                <th><em>*</em> 检查内容及结论</th>
+                                <td colspan="3">12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div id="invest-classification-detail-modal" class="modal invest-classification-modal">
+        <div class="modal-content invest-classification-content">
+            <div class="invest-detail-header">
+                <span>五级分类详情</span>
+                <button type="button" onclick="closeInvestClassificationDetail()">×</button>
+            </div>
+            <div class="invest-detail-actions">
+                <button type="button" onclick="showInvestClassificationApprovalRecord()">审批记录</button>
+                <button type="button" onclick="showInvestClassificationChangeRecord()">变更记录</button>
+            </div>
+            <div class="invest-detail-body">
+                <table class="classification-info-table invest-classification-table">
+                    <tbody>
+                        <tr>
+                            <th>项目名称</th>
+                            <td>中住建设集团有限公司</td>
+                            <th>客户名称</th>
+                            <td>中住建设集团有限公司<br>91371700665723908P</td>
+                        </tr>
+                        <tr>
+                            <th>借据号</th>
+                            <td>J(2022)额度借第016号-08</td>
+                            <th>放款金额</th>
+                            <td>9,500,000.00 元</td>
+                        </tr>
+                        <tr>
+                            <th>放款起止日期</th>
+                            <td>2023-09-21 ~ 2026-09-18</td>
+                            <th>在投余额</th>
+                            <td>9,500,000.00 元</td>
+                        </tr>
+                        <tr>
+                            <th><em>*</em> 认定时间</th>
+                            <td>2026-06-30</td>
+                            <th><em>*</em> 五级分类</th>
+                            <td>正常资产</td>
+                        </tr>
+                        <tr>
+                            <th>备注</th>
+                            <td colspan="3">企业资金紧张，但能维持基本运营，抵押物足值，认定为正常类。</td>
+                        </tr>
+                        <tr>
+                            <th>附件</th>
+                            <td colspan="3">暂无附件~</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="invest-classification-approval-modal" class="modal invest-record-modal">
+        <div class="modal-content invest-record-content approval-flow-content">
+            <div class="invest-detail-header">
+                <span>审批流程</span>
+                <button type="button" onclick="closeInvestClassificationApprovalRecord()">×</button>
+            </div>
+            <div class="approval-flow-body">
+                <div class="flow-legend">
+                    <span><i class="flow-dot done"></i>已完成</span>
+                    <span><i class="flow-dot doing"></i>进行中</span>
+                    <span><i class="flow-dot pending"></i>无/未处理</span>
+                </div>
+                <div class="flow-zoom">
+                    <button type="button">−</button>
+                    <span>100%</span>
+                    <button type="button">＋</button>
+                </div>
+                <div class="flow-track">
+                    <div class="flow-node">
+                        <strong>发起节点</strong>
+                        <span>所有人</span>
+                    </div>
+                    <i></i>
+                    <div class="flow-node">
+                        <strong>风险管理部复核</strong>
+                        <span>宇晓凤</span>
+                    </div>
+                    <em>流程结束</em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="invest-classification-change-modal" class="modal invest-record-modal">
+        <div class="modal-content invest-record-content">
+            <div class="invest-detail-header">
+                <span>变更记录</span>
+                <button type="button" onclick="closeInvestClassificationChangeRecord()">×</button>
+            </div>
+            <div class="invest-detail-body">
+                <table class="classification-info-table invest-classification-table">
+                    <tbody>
+                        <tr>
+                            <th>变更前五级分类</th>
+                            <td>——</td>
+                            <th>变更后五级分类</th>
+                            <td>——</td>
+                        </tr>
+                        <tr>
+                            <th>风险经理</th>
+                            <td>——</td>
+                            <th>附件</th>
+                            <td>暂无附件~</td>
+                        </tr>
+                        <tr>
+                            <th>备注</th>
+                            <td colspan="3">——</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div id="classification-detail-page" class="detail-page classification-detail-page">
         <div class="detail-page-content classification-detail-content">
             <div class="classification-detail-header">
@@ -1008,7 +1245,7 @@
                             <div class="post-card-top">
                                 <span class="approval-complete-tag">审批完成</span>
                                 <div class="post-card-title">
-                                    <strong>山东惠民矿产有限公司</strong>
+                                    <strong class="clickable-title" onclick="showPostVisitDetailModal()">山东惠民矿产有限公司</strong>
                                     <a href="#">[ 现场检查 ]</a>
                                 </div>
                                 <div class="post-card-meta">回访人：郭倩倩　添加日期：2026年05月14日</div>
@@ -1025,7 +1262,7 @@
                             <div class="post-card-top">
                                 <span class="approval-complete-tag">审批完成</span>
                                 <div class="post-card-title">
-                                    <strong>菏泽中南建筑科技有限公司</strong>
+                                    <strong class="clickable-title" onclick="showPostVisitDetailModal()">菏泽中南建筑科技有限公司</strong>
                                     <a href="#">[ 现场检查 ]</a>
                                 </div>
                                 <div class="post-card-meta">回访人：宋波　添加日期：2026年01月21日</div>
@@ -1057,7 +1294,7 @@
                     <article class="classify-card">
                         <span class="approval-complete-tag">审批完成</span>
                         <div class="classify-main">
-                            <div class="classify-title"><span class="asset-tag normal">正常资产</span><strong>中住建设集团有限公司</strong></div>
+                            <div class="classify-title"><span class="asset-tag normal">正常资产</span><strong class="clickable-title" onclick="showInvestClassificationDetail()">中住建设集团有限公司</strong></div>
                             <div class="classify-date">认定时间：<strong>2026-06-30</strong></div>
                             <div class="classify-manager">主办业务经理：黄冠</div>
                         </div>
@@ -1072,7 +1309,7 @@
                     <article class="classify-card">
                         <span class="approval-complete-tag">审批完成</span>
                         <div class="classify-main">
-                            <div class="classify-title"><span class="asset-tag normal">正常资产</span><strong>中住建设集团有限公司</strong></div>
+                            <div class="classify-title"><span class="asset-tag normal">正常资产</span><strong class="clickable-title" onclick="showInvestClassificationDetail()">中住建设集团有限公司</strong></div>
                             <div class="classify-date">认定时间：<strong>2026-06-30</strong></div>
                             <div class="classify-manager">主办业务经理：黄冠</div>
                         </div>
@@ -1087,7 +1324,7 @@
                     <article class="classify-card">
                         <span class="approval-complete-tag">审批完成</span>
                         <div class="classify-main">
-                            <div class="classify-title"><span class="asset-tag normal">正常资产</span><strong>中住建设集团有限公司</strong></div>
+                            <div class="classify-title"><span class="asset-tag normal">正常资产</span><strong class="clickable-title" onclick="showInvestClassificationDetail()">中住建设集团有限公司</strong></div>
                             <div class="classify-date">认定时间：<strong>2026-06-30</strong></div>
                             <div class="classify-manager">主办业务经理：黄冠</div>
                         </div>
@@ -1102,7 +1339,7 @@
                     <article class="classify-card">
                         <span class="approval-complete-tag">审批完成</span>
                         <div class="classify-main">
-                            <div class="classify-title"><span class="asset-tag normal">正常资产</span><strong>中住建设集团有限公司</strong></div>
+                            <div class="classify-title"><span class="asset-tag normal">正常资产</span><strong class="clickable-title" onclick="showInvestClassificationDetail()">中住建设集团有限公司</strong></div>
                             <div class="classify-date">认定时间：<strong>2026-06-30</strong></div>
                             <div class="classify-manager">主办业务经理：黄冠</div>
                         </div>
@@ -1117,7 +1354,7 @@
                     <article class="classify-card">
                         <span class="approval-complete-tag">审批完成</span>
                         <div class="classify-main">
-                            <div class="classify-title"><span class="asset-tag substandard">次级资产</span><strong>临沂杜邦贸易有限公司</strong></div>
+                            <div class="classify-title"><span class="asset-tag substandard">次级资产</span><strong class="clickable-title" onclick="showInvestClassificationDetail()">临沂杜邦贸易有限公司</strong></div>
                             <div class="classify-date">认定时间：<strong>2026-06-30</strong></div>
                             <div class="classify-manager">主办业务经理：黄冠</div>
                         </div>
@@ -1132,7 +1369,7 @@
                     <article class="classify-card">
                         <span class="approval-complete-tag">审批完成</span>
                         <div class="classify-main">
-                            <div class="classify-title"><span class="asset-tag substandard">次级资产</span><strong>临沂杜邦贸易有限公司</strong></div>
+                            <div class="classify-title"><span class="asset-tag substandard">次级资产</span><strong class="clickable-title" onclick="showInvestClassificationDetail()">临沂杜邦贸易有限公司</strong></div>
                             <div class="classify-date">认定时间：<strong>2026-06-30</strong></div>
                             <div class="classify-manager">主办业务经理：黄冠</div>
                         </div>
@@ -1147,7 +1384,7 @@
                     <article class="classify-card">
                         <span class="approval-complete-tag">审批完成</span>
                         <div class="classify-main">
-                            <div class="classify-title"><span class="asset-tag substandard">次级资产</span><strong>临沂杜邦贸易有限公司</strong></div>
+                            <div class="classify-title"><span class="asset-tag substandard">次级资产</span><strong class="clickable-title" onclick="showInvestClassificationDetail()">临沂杜邦贸易有限公司</strong></div>
                             <div class="classify-date">认定时间：<strong>2026-06-30</strong></div>
                             <div class="classify-manager">主办业务经理：黄冠</div>
                         </div>
