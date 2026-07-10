@@ -83,7 +83,7 @@
                                 <strong>还款审批</strong>
                                 <span>还款申请待审批</span>
                             </div>
-                            <em>0</em>
+                            <em>1</em>
                             <button class="message-btn" onclick="switchToApprovalSub('repayment-approval')">查看</button>
                         </div>
                     </div>
@@ -257,7 +257,7 @@
             <div class="center-tab" data-subtab="report-approval">报表上报审批<span class="center-badge">1</span></div>
             <div class="center-tab" data-subtab="post-visit-approval">投后回访<span class="center-badge">1</span></div>
             <div class="center-tab" data-subtab="classification-approval">五级分类<span class="center-badge">1</span></div>
-            <div class="center-tab" data-subtab="repayment-approval">还款审批<span class="center-badge">0</span></div>
+            <div class="center-tab" data-subtab="repayment-approval">还款审批<span class="center-badge">1</span></div>
         </div>
         <div class="center-content active business-approval-page" id="business-approval">
             <div class="business-approval-top">
@@ -716,7 +716,49 @@
             </div>
         </div>
         <div class="center-content" id="repayment-approval">
-            <div style="padding:40px;text-align:center;color:#999">暂无还款审批数据</div>
+            <div class="post-approval-page repayment-approval-page">
+                <div class="post-approval-header">
+                    <div class="post-approval-title">
+                        <span>←</span>
+                        <strong>还款审批</strong>
+                        <em>济南金控小额贷款有限公司</em>
+                    </div>
+                    <button class="handled-record-btn" type="button">已办理记录</button>
+                </div>
+                <div class="post-approval-toolbar">
+                    <span>共 1 条记录</span>
+                    <div>
+                        <input type="text" placeholder="请输入项目名称" class="post-filter-input">
+                        <button class="search-btn">查询</button>
+                        <button class="reset-btn">重置</button>
+                    </div>
+                </div>
+                <div class="post-approval-list">
+                    <article class="post-approval-card repayment-approval-card">
+                        <div class="post-approval-card-main">
+                            <strong>中住建设集团有限公司 <a href="#">[ 还款申请 ]</a></strong>
+                            <span>客户名称：中住建设集团有限公司 / 91371700665723908P</span>
+                        </div>
+                        <div class="post-approval-submit">
+                            <span>提交人</span>
+                            <strong>济南金控小额贷款有限公司 / 王晨晨</strong>
+                        </div>
+                        <div class="post-approval-submit">
+                            <span>提交时间</span>
+                            <strong>2026-07-10 09:35:12</strong>
+                        </div>
+                        <button class="blue-handle-btn" type="button" onclick="openRepaymentDetailPage()">去处理</button>
+                    </article>
+                </div>
+                <div class="post-manage-pagination">
+                    <span>共 1 条</span>
+                    <select><option>10条/页</option></select>
+                    <button class="page-btn disabled">‹</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn disabled">›</button>
+                    <span>前往</span><input type="text" value="1"><span>页</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1210,6 +1252,240 @@
             <div class="classification-detail-footer">
                 <button class="classification-submit-btn" type="button" onclick="showApproveModal()">提交</button>
                 <button class="classification-back-action" type="button" onclick="showBackModal()">退回</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="repayment-detail-page" class="detail-page repayment-detail-page">
+        <div class="detail-page-content repayment-detail-content">
+            <div class="repayment-detail-header">
+                <div class="repayment-detail-title">
+                    <button class="repayment-detail-back" type="button" onclick="goBack()">←</button>
+                    <strong>中住建设集团有限公司</strong>
+                    <span class="business-approval-tag tag-orange">还款审批</span>
+                </div>
+                <span class="repayment-detail-manager">主办业务经理： 王晨晨</span>
+            </div>
+
+            <div class="repayment-detail-layout">
+                <main class="repayment-detail-main">
+                    <section class="repayment-section" id="repayment-base-info">
+                        <h3 class="repayment-section-title">还款基本信息</h3>
+                        <table class="repayment-info-table">
+                            <tbody>
+                                <tr>
+                                    <th>借据号</th>
+                                    <td>J(2022)额度借第016号-08</td>
+                                    <th>客户名称</th>
+                                    <td>中住建设集团有限公司</td>
+                                    <th>统一社会信用代码</th>
+                                    <td>91371700665723908P</td>
+                                </tr>
+                                <tr>
+                                    <th>还款日期</th>
+                                    <td>2026-07-10</td>
+                                    <th>还款金额</th>
+                                    <td>1,000,000.00 元</td>
+                                    <th>还款方式</th>
+                                    <td>正常还款</td>
+                                </tr>
+                                <tr>
+                                    <th>项目经理</th>
+                                    <td>王晨晨</td>
+                                    <th>申请部门</th>
+                                    <td>济南金控小额贷款有限公司</td>
+                                    <th>备注</th>
+                                    <td>——</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section class="repayment-section" id="repayment-plan">
+                        <h3 class="repayment-section-title">还款计划明细</h3>
+                        <div class="repayment-table-wrap">
+                            <table class="repayment-data-table repayment-plan-table">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>计划还款日</th>
+                                        <th>实际还款日</th>
+                                        <th>还款状态</th>
+                                        <th>应还本金(元)</th>
+                                        <th>已还本金(元)</th>
+                                        <th>应还利息(元)</th>
+                                        <th>已还利息(元)</th>
+                                        <th>应还罚息(元)</th>
+                                        <th>已还罚息(元)</th>
+                                        <th>应还复利(元)</th>
+                                        <th>已还复利(元)</th>
+                                        <th>剩余本息(元)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2026-01-15</td>
+                                        <td>2026-01-15</td>
+                                        <td>已结清</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>45,833.33</td>
+                                        <td>45,833.33</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>2026-02-15</td>
+                                        <td>2026-02-15</td>
+                                        <td>已结清</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>42,916.67</td>
+                                        <td>42,916.67</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>2026-03-15</td>
+                                        <td>——</td>
+                                        <td>待还款</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>45,833.33</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>45,833.33</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>2026-04-15</td>
+                                        <td>——</td>
+                                        <td>待还款</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>44,375.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>44,375.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>2026-05-15</td>
+                                        <td>——</td>
+                                        <td>待还款</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>45,833.33</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>45,833.33</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>2026-06-15</td>
+                                        <td>——</td>
+                                        <td>待还款</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>44,375.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>44,375.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>2026-07-15</td>
+                                        <td>——</td>
+                                        <td>待还款</td>
+                                        <td>1,000,000.00</td>
+                                        <td>0.00</td>
+                                        <td>45,833.33</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>1,045,833.33</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="repayment-section" id="repayment-apply-detail">
+                        <h3 class="repayment-section-title">还款申请明细</h3>
+                        <div class="repayment-table-wrap">
+                            <table class="repayment-data-table repayment-apply-table">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>还款日期</th>
+                                        <th>还款方式</th>
+                                        <th>还款状态</th>
+                                        <th>还本金额(元)</th>
+                                        <th>还息金额(元)</th>
+                                        <th>还罚息(元)</th>
+                                        <th>还复利(元)</th>
+                                        <th>合计金额(元)</th>
+                                        <th>经办人</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2026-07-10</td>
+                                        <td>正常还款</td>
+                                        <td>待审批</td>
+                                        <td>1,000,000.00</td>
+                                        <td>45,833.33</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>1,045,833.33</td>
+                                        <td>王晨晨</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="repayment-section" id="repayment-approval-opinion">
+                        <h3 class="repayment-section-title">审批意见</h3>
+                        <div class="repayment-opinion-box">暂无审批意见</div>
+                    </section>
+                </main>
+
+                <aside class="repayment-detail-sidebar">
+                    <a class="repayment-step active" href="#repayment-base-info">还款基本信息</a>
+                    <a class="repayment-step" href="#repayment-plan">还款计划明细</a>
+                    <a class="repayment-step" href="#repayment-apply-detail">还款申请明细</a>
+                    <a class="repayment-step" href="#repayment-approval-opinion">审批意见</a>
+                </aside>
+            </div>
+
+            <div class="repayment-detail-footer">
+                <button class="repayment-approve-btn" type="button" onclick="showApproveModal()">审批</button>
+                <button class="repayment-return-btn" type="button" onclick="showBackModal()">退回</button>
             </div>
         </div>
     </div>

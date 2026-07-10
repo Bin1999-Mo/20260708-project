@@ -10183,3 +10183,333 @@ textarea:focus {
         top: 150px;
     }
 }
+
+/* ===== Repayment approval detail ===== */
+.repayment-approval-card {
+    grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.7fr) minmax(180px, 0.5fr) 110px;
+}
+
+.repayment-detail-page {
+    padding: 0;
+    background-color: #f4f7fb;
+}
+
+.repayment-detail-content {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 78px;
+    background-color: #f4f7fb;
+}
+
+.repayment-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 54px;
+    padding: 0 24px;
+    border-bottom: 1px solid #dfe5ef;
+    background-color: #fff;
+}
+
+.repayment-detail-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.repayment-detail-title strong {
+    overflow: hidden;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.repayment-detail-back {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+    color: #111827;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.repayment-detail-manager {
+    flex: 0 0 auto;
+    color: #004bd6;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.repayment-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 168px;
+    min-height: calc(100vh - 132px);
+    background-color: #fff;
+}
+
+.repayment-detail-main {
+    min-width: 0;
+    padding: 14px 20px 20px;
+    border-right: 1px solid #dfe5ef;
+    background-color: #fff;
+}
+
+.repayment-detail-sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    display: grid;
+    gap: 10px;
+    padding: 34px 18px;
+    background-color: #fff;
+}
+
+.repayment-step {
+    display: flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 0 12px;
+    border-right: 3px solid transparent;
+    color: #4b5563;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.repayment-step.active {
+    border-right-color: #1f5cff;
+    background-color: #edf3ff;
+    color: #165dff;
+    font-weight: 700;
+}
+
+.repayment-section {
+    margin-bottom: 14px;
+    border: 1px solid #c7d2e5;
+    background-color: #fff;
+}
+
+.repayment-section-title {
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+    margin: 0;
+    padding: 0 14px;
+    background-color: #eef3ff;
+    color: #004bd6;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.repayment-info-table {
+    width: calc(100% - 24px);
+    margin: 12px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.repayment-info-table th,
+.repayment-info-table td {
+    min-height: 36px;
+    padding: 8px 10px;
+    border: 1px solid #d3dbea;
+    color: #1f2937;
+    font-size: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.repayment-info-table th {
+    width: 11%;
+    background-color: #f0f3fb;
+    font-weight: 600;
+}
+
+.repayment-info-table td {
+    width: 22%;
+    background-color: #fff;
+    word-break: break-word;
+}
+
+.repayment-table-wrap {
+    margin: 12px;
+    overflow-x: auto;
+}
+
+.repayment-data-table {
+    width: 100%;
+    min-width: 1280px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.repayment-apply-table {
+    min-width: 980px;
+}
+
+.repayment-data-table th,
+.repayment-data-table td {
+    height: 34px;
+    padding: 7px 8px;
+    border: 1px solid #e0e6f0;
+    color: #1f2937;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.repayment-data-table th {
+    background-color: #f2f5fb;
+    color: #394150;
+    font-weight: 600;
+}
+
+.repayment-data-table tbody tr:nth-child(even) td {
+    background-color: #fbfcff;
+}
+
+.repayment-opinion-box {
+    min-height: 62px;
+    margin: 12px;
+    padding: 14px;
+    border: 1px solid #d3dbea;
+    color: #8a94a6;
+    font-size: 13px;
+}
+
+.repayment-detail-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    height: 62px;
+    padding: 0 28px;
+    background-color: #fff;
+    box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.08);
+}
+
+.repayment-approve-btn,
+.repayment-return-btn {
+    min-width: 72px;
+    height: 34px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.repayment-approve-btn {
+    background-color: #2f6ff6;
+    color: #fff;
+}
+
+.repayment-return-btn {
+    background-color: #fff1d9;
+    color: #f08a00;
+}
+
+@media (max-width: 900px) {
+    .repayment-detail-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+        padding: 12px;
+    }
+
+    .repayment-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .repayment-detail-main {
+        padding: 12px 12px 18px;
+        border-right: none;
+    }
+
+    .repayment-detail-sidebar {
+        position: static;
+        display: flex;
+        gap: 8px;
+        order: -1;
+        padding: 10px 12px;
+        border-bottom: 1px solid #dfe5ef;
+        overflow-x: auto;
+    }
+
+    .repayment-step {
+        flex: 0 0 auto;
+        border-right: none;
+        border-bottom: 2px solid transparent;
+    }
+
+    .repayment-step.active {
+        border-bottom-color: #1f5cff;
+    }
+
+    .repayment-info-table {
+        min-width: 820px;
+    }
+
+    .repayment-detail-footer {
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .repayment-approval-card {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .repayment-detail-title {
+        width: 100%;
+    }
+
+    .repayment-detail-title strong {
+        flex: 1 1 auto;
+        font-size: 16px;
+    }
+
+    .repayment-detail-manager {
+        font-size: 12px;
+    }
+
+    .repayment-detail-content {
+        padding-bottom: 70px;
+    }
+
+    .repayment-section-title {
+        min-height: 36px;
+        font-size: 14px;
+    }
+
+    .repayment-table-wrap,
+    .repayment-info-table {
+        margin: 10px;
+    }
+
+    .repayment-info-table th,
+    .repayment-info-table td,
+    .repayment-data-table th,
+    .repayment-data-table td {
+        font-size: 12px;
+    }
+
+    .repayment-detail-footer {
+        gap: 10px;
+        height: 58px;
+    }
+
+    .repayment-approve-btn,
+    .repayment-return-btn {
+        flex: 1 1 0;
+    }
+}
