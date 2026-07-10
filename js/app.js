@@ -54,6 +54,7 @@
                     var changeDetailPage = document.getElementById('change-detail-page');
                     var reportDetailPage = document.getElementById('report-detail-page');
                     var classificationDetailPage = document.getElementById('classification-detail-page');
+                    var repaymentDetailPage = document.getElementById('repayment-detail-page');
                     if (stageDetailPage) {
                         stageDetailPage.classList.remove('show');
                     }
@@ -74,6 +75,9 @@
                     }
                     if (classificationDetailPage) {
                         classificationDetailPage.classList.remove('show');
+                    }
+                    if (repaymentDetailPage) {
+                        repaymentDetailPage.classList.remove('show');
                     }
                     document.body.style.overflow = '';
 
@@ -940,6 +944,32 @@
         }
     };
 
+    window.openRepaymentDetailPage = function() {
+        var appHeader = document.querySelector('.header');
+        var navTabs = document.querySelector('.nav-tabs');
+        var tabContents = document.querySelectorAll('.tab-content');
+        var detailPage = document.getElementById('repayment-detail-page');
+        currentDetailSource = 'repayment-approval';
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
+
+        if (navTabs) {
+            navTabs.style.display = 'none';
+        }
+
+        for (var i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+
+        if (detailPage) {
+            detailPage.classList.add('show');
+            document.body.style.overflow = '';
+            window.scrollTo(0, 0);
+        }
+    };
+
     window.showLoanApprovalRecordModal = function() {
         showActionModal('loan-approval-record-modal');
     };
@@ -1019,6 +1049,7 @@
         var reportDetailPage = document.getElementById('report-detail-page');
         var stageDetailPage = document.getElementById('stage-detail-page');
         var classificationDetailPage = document.getElementById('classification-detail-page');
+        var repaymentDetailPage = document.getElementById('repayment-detail-page');
 
         if (detailPage) {
             detailPage.classList.remove('show');
@@ -1045,6 +1076,9 @@
         if (classificationDetailPage) {
             classificationDetailPage.classList.remove('show');
         }
+        if (repaymentDetailPage) {
+            repaymentDetailPage.classList.remove('show');
+        }
 
         if (navTabs) {
             navTabs.style.display = '';
@@ -1066,7 +1100,8 @@
             || currentDetailSource === 'loan-management'
             || currentDetailSource === 'report-approval'
             || currentDetailSource === 'post-visit-approval'
-            || currentDetailSource === 'classification-approval';
+            || currentDetailSource === 'classification-approval'
+            || currentDetailSource === 'repayment-approval';
         var targetNav = isApproval ? document.querySelector('.nav-tabs .nav-item[data-tab="approval-center"]') : document.querySelector('.nav-tabs .nav-item[data-tab="' + currentDetailSource + '"]');
         var targetContent = isApproval ? document.getElementById('approval-center') : document.getElementById(currentDetailSource);
 
