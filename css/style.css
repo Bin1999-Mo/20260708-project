@@ -10801,3 +10801,384 @@ textarea:focus {
         flex: 1 1 0;
     }
 }
+
+/* ===== Approval center mobile detail optimization ===== */
+@media (max-width: 1024px) {
+    .credit-detail-content,
+    .project-detail-content,
+    .loan-approval-detail-content,
+    .classification-detail-content,
+    .repayment-detail-content,
+    .report-detail-page .detail-page-content,
+    #change-detail-page .detail-page-content {
+        min-height: 100dvh;
+        overflow: visible;
+    }
+
+    .credit-detail-layout,
+    .project-detail-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+        padding: 0 12px 96px;
+        overflow: visible;
+    }
+
+    .credit-detail-main,
+    .project-detail-main {
+        padding-right: 0;
+    }
+
+    .credit-stage-sidebar,
+    .project-stage-sidebar {
+        order: -1;
+        min-height: 0;
+        margin-bottom: 12px;
+        border-left: none;
+        border-bottom: 1px solid #d8deea;
+        overflow-x: auto;
+        background-color: rgba(255, 255, 255, 0.88);
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .credit-stage-list,
+    .project-stage-list {
+        display: flex;
+        gap: 8px;
+        width: max-content;
+        min-width: 100%;
+        margin: 0;
+        padding: 10px 0;
+    }
+
+    .credit-stage-item,
+    .project-stage-item {
+        flex: 0 0 auto;
+        min-height: 30px;
+        padding: 0 12px;
+        border: 1px solid #d8deea;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #475467;
+        line-height: 28px;
+    }
+
+    .credit-stage-item span,
+    .project-stage-item span,
+    .credit-stage-item span::after,
+    .project-stage-item span::after,
+    .credit-stage-item.active::after,
+    .project-stage-item.active::after {
+        display: none;
+    }
+
+    .credit-stage-item.active,
+    .project-stage-item.active {
+        border-color: #1749c7;
+        background-color: #1749c7;
+        color: #fff;
+    }
+
+    .credit-form-grid,
+    .project-form-grid,
+    .project-location-field {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .credit-field.half,
+    .credit-field.file-field,
+    .credit-field.full,
+    .project-report-field,
+    .project-upload-wide,
+    .project-field.full {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .credit-file-row,
+    .credit-amount-line,
+    .project-radio-row {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .credit-amount-line .credit-unit-input,
+    .project-unit-input {
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .credit-approval-opinion,
+    .classification-opinion-row,
+    .loan-opinion-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .credit-opinion-person-cell,
+    .loan-opinion-person {
+        border-right: none;
+        border-bottom: 1px solid #d8deea;
+    }
+
+    .credit-opinion-date,
+    .loan-opinion-time,
+    .classification-opinion-time {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 767px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .detail-page {
+        padding: 0 !important;
+        background-color: #f4f7fb;
+    }
+
+    .detail-page-content {
+        min-height: 100dvh;
+        border-radius: 0;
+    }
+
+    .credit-detail-header,
+    .project-detail-header,
+    .loan-detail-header,
+    .repayment-detail-header,
+    .classification-detail-header,
+    .report-detail-header,
+    #change-detail-page .modal-header {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        height: auto;
+        min-height: 48px;
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .credit-detail-title,
+    .project-detail-title,
+    .loan-detail-title,
+    .repayment-detail-title,
+    .report-detail-title {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .credit-detail-title strong,
+    .project-detail-title strong,
+    .loan-detail-title strong,
+    .repayment-detail-title strong,
+    .report-module-title,
+    #change-detail-page .modal-title {
+        min-width: 0;
+        overflow: visible;
+        white-space: normal;
+        word-break: break-word;
+        font-size: 16px;
+        line-height: 1.35;
+    }
+
+    .credit-manager,
+    .project-manager,
+    .loan-detail-manager,
+    .repayment-detail-manager {
+        flex: 1 1 100%;
+        margin-left: 30px;
+        font-size: 12px;
+        line-height: 1.4;
+        white-space: normal;
+    }
+
+    .credit-detail-tabs.detail-tabs,
+    .project-detail-tabs,
+    .loan-process-tabs,
+    #change-detail-page .change-detail-tabs {
+        display: flex;
+        height: auto;
+        margin: 0;
+        padding: 0 12px;
+        overflow-x: auto;
+        border-bottom: 1px solid #cfd8ea;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .credit-detail-tabs .detail-tab,
+    .project-detail-tabs button,
+    .loan-process-tabs .detail-tab,
+    #change-detail-page .detail-tab {
+        flex: 0 0 auto;
+        min-width: max-content;
+        height: 36px;
+        padding: 0 14px;
+        line-height: 36px;
+        white-space: nowrap;
+    }
+
+    .credit-detail-layout,
+    .project-detail-layout {
+        padding: 10px 10px 96px;
+    }
+
+    .credit-form-panel,
+    .project-form-panel {
+        padding: 12px;
+    }
+
+    .credit-section,
+    .project-section,
+    .loan-section,
+    .repayment-section,
+    .report-opinion-section,
+    #change-detail-page .detail-section {
+        margin-bottom: 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .credit-section,
+    .classification-info-section {
+        overflow-x: hidden;
+    }
+
+    .project-section {
+        min-height: 0;
+    }
+
+    .credit-table-scroll,
+    .loan-empty-table-wrap,
+    .repayment-table-wrap,
+    .report-table-wrap,
+    .change-table-wrap {
+        margin-left: 10px;
+        margin-right: 10px;
+        max-width: calc(100vw - 40px);
+    }
+
+    .credit-table-scroll {
+        width: auto;
+        max-width: calc(100vw - 40px);
+        overflow-x: auto;
+        contain: layout paint;
+    }
+
+    .loan-info-table,
+    .post-visit-form-table,
+    .repayment-info-table {
+        width: auto;
+        min-width: 880px;
+    }
+
+    .classification-detail-page .classification-info-table,
+    .classification-detail-page .classification-info-table tbody,
+    .classification-detail-page .classification-info-table tr,
+    .classification-detail-page .classification-info-table th,
+    .classification-detail-page .classification-info-table td {
+        display: block;
+        width: 100% !important;
+        min-width: 0;
+    }
+
+    .classification-detail-page .classification-info-table {
+        margin: 10px;
+        border-top: 1px solid #d2dae9;
+    }
+
+    .classification-detail-page .classification-info-table tr {
+        border-left: 1px solid #d2dae9;
+        border-right: 1px solid #d2dae9;
+    }
+
+    .classification-detail-page .classification-info-table th,
+    .classification-detail-page .classification-info-table td {
+        min-height: 36px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        word-break: break-word;
+    }
+
+    .loan-detail-main,
+    .repayment-detail-main {
+        padding: 12px 10px 92px;
+        border-right: none;
+    }
+
+    .loan-detail-sidebar,
+    .repayment-detail-sidebar {
+        padding: 10px;
+    }
+
+    .loan-detail-footer,
+    .classification-detail-footer,
+    .repayment-detail-footer {
+        gap: 10px;
+        height: auto;
+        min-height: 58px;
+        padding: 10px 12px;
+    }
+
+    .loan-submit-btn,
+    .loan-return-btn,
+    .classification-submit-btn,
+    .classification-back-action,
+    .repayment-approve-btn,
+    .repayment-return-btn {
+        flex: 1 1 0;
+        min-width: 0;
+        height: 38px;
+    }
+
+    .classification-detail-body {
+        min-height: auto;
+        padding: 10px 10px 90px;
+    }
+
+    .report-detail-body,
+    #change-detail-page .modal-body {
+        padding: 12px 10px 88px;
+    }
+
+    .report-detail-actions {
+        flex: 1 1 100%;
+        justify-content: stretch;
+    }
+
+    .report-detail-actions .btn {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .report-title-pill {
+        width: 100%;
+        max-width: none;
+        white-space: normal;
+    }
+
+    .report-tools,
+    .unit-switch {
+        width: 100%;
+    }
+
+    .unit-switch button,
+    .export-btn {
+        flex: 1 1 0;
+    }
+
+    #change-detail-page .form-grid,
+    #change-detail-page .change-summary {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #change-detail-page .approval-action-bar {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        background-color: #fff;
+    }
+}
