@@ -723,7 +723,7 @@
                         <strong>还款审批</strong>
                         <em>济南金控小额贷款有限公司</em>
                     </div>
-                    <button class="handled-record-btn" type="button">已办理记录</button>
+                    <button class="handled-record-btn" type="button" onclick="showRepaymentRecordModal()">已办理记录</button>
                 </div>
                 <div class="post-approval-toolbar">
                     <span>共 1 条记录</span>
@@ -850,6 +850,110 @@
                     <button class="page-btn active">1</button>
                     <button class="page-btn disabled">›</button>
                     <span>前往</span><input type="text" value="1"><span>页</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="repayment-record-modal" class="modal handled-record-modal repayment-record-modal">
+        <div class="modal-content handled-record-content repayment-record-content">
+            <div class="handled-record-title repayment-record-title">
+                <span>还款记录</span>
+                <button type="button" onclick="closeRepaymentRecordModal()">×</button>
+            </div>
+            <div class="handled-record-body repayment-record-body">
+                <div class="repayment-record-tabs">
+                    <button class="active" type="button">还款记录</button>
+                    <button type="button">其他还款记录</button>
+                </div>
+                <div class="repayment-record-toolbar">
+                    <button class="repayment-batch-btn" type="button">批量下载还款凭证</button>
+                    <div class="repayment-record-filter">
+                        <select>
+                            <option>济南金控小额贷款有限公司</option>
+                        </select>
+                        <input type="text" placeholder="请输入项目名称/借据号">
+                        <select>
+                            <option>请选择客户类型</option>
+                        </select>
+                        <select>
+                            <option>请选择状态</option>
+                        </select>
+                        <button class="search-btn" type="button">查询</button>
+                        <button class="reset-btn" type="button">重置</button>
+                    </div>
+                </div>
+                <div class="repayment-record-table-wrap">
+                    <table class="repayment-record-table">
+                        <thead>
+                            <tr>
+                                <th class="check-col"><input type="checkbox"></th>
+                                <th>序号</th>
+                                <th>所属经营板块</th>
+                                <th>项目名称</th>
+                                <th>借据号</th>
+                                <th>计划还款日期</th>
+                                <th>实际还款日期</th>
+                                <th>还款期次</th>
+                                <th>应收总合计(元)</th>
+                                <th>应收本金(元)</th>
+                                <th>已收本金(元)</th>
+                                <th>应收利息(元)</th>
+                                <th>已收利息(元)</th>
+                                <th>应收罚息(元)</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>1</td>
+                                <td class="text-ellipsis">济南金控小额贷款有限公司</td>
+                                <td>林一夏</td>
+                                <td>JKXD2026-01</td>
+                                <td>2026-07-08</td>
+                                <td>2026-07-09</td>
+                                <td><span class="repayment-period">1</span> / 13</td>
+                                <td>36,111.11</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>36,111.11</td>
+                                <td>36,111.11</td>
+                                <td>0.00</td>
+                                <td><span class="repayment-status pending">审批中</span></td>
+                                <td><button class="repayment-action-btn" type="button">功能⌄</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>2</td>
+                                <td class="text-ellipsis">济南金控小额贷款有限公司</td>
+                                <td>李霖</td>
+                                <td class="text-ellipsis">J借202606110001-0004</td>
+                                <td>2027-01-02</td>
+                                <td>2026-06-30</td>
+                                <td><span class="repayment-period">12</span> / 12</td>
+                                <td>100,638.89</td>
+                                <td>100,000.00</td>
+                                <td>110,000.00</td>
+                                <td>638.89</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td><span class="repayment-status returned">已退回</span></td>
+                                <td><button class="repayment-action-btn" type="button">功能⌄</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="repayment-record-pagination">
+                    <span>共 2 条</span>
+                    <select><option>10条/页</option></select>
+                    <button class="page-btn disabled" type="button">‹</button>
+                    <button class="page-btn active" type="button">1</button>
+                    <button class="page-btn disabled" type="button">›</button>
+                    <span>前往</span>
+                    <input type="text" value="1">
+                    <span>页</span>
                 </div>
             </div>
         </div>
