@@ -10189,6 +10189,230 @@ textarea:focus {
     grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.7fr) minmax(180px, 0.5fr) 110px;
 }
 
+.repayment-record-modal.show {
+    align-items: flex-start;
+    padding: 40px 24px;
+}
+
+.repayment-record-content {
+    width: min(1632px, calc(100vw - 48px));
+    max-width: none;
+    max-height: calc(100vh - 80px);
+}
+
+.repayment-record-title {
+    height: 42px;
+}
+
+.repayment-record-body {
+    padding: 18px;
+}
+
+.repayment-record-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.repayment-record-tabs button {
+    min-width: 102px;
+    height: 38px;
+    border: none;
+    background-color: #f1f4f8;
+    color: #667085;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.repayment-record-tabs button:first-child {
+    border-radius: 20px 0 0 20px;
+}
+
+.repayment-record-tabs button:last-child {
+    border-radius: 0 20px 20px 0;
+}
+
+.repayment-record-tabs button.active {
+    background-color: #fff;
+    color: #005bd8;
+    box-shadow: 0 2px 10px rgba(16, 24, 40, 0.08);
+}
+
+.repayment-record-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.repayment-batch-btn {
+    flex: 0 0 auto;
+    height: 32px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 3px;
+    background-color: #1447d9;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.repayment-record-filter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    min-width: 0;
+}
+
+.repayment-record-filter input,
+.repayment-record-filter select {
+    height: 32px;
+    min-width: 0;
+    padding: 0 12px;
+    border: 1px solid #d8e0ec;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #475467;
+    font-size: 13px;
+}
+
+.repayment-record-filter select {
+    width: 176px;
+}
+
+.repayment-record-filter input {
+    width: 170px;
+}
+
+.repayment-record-filter .search-btn,
+.repayment-record-filter .reset-btn {
+    width: 52px;
+    height: 32px;
+    padding: 0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.repayment-record-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #e3e8f2;
+    background-color: rgba(255, 255, 255, 0.72);
+}
+
+.repayment-record-table {
+    width: 100%;
+    min-width: 1580px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 12px;
+}
+
+.repayment-record-table th,
+.repayment-record-table td {
+    height: 44px;
+    padding: 8px 10px;
+    border-right: 1px solid #e3e8f2;
+    border-bottom: 1px solid #e3e8f2;
+    color: #344054;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.repayment-record-table th {
+    background-color: #f1f4fc;
+    color: #667085;
+    font-weight: 600;
+}
+
+.repayment-record-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.repayment-record-table input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+}
+
+.repayment-record-table .check-col {
+    width: 42px;
+}
+
+.repayment-record-table .text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.repayment-period {
+    color: #165dff;
+}
+
+.repayment-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 26px;
+    padding: 0 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.repayment-status.pending {
+    background-color: #fff4e5;
+    color: #f59e0b;
+}
+
+.repayment-status.returned {
+    background-color: #fff1f0;
+    color: #f04438;
+}
+
+.repayment-action-btn {
+    min-width: 62px;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+    background-color: #2f8cff;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.repayment-record-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 16px;
+    color: #344054;
+    font-size: 13px;
+}
+
+.repayment-record-pagination select,
+.repayment-record-pagination input {
+    height: 32px;
+    border: 1px solid #d8e0ec;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #344054;
+    font-size: 13px;
+}
+
+.repayment-record-pagination select {
+    width: 84px;
+    padding: 0 8px;
+}
+
+.repayment-record-pagination input {
+    width: 38px;
+    text-align: center;
+}
+
 .repayment-detail-page {
     padding: 0;
     background-color: #f4f7fb;
@@ -10419,6 +10643,40 @@ textarea:focus {
 }
 
 @media (max-width: 900px) {
+    .repayment-record-modal.show {
+        padding: 10px;
+    }
+
+    .repayment-record-content {
+        width: 100%;
+        max-height: calc(100dvh - 20px);
+    }
+
+    .repayment-record-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .repayment-record-filter {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .repayment-record-filter input,
+    .repayment-record-filter select,
+    .repayment-record-filter .search-btn,
+    .repayment-record-filter .reset-btn {
+        width: 100%;
+    }
+
+    .repayment-record-filter input {
+        grid-column: 1 / -1;
+    }
+
+    .repayment-record-pagination {
+        flex-wrap: wrap;
+    }
+
     .repayment-detail-header {
         align-items: flex-start;
         flex-direction: column;
@@ -10465,6 +10723,36 @@ textarea:focus {
 }
 
 @media (max-width: 767px) {
+    .repayment-record-body {
+        padding: 12px;
+    }
+
+    .repayment-record-tabs {
+        justify-content: stretch;
+    }
+
+    .repayment-record-tabs button {
+        flex: 1 1 0;
+        min-width: 0;
+        font-size: 13px;
+    }
+
+    .repayment-batch-btn {
+        width: 100%;
+    }
+
+    .repayment-record-filter {
+        grid-template-columns: 1fr;
+    }
+
+    .repayment-record-filter input {
+        grid-column: auto;
+    }
+
+    .repayment-record-pagination {
+        justify-content: flex-start;
+    }
+
     .repayment-approval-card {
         grid-template-columns: minmax(0, 1fr);
     }

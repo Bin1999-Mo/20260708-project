@@ -870,6 +870,14 @@
         closeActionModal('classification-record-modal');
     };
 
+    window.showRepaymentRecordModal = function() {
+        showActionModal('repayment-record-modal');
+    };
+
+    window.closeRepaymentRecordModal = function() {
+        closeActionModal('repayment-record-modal');
+    };
+
     window.showPostVisitHandleModal = function() {
         showActionModal('post-visit-handle-modal');
     };
@@ -1143,6 +1151,7 @@
         var postVisitHandleModal = document.getElementById('post-visit-handle-modal');
         var postVisitDetailModal = document.getElementById('post-visit-detail-modal');
         var classificationRecordModal = document.getElementById('classification-record-modal');
+        var repaymentRecordModal = document.getElementById('repayment-record-modal');
         var investClassificationDetailModal = document.getElementById('invest-classification-detail-modal');
         var investClassificationApprovalModal = document.getElementById('invest-classification-approval-modal');
         var investClassificationChangeModal = document.getElementById('invest-classification-change-modal');
@@ -1183,6 +1192,10 @@
 
         if (classificationRecordModal && event.target === classificationRecordModal) {
             closeClassificationRecordModal();
+        }
+
+        if (repaymentRecordModal && event.target === repaymentRecordModal) {
+            closeRepaymentRecordModal();
         }
 
         if (investClassificationDetailModal && event.target === investClassificationDetailModal) {
