@@ -81,6 +81,7 @@
                     if (targetContent) {
                         targetContent.classList.add('active');
                     }
+                    resetDefaultSubtab(tabId);
                 });
             })(i);
         }
@@ -133,6 +134,22 @@
         var targetContent = document.getElementById(subtabId);
         if (targetContent) {
             targetContent.classList.add('active');
+        }
+    }
+
+    function resetDefaultSubtab(tabId) {
+        var defaultSubtabs = {
+            'client-library': 'enterprise-clients',
+            'invest-management': 'post-invest-visit'
+        };
+        var defaultSubtabId = defaultSubtabs[tabId];
+        if (!defaultSubtabId) {
+            return;
+        }
+
+        var tab = document.querySelector('#' + tabId + ' .center-tab[data-subtab="' + defaultSubtabId + '"]');
+        if (tab) {
+            activateCenterTab(tab);
         }
     }
 
@@ -857,6 +874,38 @@
         closeActionModal('post-visit-handle-modal');
     };
 
+    window.showPostVisitDetailModal = function() {
+        showActionModal('post-visit-detail-modal');
+    };
+
+    window.closePostVisitDetailModal = function() {
+        closeActionModal('post-visit-detail-modal');
+    };
+
+    window.showInvestClassificationDetail = function() {
+        showActionModal('invest-classification-detail-modal');
+    };
+
+    window.closeInvestClassificationDetail = function() {
+        closeActionModal('invest-classification-detail-modal');
+    };
+
+    window.showInvestClassificationApprovalRecord = function() {
+        showActionModal('invest-classification-approval-modal');
+    };
+
+    window.closeInvestClassificationApprovalRecord = function() {
+        closeActionModal('invest-classification-approval-modal');
+    };
+
+    window.showInvestClassificationChangeRecord = function() {
+        showActionModal('invest-classification-change-modal');
+    };
+
+    window.closeInvestClassificationChangeRecord = function() {
+        closeActionModal('invest-classification-change-modal');
+    };
+
     window.savePostVisitHandle = function() {
         closePostVisitHandleModal();
     };
@@ -1057,7 +1106,11 @@
         var reportRecordModal = document.getElementById('report-record-modal');
         var postVisitRecordModal = document.getElementById('post-visit-record-modal');
         var postVisitHandleModal = document.getElementById('post-visit-handle-modal');
+        var postVisitDetailModal = document.getElementById('post-visit-detail-modal');
         var classificationRecordModal = document.getElementById('classification-record-modal');
+        var investClassificationDetailModal = document.getElementById('invest-classification-detail-modal');
+        var investClassificationApprovalModal = document.getElementById('invest-classification-approval-modal');
+        var investClassificationChangeModal = document.getElementById('invest-classification-change-modal');
         var loanApprovalRecordModal = document.getElementById('loan-approval-record-modal');
         var businessApprovalFlowModal = document.getElementById('business-approval-flow-modal');
         var businessApprovalRecordModal = document.getElementById('business-approval-record-detail-modal');
@@ -1089,8 +1142,24 @@
             closePostVisitHandleModal();
         }
 
+        if (postVisitDetailModal && event.target === postVisitDetailModal) {
+            closePostVisitDetailModal();
+        }
+
         if (classificationRecordModal && event.target === classificationRecordModal) {
             closeClassificationRecordModal();
+        }
+
+        if (investClassificationDetailModal && event.target === investClassificationDetailModal) {
+            closeInvestClassificationDetail();
+        }
+
+        if (investClassificationApprovalModal && event.target === investClassificationApprovalModal) {
+            closeInvestClassificationApprovalRecord();
+        }
+
+        if (investClassificationChangeModal && event.target === investClassificationChangeModal) {
+            closeInvestClassificationChangeRecord();
         }
 
         if (loanApprovalRecordModal && event.target === loanApprovalRecordModal) {
@@ -1149,7 +1218,11 @@
             closeReportRecordModal();
             closePostVisitRecordModal();
             closePostVisitHandleModal();
+            closePostVisitDetailModal();
             closeClassificationRecordModal();
+            closeInvestClassificationDetail();
+            closeInvestClassificationApprovalRecord();
+            closeInvestClassificationChangeRecord();
             closeLoanApprovalRecordModal();
             closeLoanWithdrawModal();
             closeApproveModal();
