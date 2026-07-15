@@ -4,6 +4,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         initTabs();
+        initMoreActions();
         initCenterTabs();
         initDetailTabs();
         initProjectApprovalTabs();
@@ -27,6 +28,7 @@
         var navItems = document.querySelectorAll('.nav-tabs .nav-item');
         var tabContents = document.querySelectorAll('.tab-content');
         var stageDetailPage = document.getElementById('stage-detail-page');
+        var moreToggle = document.querySelector('.nav-more-toggle');
 
         window.switchToTab = function(tabId) {
             var targetNav = document.querySelector('.nav-tabs .nav-item[data-tab="' + tabId + '"]');
@@ -41,12 +43,18 @@
                     for (var j = 0; j < navItems.length; j++) {
                         navItems[j].classList.remove('active');
                     }
+                    if (moreToggle) {
+                        moreToggle.classList.remove('active');
+                    }
 
                     for (var k = 0; k < tabContents.length; k++) {
                         tabContents[k].classList.remove('active');
                     }
 
                     this.classList.add('active');
+                    if (moreToggle && this.classList.contains('nav-more-item')) {
+                        moreToggle.classList.add('active');
+                    }
                     var tabId = this.getAttribute('data-tab');
                     var detailPage = document.getElementById('detail-page');
                     var projectApprovalPage = document.getElementById('project-approval-page');
@@ -55,6 +63,8 @@
                     var reportDetailPage = document.getElementById('report-detail-page');
                     var classificationDetailPage = document.getElementById('classification-detail-page');
                     var repaymentDetailPage = document.getElementById('repayment-detail-page');
+                    var postVisitHandlePage = document.getElementById('post-visit-handle-page');
+                    var stageRepaymentPlanPage = document.getElementById('stage-repayment-plan-page');
                     if (stageDetailPage) {
                         stageDetailPage.classList.remove('show');
                     }
@@ -79,6 +89,12 @@
                     if (repaymentDetailPage) {
                         repaymentDetailPage.classList.remove('show');
                     }
+                    if (postVisitHandlePage) {
+                        postVisitHandlePage.classList.remove('show');
+                    }
+                    if (stageRepaymentPlanPage) {
+                        stageRepaymentPlanPage.classList.remove('show');
+                    }
                     document.body.style.overflow = '';
 
                     var targetContent = document.getElementById(tabId);
@@ -89,6 +105,43 @@
                 });
             })(i);
         }
+    }
+
+    function initMoreActions() {
+        var more = document.querySelector('.nav-more');
+        var toggle = more ? more.querySelector('.nav-more-toggle') : null;
+        var menu = more ? more.querySelector('.nav-more-menu') : null;
+
+        if (!more || !toggle || !menu) {
+            return;
+        }
+
+        function setOpen(open) {
+            more.classList.toggle('open', open);
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+
+        toggle.addEventListener('click', function(event) {
+            event.stopPropagation();
+            setOpen(!more.classList.contains('open'));
+        });
+
+        menu.addEventListener('click', function() {
+            setOpen(false);
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!more.contains(event.target)) {
+                setOpen(false);
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && more.classList.contains('open')) {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
     }
 
     function initCenterTabs() {
@@ -248,7 +301,9 @@
             '.loan-workbench-table-wrap .loan-table',
             '.loan-table-wrapper.data-table-scroll .loan-table',
             '.loan-record-table-wrap .loan-table',
-            '.handled-table-wrap .handled-table'
+            '.handled-table-wrap .handled-table',
+            '.repayment-detail-page .repayment-plan-table',
+            '.repayment-detail-page .repayment-apply-table'
         ].join(','));
 
         for (var i = 0; i < tables.length; i++) {
@@ -529,12 +584,17 @@
     };
 
     window.openChangeDetailPage = function(businessId) {
+        var appHeader = document.querySelector('.header');
         var navTabs = document.querySelector('.nav-tabs');
         var tabContents = document.querySelectorAll('.tab-content');
         var detailPage = document.getElementById('change-detail-page');
         currentDetailSource = 'business-approval';
 
         initChangeDetailContent();
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
 
         if (navTabs) {
             navTabs.style.display = 'none';
@@ -878,12 +938,37 @@
         closeActionModal('repayment-record-modal');
     };
 
-    window.showPostVisitHandleModal = function() {
-        showActionModal('post-visit-handle-modal');
+    window.openPostVisitHandlePage = function() {
+        var appHeader = document.querySelector('.header');
+        var navTabs = document.querySelector('.nav-tabs');
+        var tabContents = document.querySelectorAll('.tab-content');
+        var detailPage = document.getElementById('post-visit-handle-page');
+        currentDetailSource = 'post-visit-approval';
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
+
+        if (navTabs) {
+            navTabs.style.display = 'none';
+        }
+
+        for (var i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+
+        if (detailPage) {
+            detailPage.classList.add('show');
+            document.body.style.overflow = '';
+            window.scrollTo(0, 0);
+        }
     };
 
-    window.closePostVisitHandleModal = function() {
-        closeActionModal('post-visit-handle-modal');
+    window.closePostVisitHandlePage = function() {
+        var detailPage = document.getElementById('post-visit-handle-page');
+        if (detailPage && detailPage.classList.contains('show')) {
+            window.goBack();
+        }
     };
 
     window.showPostVisitDetailModal = function() {
@@ -919,11 +1004,11 @@
     };
 
     window.savePostVisitHandle = function() {
-        closePostVisitHandleModal();
+        closePostVisitHandlePage();
     };
 
     window.submitPostVisitHandle = function() {
-        closePostVisitHandleModal();
+        closePostVisitHandlePage();
     };
 
     window.openClassificationDetailPage = function() {
@@ -1058,6 +1143,8 @@
         var stageDetailPage = document.getElementById('stage-detail-page');
         var classificationDetailPage = document.getElementById('classification-detail-page');
         var repaymentDetailPage = document.getElementById('repayment-detail-page');
+        var postVisitHandlePage = document.getElementById('post-visit-handle-page');
+        var stageRepaymentPlanPage = document.getElementById('stage-repayment-plan-page');
 
         if (detailPage) {
             detailPage.classList.remove('show');
@@ -1087,6 +1174,12 @@
         if (repaymentDetailPage) {
             repaymentDetailPage.classList.remove('show');
         }
+        if (postVisitHandlePage) {
+            postVisitHandlePage.classList.remove('show');
+        }
+        if (stageRepaymentPlanPage) {
+            stageRepaymentPlanPage.classList.remove('show');
+        }
 
         if (navTabs) {
             navTabs.style.display = '';
@@ -1115,6 +1208,10 @@
 
         if (targetNav) {
             targetNav.classList.add('active');
+            var moreToggle = document.querySelector('.nav-more-toggle');
+            if (moreToggle) {
+                moreToggle.classList.toggle('active', targetNav.classList.contains('nav-more-item'));
+            }
         }
 
         if (targetContent) {
@@ -1148,7 +1245,6 @@
         var loanRecordModal = document.getElementById('loan-record-modal');
         var reportRecordModal = document.getElementById('report-record-modal');
         var postVisitRecordModal = document.getElementById('post-visit-record-modal');
-        var postVisitHandleModal = document.getElementById('post-visit-handle-modal');
         var postVisitDetailModal = document.getElementById('post-visit-detail-modal');
         var classificationRecordModal = document.getElementById('classification-record-modal');
         var repaymentRecordModal = document.getElementById('repayment-record-modal');
@@ -1180,10 +1276,6 @@
 
         if (postVisitRecordModal && event.target === postVisitRecordModal) {
             closePostVisitRecordModal();
-        }
-
-        if (postVisitHandleModal && event.target === postVisitHandleModal) {
-            closePostVisitHandleModal();
         }
 
         if (postVisitDetailModal && event.target === postVisitDetailModal) {
@@ -1265,7 +1357,7 @@
             closeLoanRecordModal();
             closeReportRecordModal();
             closePostVisitRecordModal();
-            closePostVisitHandleModal();
+            closePostVisitHandlePage();
             closePostVisitDetailModal();
             closeClassificationRecordModal();
             closeInvestClassificationDetail();
@@ -1279,6 +1371,12 @@
             closePhotoDetailModal();
             closeEnterpriseClientDetail();
             closeIndividualClientDetail();
+            if (window.closeStageRepaymentPlanPage) {
+                closeStageRepaymentPlanPage();
+            }
+            if (window.closeAssetDetail) {
+                closeAssetDetail();
+            }
         }
     });
 
@@ -1715,29 +1813,62 @@
 var stageData = {
     'E2025061100001': {
         companyName: '北京易诚互动网络技术股份有限公司',
+        creditCode: '911101085996989854',
+        currentStageIndex: 2,
         stages: [
-            { label: '立项', time: '2025-06-11', operator: '董瑾', status: '已完成' },
-            { label: '尽调', time: '2025-06-15', operator: '张伟', status: '进行中' },
-            { label: '审批', time: '--', operator: '--', status: '待处理' },
-            { label: '合同', time: '--', operator: '--', status: '待处理' },
-            { label: '放款', time: '--', operator: '--', status: '待处理' },
-            { label: '还款', time: '--', operator: '--', status: '待处理' },
-            { label: '结清', time: '--', operator: '--', status: '待处理' }
+            { key: 'enterprise', label: '企业信息', time: '2025-06-10', operator: '董瑾', status: '已完成' },
+            { key: 'initiation', label: '立项', time: '2025-06-11', operator: '董瑾', status: '已完成' },
+            { key: 'investigation', label: '尽调', time: '2025-06-15', operator: '张伟', status: '进行中' },
+            { key: 'contract', label: '合同', time: '--', operator: '--', status: '待处理' },
+            { key: 'loan', label: '放款', time: '--', operator: '--', status: '待处理' },
+            { key: 'repayment', label: '还款', time: '--', operator: '--', status: '待处理' }
         ]
     },
     'E2025061100003': {
         companyName: '浙江臻善科技股份有限公司',
+        creditCode: '91330110736036137L',
+        currentStageIndex: 1,
         stages: [
-            { label: '立项', time: '--', operator: '董瑾', status: '进行中' },
-            { label: '尽调', time: '--', operator: '--', status: '待处理' },
-            { label: '审批', time: '--', operator: '--', status: '待处理' },
-            { label: '合同', time: '--', operator: '--', status: '待处理' },
-            { label: '放款', time: '--', operator: '--', status: '待处理' },
-            { label: '还款', time: '--', operator: '--', status: '待处理' },
-            { label: '结清', time: '--', operator: '--', status: '待处理' }
+            { key: 'enterprise', label: '企业信息', time: '2025-06-09', operator: '董瑾', status: '已完成' },
+            { key: 'initiation', label: '立项', time: '--', operator: '董瑾', status: '进行中' },
+            { key: 'investigation', label: '尽调', time: '--', operator: '--', status: '待处理' },
+            { key: 'contract', label: '合同', time: '--', operator: '--', status: '待处理' },
+            { key: 'loan', label: '放款', time: '--', operator: '--', status: '待处理' },
+            { key: 'repayment', label: '还款', time: '--', operator: '--', status: '待处理' }
         ]
     }
 };
+
+function createAdvancedStageRecord(companyName, creditCode, currentStageIndex) {
+    var labels = [
+        { key: 'enterprise', label: '企业信息' },
+        { key: 'initiation', label: '立项' },
+        { key: 'investigation', label: '尽调' },
+        { key: 'contract', label: '合同' },
+        { key: 'loan', label: '放款' },
+        { key: 'repayment', label: '还款' }
+    ];
+    var stages = [];
+    for (var i = 0; i < labels.length; i++) {
+        stages.push({
+            key: labels[i].key,
+            label: labels[i].label,
+            time: i <= currentStageIndex ? ['2026-03-01', '2026-03-11', '2026-03-20', '2026-03-27', '2026-03-31', '2026-04-08'][i] : '--',
+            operator: i <= currentStageIndex ? (i < 3 ? '董瑾' : '单士博') : '--',
+            status: i < currentStageIndex ? '已完成' : (i === currentStageIndex ? '进行中' : '待处理')
+        });
+    }
+    return {
+        companyName: companyName,
+        creditCode: creditCode,
+        currentStageIndex: currentStageIndex,
+        stages: stages
+    };
+}
+
+stageData.E2026032700004 = createAdvancedStageRecord('济南联合百川园区运营有限公司', '91370100MA3N8X6P2Q', 3);
+stageData.E2026033100005 = createAdvancedStageRecord('商河县产业投资开发集团有限公司', '91370126MA3R7X8K5M', 4);
+stageData.E2026040800006 = createAdvancedStageRecord('济南金控产业发展有限公司', '91370100MA3Q6Y9L8N', 5);
 var currentStageClientId = '';
 
 window.openStageDetail = function(clientId, stepClass) {
@@ -1752,6 +1883,8 @@ window.openStageDetail = function(clientId, stepClass) {
     if (titleEl) { titleEl.textContent = data.companyName; }
     if (headerCompany) { headerCompany.textContent = data.companyName; }
 
+    configureStageNavigation(data.currentStageIndex);
+
     var navItems = document.querySelectorAll('.nav-tabs .nav-item');
     var tabContents = document.querySelectorAll('.tab-content');
     var navTabs = document.querySelector('.nav-tabs');
@@ -1765,11 +1898,30 @@ window.openStageDetail = function(clientId, stepClass) {
         document.body.style.overflow = 'hidden';
     }
 
-    var stepNum = 0;
-    if (stepClass === 'step-2') { stepNum = 1; }
-
-    switchStage(stepNum);
+    switchStage(data.currentStageIndex);
 };
+
+function configureStageNavigation(currentStageIndex) {
+    var navItems = document.querySelectorAll('.stage-nav-item');
+
+    for (var i = 0; i < navItems.length; i++) {
+        var item = navItems[i];
+        var itemIndex = parseInt(item.getAttribute('data-stage-index'), 10);
+        var isFutureStage = itemIndex > currentStageIndex;
+
+        item.hidden = isFutureStage;
+        item.disabled = isFutureStage;
+        item.classList.remove('active');
+        item.classList.toggle('current-stage', itemIndex === currentStageIndex);
+        item.classList.toggle('last-visible', itemIndex === currentStageIndex);
+
+        if (itemIndex === currentStageIndex) {
+            item.setAttribute('aria-current', 'step');
+        } else {
+            item.removeAttribute('aria-current');
+        }
+    }
+}
 
 window.closeStageDetail = function() {
     var stagePage = document.getElementById('stage-detail-page');
@@ -1787,57 +1939,720 @@ window.closeStageDetail = function() {
 
     window.switchStage = function(stageIndex) {
         var data = stageData[currentStageClientId];
-        if (!data) { return; }
+        stageIndex = parseInt(stageIndex, 10);
+        if (!data || isNaN(stageIndex) || stageIndex < 0 || stageIndex > data.currentStageIndex) {
+            return;
+        }
+
         var stage = data.stages[stageIndex];
-        var table = document.getElementById('stage-detail-table');
+        if (!stage) { return; }
+
         var navItems = document.querySelectorAll('.stage-nav-item');
 
         for (var i = 0; i < navItems.length; i++) {
-            navItems[i].classList.remove('active');
-            var dot = navItems[i].querySelector('.stage-dot');
+            var navItem = navItems[i];
+            var navIndex = parseInt(navItem.getAttribute('data-stage-index'), 10);
+            navItem.classList.remove('active');
+            var dot = navItem.querySelector('.stage-dot');
             if (dot) {
                 dot.classList.remove('active');
                 dot.classList.remove('completed');
-                if (i < stageIndex) {
+                if (navIndex < data.currentStageIndex) {
                     dot.classList.add('completed');
-                } else if (i === stageIndex) {
+                } else if (navIndex === data.currentStageIndex) {
                     dot.classList.add('active');
                 }
             }
         }
+
         var targetNav = document.querySelector('.stage-nav-item[data-stage-index="' + stageIndex + '"]');
-        if (!targetNav && navItems[stageIndex]) {
-            targetNav = navItems[stageIndex];
-        }
         if (targetNav) {
             targetNav.classList.add('active');
-            var targetDot = targetNav.querySelector('.stage-dot');
-            if (targetDot) {
-                targetDot.classList.add('active');
+        }
+
+        renderStageFields(data, stage);
+
+        var currentStage = data.stages[data.currentStageIndex];
+        var currentLabel = document.getElementById('stage-current-label');
+        if (currentLabel && currentStage) {
+            currentLabel.textContent = '当前阶段：' + currentStage.label;
+        }
+
+        setText('stage-phase-tag', stage.label);
+        setText('stage-process-title', stage.label === '企业信息' ? '企业信息' : stage.label + '信息');
+    };
+
+    function renderStageFields(data, stage) {
+        var target = document.getElementById('stage-project-info');
+        if (!target) { return; }
+
+        activateStageInfoPanel();
+
+        var source = null;
+        if (stage.key === 'initiation') {
+            source = document.getElementById('project-info-panel');
+        } else if (stage.key === 'investigation') {
+            source = document.getElementById('project');
+        } else if (stage.key === 'loan') {
+            source = document.getElementById('loan-project');
+        } else if (stage.key === 'contract') {
+            renderContractStage(target, data, stage);
+            return;
+        } else if (stage.key === 'repayment') {
+            renderRepaymentStage(target, data, stage);
+            return;
+        }
+
+        if (source) {
+            var clone = source.cloneNode(true);
+            hydrateStageTemplate(clone, data, stage);
+            sanitizeStageTemplate(clone);
+            target.innerHTML = '';
+            while (clone.firstChild) {
+                target.appendChild(clone.firstChild);
+            }
+            target.classList.add('stage-rich-content');
+            return;
+        }
+
+        target.classList.remove('stage-rich-content');
+        target.innerHTML = '<section class="stage-shot-card"><h3 class="stage-shot-section-title" id="stage-process-title"></h3><div class="stage-shot-form" id="stage-simple-form"></div></section>';
+        var form = document.getElementById('stage-simple-form');
+        var amount = currentStageClientId === 'E2025061100001' ? '50,000,000.00 元' : '30,000,000.00 元';
+        var fieldsByStage = {
+            enterprise: [
+                ['企业名称', data.companyName],
+                ['统一社会信用代码', data.creditCode],
+                ['客户号', currentStageClientId],
+                ['企业类型', '股份有限公司'],
+                ['注册地址', data.companyName.indexOf('北京') === 0 ? '北京市海淀区' : '浙江省杭州市'],
+                ['经营状态', '正常']
+            ],
+            initiation: [
+                ['项目名称', data.companyName],
+                ['业务品种', '小额贷款'],
+                ['立项时间', stage.time],
+                ['申请金额', amount],
+                ['负责部门', '业务部'],
+                ['主办业务经理', '董瑾']
+            ],
+            investigation: [
+                ['尽调时间', stage.time],
+                ['检查方式', '非现场'],
+                ['主担保方式', '保证'],
+                ['详细担保方式', '企业保证'],
+                ['投放行业', '信息技术服务业'],
+                ['企业规模', '中型企业'],
+                ['是否涉农', '否'],
+                ['尽调报告', '尽调报告.pdf']
+            ],
+            contract: [
+                ['合同编号', '--'],
+                ['签订日期', stage.time],
+                ['合同金额', amount],
+                ['合同期限', '--'],
+                ['担保方式', '--'],
+                ['经办人', stage.operator]
+            ],
+            loan: [
+                ['借据号', '--'],
+                ['放款日期', stage.time],
+                ['放款金额', amount],
+                ['到期日期', '--'],
+                ['执行年利率', '--'],
+                ['经办人', stage.operator]
+            ],
+            repayment: [
+                ['借据号', '--'],
+                ['还款日期', stage.time],
+                ['应还本金', '--'],
+                ['应还利息', '--'],
+                ['实还金额', '--'],
+                ['剩余本金', '--']
+            ]
+        };
+        var fields = fieldsByStage[stage.key] || [];
+        fields.push(['环节状态', stage.status]);
+
+        form.innerHTML = '';
+        for (var i = 0; i < fields.length; i++) {
+            var field = document.createElement('label');
+            var label = document.createElement('span');
+            var input = document.createElement('input');
+
+            field.className = 'stage-shot-field';
+            label.textContent = fields[i][0];
+            input.type = 'text';
+            input.value = fields[i][1];
+            input.readOnly = true;
+
+            field.appendChild(label);
+            field.appendChild(input);
+            form.appendChild(field);
+        }
+    }
+
+    function activateStageInfoPanel() {
+        var tabs = document.querySelectorAll('#stage-detail-page .stage-tab');
+        var panels = document.querySelectorAll('#stage-detail-page .stage-tab-content');
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.toggle('active', tabs[i].getAttribute('data-stage-panel') === 'stage-project-info');
+        }
+        for (var j = 0; j < panels.length; j++) {
+            panels[j].classList.toggle('active', panels[j].id === 'stage-project-info');
+        }
+    }
+
+    function sanitizeStageTemplate(container) {
+        var idNodes = container.querySelectorAll('[id]');
+        var namedNodes = container.querySelectorAll('[name]');
+        for (var i = 0; i < idNodes.length; i++) {
+            idNodes[i].removeAttribute('id');
+        }
+        for (var j = 0; j < namedNodes.length; j++) {
+            namedNodes[j].setAttribute('name', 'stage-' + namedNodes[j].getAttribute('name'));
+        }
+    }
+
+    function hydrateStageTemplate(container, data, stage) {
+        if (stage.key === 'initiation') {
+            hydrateInitiationTemplate(container, data, stage);
+        } else if (stage.key === 'investigation') {
+            hydrateInvestigationTemplate(container, data, stage);
+        } else if (stage.key === 'loan') {
+            hydrateLoanTemplate(container, data, stage);
+        }
+    }
+
+    function hydrateInitiationTemplate(container, data, stage) {
+        var amount = currentStageClientId === 'E2025061100001' ? '50,000,000.00' : '30,000,000.00';
+        setStageTemplateField(container, '项目名称', data.companyName);
+        setStageTemplateField(container, '初次接洽时间', '2026-02-26');
+        setStageTemplateField(container, '意向金额', amount);
+        setStageTemplateField(container, '资金用途', '经营周转');
+        setStageTemplateField(container, '立项时间', stage.time === '--' ? '2026-03-11 09:00:00' : stage.time + ' 09:00:00');
+        setStageTemplateField(container, '客户类型', '首次合作客户');
+        setStageTemplateField(container, '业务类型', '贷款');
+        setStageTemplateField(container, '还款来源', '经营回款');
+
+        var locationField = findStageTemplateField(container, '客户地点');
+        if (locationField) {
+            var locationSelect = locationField.querySelector('select');
+            var locationInput = locationField.querySelector('input');
+            setSelectValue(locationSelect, data.companyName.indexOf('北京') === 0 ? '北京市 / 北京市 / 海淀区' : '浙江省 / 杭州市 / 西湖区');
+            if (locationInput) {
+                locationInput.value = data.companyName.indexOf('北京') === 0 ? '北京市海淀区中关村科技园' : '浙江省杭州市西湖区科技园';
             }
         }
 
-        var html = '';
-        html += '<div class="info-row"><span class="label">环节名称：</span><span class="value" id="stage-phase-name">' + stage.label + '</span></div>';
-        html += '<div class="info-row"><span class="label">处理时间：</span><span class="value" id="stage-handler-time">' + stage.time + '</span></div>';
-        html += '<div class="info-row"><span class="label">处理人：</span><span class="value" id="stage-handler-name">' + stage.operator + '</span></div>';
-        html += '<div class="info-row"><span class="label">状态：</span><span class="value" id="stage-handler-status">' + stage.status + '</span></div>';
-        html += '<div class="info-row"><span class="label">客户名称：</span><span class="value">' + data.companyName + '</span></div>';
-        html += '<div class="info-row"><span class="label">负责部门：</span><span class="value">业务部</span></div>';
-        html += '<div class="info-row"><span class="label">主办业务经理：</span><span class="value">董瑾</span></div>';
-        if (table) { table.innerHTML = html; }
+        var reportField = findStageTemplateField(container, '立项报告');
+        if (reportField) {
+            reportField.classList.add('required');
+            var reportRadios = reportField.querySelectorAll('input[type="radio"]');
+            if (reportRadios[0]) { reportRadios[0].checked = false; }
+            if (reportRadios[1]) { reportRadios[1].checked = true; }
+            var reportUpload = reportField.querySelector('.project-upload-line');
+            if (reportUpload) { reportUpload.style.display = 'none'; }
+        }
 
-        var statusTag = document.getElementById('stage-status-tag');
-        if (statusTag) { statusTag.textContent = stage.status; }
+        var description = findStageTemplateField(container, '项目简介');
+        var textarea = description ? description.querySelector('textarea') : null;
+        if (textarea) {
+            textarea.value = data.companyName + '经营情况稳定，本次融资主要用于补充企业日常经营周转资金。项目主体资信良好，业务模式清晰，还款来源为经营回款。';
+        }
 
-        var currentLabel = document.getElementById('stage-current-label');
-        if (currentLabel) { currentLabel.textContent = '当前：' + stage.label + '阶段'; }
+        setStageFileChips(container, '其他资料', [
+            '借款人联合百川决议.png',
+            '担保人企业资料.pdf',
+            '借款人企业资料.pdf',
+            '投保证担保决议1.png',
+            '投质押担保决议1.png',
+            '投保证担保决议2.png'
+        ]);
+    }
 
-        setText('stage-phase-tag', stage.label === '尽调' ? '尽调调查' : stage.label + '阶段');
-        setText('stage-phase-name', stage.label);
-        setText('stage-handler-time', stage.time);
-        setText('stage-handler-name', stage.operator);
-        setText('stage-handler-status', stage.status);
-        setText('stage-process-title', stage.label + '信息');
+    function hydrateInvestigationTemplate(container, data, stage) {
+        setStageTemplateField(container, '尽调时间', stage.time === '--' ? '2026-03-02 09:00:00' : stage.time + ' 09:00:00');
+        setStageTemplateField(container, '详细担保方式', '质押、保证');
+        setStageTemplateField(container, '主担保方式', '质押');
+        setStageTemplateField(container, '投放行业', '租赁和商务服务业 / 商务服务业 / 综合管理服务');
+        setStageTemplateField(container, '企业规模', '小型');
+        setStageTemplateField(container, '是否涉农', '是');
+        setStageTemplateField(container, '业务模式', '授信');
+        setStageTemplateField(container, '上年末总资产', '698,012,600.00');
+        setStageTemplateField(container, '上年末纳税总额', '6,213,600.00');
+        setStageTemplateField(container, '上年末净资产', '216,739,900.00');
+        setStageTemplateField(container, '上年营业收入', '51,612,600.00');
+        setStageTemplateField(container, '上年净利润', '2,069,400.00');
+        setStageTemplateField(container, '预授信金额', '23,000,000.00');
+        setStageTemplateField(container, '授信利率', '6.98');
+        setStageTemplateField(container, '授信期限', '24');
+        setStageTemplateField(container, '资金用途', '经营周转');
+        setStageTemplateField(container, '是否董事长审批', '是');
+
+        setStageFileChips(container, '尽调报告', [data.companyName + '调查报告.pdf']);
+        setStageFileChips(container, '征信情况', ['企业征信报告.pdf', '联合百川征信报告.pdf']);
+        setStageFileChips(container, '其他资料', [
+            '借款人联合百川决议.png',
+            '担保人企业资料.pdf',
+            '借款人企业资料.pdf',
+            '投保证担保决议1.png',
+            '投质押担保决议1.png',
+            '投保证担保决议2.png'
+        ]);
+
+        hydrateInvestigationTables(container);
+        hydrateInvestigationOpinions(container, data);
+    }
+
+    function renderContractStage(target, data, stage) {
+        target.classList.add('stage-rich-content');
+        target.innerHTML =
+            '<section class="stage-contract-section">' +
+                '<h3 class="stage-contract-title">合同信息</h3>' +
+                '<div class="stage-contract-grid">' +
+                    stageContractField('合同号', 'S（2026）额度借第009号-01', true) +
+                    stageContractAmountField('合同总额', '23,000,000.00', '贰仟叁佰万元整', true) +
+                    '<div class="stage-contract-field required"><span>结算周期</span><div class="stage-contract-radio"><label><input type="radio" checked>自然月</label><label><input type="radio">标准月</label></div></div>' +
+                    stageContractField('合同起始日', stage.time, true) +
+                    stageContractField('合同到期日', '2028-03-27', true) +
+                    stageContractUnitField('合同期限', '731', '天', false) +
+                    stageContractUnitField('年利率', '6.98', '%', true) +
+                    stageContractUnitField('月利率', '5.820000', '‰', false) +
+                    stageContractField('还款方式', '按月付息，到期一次性还本', true) +
+                    '<div class="stage-contract-field required"><span>罚息费率</span><div class="stage-contract-composite"><b>按比例上浮</b><b>100.00 %</b><em>计</em><b>13.96 %</b></div></div>' +
+                    '<div class="stage-contract-field required"><span>罚息类型</span><div class="stage-contract-radio"><label><input type="radio" checked>按应收本息合计收取</label><label><input type="radio">按本金收取</label></div></div>' +
+                    '<div class="stage-contract-field"><span>收息方式</span><div class="stage-contract-radio"><label><input type="radio" checked>按单利收取</label><label><input type="radio">按复利收取</label></div></div>' +
+                    '<div class="stage-contract-field required"><span>额度类型</span><div class="stage-contract-radio"><label><input type="radio">非循环</label><label><input type="radio" checked>循环</label></div></div>' +
+                    stageContractAmountField('合同余额', '10,000,000.00', '壹仟万元整', false) +
+                    '<div class="stage-contract-field stage-contract-files"><span>其他资料</span>' + buildStageFileMarkup([
+                        '借款人联合百川决议.png', '担保人企业资料.pdf', '借款人企业资料.pdf',
+                        '投保证担保决议1.png', '投质押担保决议1.png', '投保证担保决议2.png'
+                    ]) + '</div>' +
+                '</div>' +
+            '</section>';
+    }
+
+    function stageContractField(label, value, required) {
+        return '<label class="stage-contract-field' + (required ? ' required' : '') + '"><span>' + label + '</span><input type="text" value="' + value + '" readonly></label>';
+    }
+
+    function stageContractUnitField(label, value, unit, required) {
+        return '<label class="stage-contract-field' + (required ? ' required' : '') + '"><span>' + label + '</span><div class="stage-contract-unit"><input type="text" value="' + value + '" readonly><em>' + unit + '</em></div></label>';
+    }
+
+    function stageContractAmountField(label, value, uppercase, required) {
+        return '<div class="stage-contract-field' + (required ? ' required' : '') + '"><span>' + label + '</span><div class="stage-contract-amount"><div class="stage-contract-unit"><input type="text" value="' + value + '" readonly><em>元</em></div><b>大写：' + uppercase + '</b></div></div>';
+    }
+
+    function buildStageFileMarkup(fileNames) {
+        var html = '<div class="stage-file-list">';
+        for (var i = 0; i < fileNames.length; i++) {
+            html += '<span class="stage-file-chip">⌕ ' + fileNames[i] + '</span>';
+        }
+        return html + '<button class="stage-file-download" type="button" aria-label="下载附件">↓</button></div>';
+    }
+
+    function hydrateLoanTemplate(container, data, stage) {
+        var sections = container.querySelectorAll('.loan-section');
+        for (var i = sections.length - 1; i >= 0; i--) {
+            var title = sections[i].querySelector('.loan-section-title');
+            var titleText = title ? title.textContent.trim() : '';
+            if (titleText === '底层资产' || titleText === '增信措施') {
+                sections[i].parentNode.removeChild(sections[i]);
+            } else if (titleText === '放款信息') {
+                title.textContent = '放款信息-1';
+            }
+        }
+
+        var infoTables = container.querySelectorAll('.loan-info-table');
+        if (infoTables[0]) {
+            infoTables[0].querySelector('tbody').innerHTML =
+                '<tr><th>借据号</th><td>J济金控小贷(2026)额度借第009号-01</td><th>放款日期</th><td>' + stage.time + '</td><th>到期日期</th><td>2027-03-30</td><th>借款天数</th><td>364 天</td></tr>' +
+                '<tr><th>放款金额</th><td>13,000,000.00 元</td><th>年利率</th><td>6.98 %</td><th>罚息率</th><td>13.96 %</td><th>结息日</th><td>8</td></tr>' +
+                '<tr><th>结息日计息方式</th><td>下期收取</td><th>放款余额</th><td>13,000,000.00 元</td><th>是否结清</th><td>未结清</td><th>放款条件</th><td>——</td></tr>' +
+                '<tr><th colspan="2">是否董事长审批</th><td colspan="6">是</td></tr>' +
+                '<tr><th colspan="2">合同、协议、借据、支用申请书等</th><td colspan="6">暂无附件~</td></tr>' +
+                '<tr><th colspan="2">企业章程、决议</th><td colspan="6">暂无附件~</td></tr>' +
+                '<tr><th colspan="2">公司内部决策文件</th><td colspan="6">暂无附件~</td></tr>' +
+                '<tr><th colspan="2">外部信息查询</th><td colspan="6">暂无附件~</td></tr>' +
+                '<tr><th colspan="2">其他</th><td colspan="6">' + buildStageFileMarkup([
+                    '最高额保证合同.pdf', '开户资料.jpg', '用款申请书.jpg', '借款人联合百川决议.png',
+                    '客户告知书.pdf', '质押登记.jpg', '企业征信.pdf', '放款前资料审查确认单.pdf'
+                ]) + '</td></tr>';
+        }
+
+        if (infoTables[1]) {
+            infoTables[1].querySelector('tbody').innerHTML =
+                '<tr><th>收款人姓名</th><td>' + data.companyName + '</td><th>收款人开户行</th><td>中国农业银行股份有限公司商河县支行</td><th>收款人账户</th><td>15150101040020152</td><th>是否转介</th><td>公司转介</td></tr>' +
+                '<tr><th>款项性质</th><td>——</td><th colspan="2">放款依据</th><td colspan="4">——</td></tr>' +
+                '<tr><th>联行号</th><td>——</td><th>申请部门</th><td>业务部</td><th>还款人账号</th><td>15150101040020152</td><th>还款人开户行</th><td>中国农业银行股份有限公司商河县支行</td></tr>' +
+                '<tr><th>主办名称</th><td>单士博</td><th>主办比例</th><td>35.00 %</td><th>主管名称</th><td>黄冠</td><th>主管比例</th><td>30.00 %</td></tr>' +
+                '<tr><th>审批经理</th><td>曾凯</td><th>风控经理</th><td>刁鹏</td><th>协办名称</th><td>宋波</td><th>协办比例</th><td>35.00 %</td></tr>';
+        }
+
+        var tools = container.querySelectorAll('.loan-section-tools button');
+        if (tools[1]) {
+            tools[1].setAttribute('onclick', 'openStageRepaymentPlanPage()');
+        }
+
+        var opinion = container.querySelector('.loan-opinion-row');
+        if (opinion) {
+            var person = opinion.querySelector('.loan-opinion-person span:last-child');
+            var content = opinion.querySelector('.loan-opinion-content');
+            var time = opinion.querySelector('.loan-opinion-time');
+            if (person) { person.textContent = '信贷二部/单士博'; }
+            if (content) { content.innerHTML = '<p>同意放款</p><p>暂无附件~</p>'; }
+            if (time) { time.textContent = '2026-03-31 14:26:12'; }
+            var second = opinion.cloneNode(true);
+            var secondPerson = second.querySelector('.loan-opinion-person span:last-child');
+            var secondTime = second.querySelector('.loan-opinion-time');
+            if (secondPerson) { secondPerson.textContent = '信贷一部/黄冠'; }
+            if (secondTime) { secondTime.textContent = '2026-03-31 14:28:04'; }
+            opinion.parentNode.appendChild(second);
+        }
+    }
+
+    function renderRepaymentStage(target, data, stage) {
+        target.classList.add('stage-rich-content');
+        target.innerHTML =
+            '<section class="stage-repayment-section">' +
+                '<div class="stage-repayment-heading"><h3>J济金控小贷(2026)额度借第009号-01-还款信息</h3><div><button type="button" onclick="openStageRepaymentPlanPage()">▣ 还款计划</button><button type="button">折叠</button></div></div>' +
+                '<table class="stage-repayment-info-table"><tbody>' +
+                    '<tr><th>借据号</th><td>J济金控小贷(2026)额度借第009号-01</td><th>放款金额</th><td>13,000,000.00 元</td><th>当前期次</th><td>1 / 13</td></tr>' +
+                    '<tr><th>计划还款日期</th><td>' + stage.time + '</td><th>实际还款日期</th><td>' + stage.time + '</td><th>还款类型</th><td>正常还款</td></tr>' +
+                    '<tr><th>还款金额</th><td>20,164.44 元</td><th>包含本金</th><td>0.00 元</td><th>包含利息</th><td>20,164.44 元</td></tr>' +
+                    '<tr><th>实收罚息金额</th><td colspan="5">0.00 元</td></tr>' +
+                    '<tr><th>减免罚息原因</th><td colspan="5">——<br>暂无附件~</td></tr>' +
+                    '<tr><th>备注</th><td colspan="5">——</td></tr>' +
+                '</tbody></table>' +
+                '<div class="stage-repayment-opinion"><h3>还款审批意见</h3>' +
+                    stageRepaymentOpinion('信贷二部/单士博', '暂无附件~') +
+                    stageRepaymentOpinion('信贷一部/黄冠', '请审批<br>暂无附件~') +
+                    stageRepaymentOpinion('济南金控小额贷款有限公司/高妙馨', '请审核<br>暂无附件~') +
+                    stageRepaymentOpinion('济南金控小额贷款有限公司/陈城成', '暂无附件~') +
+                '</div>' +
+            '</section>';
+    }
+
+    function stageRepaymentOpinion(person, content) {
+        return '<div class="stage-repayment-opinion-row"><div><span class="comment-avatar success">✓</span>' + person + '</div><p>' + content + '</p></div>';
+    }
+
+    window.openStageRepaymentPlanPage = function() {
+        var page = document.getElementById('stage-repayment-plan-page');
+        var body = document.getElementById('stage-plan-detail-body');
+        var clientName = document.getElementById('stage-plan-client-name');
+        var data = stageData[currentStageClientId];
+        if (clientName && data) {
+            clientName.textContent = data.companyName;
+        }
+        if (body) {
+            body.innerHTML = buildStageRepaymentPlanRows();
+        }
+        if (page) {
+            page.classList.add('show');
+        }
     };
+
+    window.closeStageRepaymentPlanPage = function() {
+        var page = document.getElementById('stage-repayment-plan-page');
+        if (page) {
+            page.classList.remove('show');
+        }
+    };
+
+    function buildStageRepaymentPlanRows() {
+        var dates = ['2026-04-08', '2026-05-08', '2026-06-08', '2026-07-08', '2026-08-08', '2026-09-08', '2026-10-08', '2026-11-08', '2026-12-08', '2027-01-08', '2027-02-08', '2027-03-08', '2027-03-30'];
+        var interests = ['20,164.44', '75,616.67', '78,137.22', '75,616.67', '78,137.22', '78,137.22', '75,616.67', '78,137.22', '75,616.67', '78,137.22', '78,137.22', '70,573.33', '57,386.67'];
+        var html = '';
+        for (var i = 0; i < dates.length; i++) {
+            var settled = i < 3;
+            var approving = i === 3;
+            var status = settled ? '已结清' : (approving ? '审批中' : '未结清');
+            var actualDate = settled ? dates[i] : '——';
+            var receivedInterest = settled ? interests[i] : '0.00';
+            var receivedTotal = settled ? interests[i] : (approving ? '0.00' : '——');
+            html += '<tr>' +
+                '<td>' + (i + 1) + '</td><td>' + dates[i] + '</td><td>' + actualDate + '</td><td>' + status + '</td>' +
+                '<td>' + (i === dates.length - 1 ? '13,000,000.00' : '0.00') + '</td><td>' + (settled ? '0.00' : '——') + '</td>' +
+                '<td>' + interests[i] + '</td><td>' + receivedInterest + '</td><td>0.00</td><td>0.00</td><td>' + (settled || approving ? '0.00' : '——') + '</td><td>' + (settled || approving ? '0.00' : '——') + '</td><td>' + receivedTotal + '</td><td>' + (settled || approving ? '0.00' : '——') + '</td>' +
+            '</tr>';
+        }
+        return html;
+    }
+
+    function findStageTemplateField(container, labelText) {
+        var fields = container.querySelectorAll('.project-field, .credit-field');
+        for (var i = 0; i < fields.length; i++) {
+            var children = fields[i].children;
+            for (var j = 0; j < children.length; j++) {
+                if (children[j].tagName === 'SPAN' && children[j].textContent.trim() === labelText) {
+                    return fields[i];
+                }
+            }
+        }
+        return null;
+    }
+
+    function setStageTemplateField(container, labelText, value) {
+        var field = findStageTemplateField(container, labelText);
+        if (!field) { return; }
+        var select = field.querySelector('select');
+        var textarea = field.querySelector('textarea');
+        var input = field.querySelector('input[type="text"]');
+        if (select) {
+            setSelectValue(select, value);
+        } else if (textarea) {
+            textarea.value = value;
+        } else if (input) {
+            input.value = value;
+        }
+    }
+
+    function setSelectValue(select, value) {
+        if (!select) { return; }
+        select.innerHTML = '';
+        var option = document.createElement('option');
+        option.textContent = value;
+        option.value = value;
+        select.appendChild(option);
+    }
+
+    function setStageFileChips(container, labelText, fileNames) {
+        var field = findStageTemplateField(container, labelText);
+        if (!field) { return; }
+        var fileArea = field.querySelector('.credit-file-row, .credit-empty-file, .project-upload-line');
+        if (!fileArea) { return; }
+        fileArea.className = 'stage-file-list';
+        fileArea.innerHTML = '';
+        for (var i = 0; i < fileNames.length; i++) {
+            var chip = document.createElement('span');
+            chip.className = 'stage-file-chip';
+            chip.textContent = '⌕ ' + fileNames[i];
+            fileArea.appendChild(chip);
+        }
+        var download = document.createElement('button');
+        download.className = 'stage-file-download';
+        download.type = 'button';
+        download.textContent = '↓';
+        download.setAttribute('aria-label', '下载附件');
+        fileArea.appendChild(download);
+    }
+
+    function findCreditSection(container, titleText) {
+        var sections = container.querySelectorAll('.credit-section');
+        for (var i = 0; i < sections.length; i++) {
+            var title = sections[i].querySelector('.credit-section-title');
+            if (title && title.textContent.trim() === titleText) {
+                return sections[i];
+            }
+        }
+        return null;
+    }
+
+    function hydrateInvestigationTables(container) {
+        var assetSection = findCreditSection(container, '底层资产');
+        var assetTables = assetSection ? assetSection.querySelectorAll('table') : [];
+        if (assetTables[0]) {
+            assetTables[0].querySelector('tbody').innerHTML =
+                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'mortgage\')">房产</button></td><td>91370126MA3R7X8K5M</td><td>鲁（2026）商河县不动产权第001028号</td><td>商河县产业投资开发集团有限公司</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>';
+        }
+        if (assetTables[1]) {
+            assetTables[1].querySelector('tbody').innerHTML =
+                '<tr><td>1</td><td>股权</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'pledge\')">产业投资集团持有的1000万股股权</button></td><td>10,000,000.00</td><td>产业投资集团有限公司</td><td>ZY20260302001</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>' +
+                '<tr><td>2</td><td>股权</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'pledge\')">产业投资集团持有的2300万股股权</button></td><td>23,000,000.00</td><td>产业投资集团有限公司</td><td>ZY20260302002</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>';
+        }
+
+        var guaranteeSection = findCreditSection(container, '增信措施');
+        var guaranteeTables = guaranteeSection ? guaranteeSection.querySelectorAll('table') : [];
+        if (guaranteeTables[0]) {
+            guaranteeTables[0].querySelector('tbody').innerHTML =
+                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'guarantor\')">昌晋升</button></td><td>370126198111091216</td><td>44</td><td>15908843351</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>';
+        }
+        if (guaranteeTables[1]) {
+            guaranteeTables[1].querySelector('tbody').innerHTML =
+                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'guarantee\')">商河县产业投资开发集团有限公司</button></td><td>91370126798891104N</td><td>25,000,000.00</td><td>提供连带责任保证</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>';
+        }
+    }
+
+    function getAssetDetailConfig(type) {
+        var configs = {
+            mortgage: {
+                title: '查看抵押物',
+                sectionTitle: '抵押物完整信息',
+                fields: [
+                    ['类别', '房产', true],
+                    ['权利人类型', '企业', true],
+                    ['权利人', '商河县产业投资开发集团有限公司', true],
+                    ['权利人证件类型', '统一社会信用代码', false],
+                    ['权利人证件号码', '91370126MA3R7X8K5M', false],
+                    ['权利证号', '鲁（2026）商河县不动产权第001028号', true],
+                    ['城市', '山东省 / 济南市 / 商河县', true],
+                    ['坐落', '商河县产业园区创业大道6号', true],
+                    ['面积（㎡）', '18,650.32', false],
+                    ['预评估价值（元）', '32,000,000.00', false],
+                    ['抵押开始时间', '2026-07-10', false],
+                    ['抵押结束时间', '2028-07-10', false],
+                    ['评估时间', '2026-07-08', false],
+                    ['评估公司', '山东中评恒信资产评估有限公司', false],
+                    ['是否一押', '是', false],
+                    ['债权人', '济南金控小额贷款有限公司', false],
+                    ['债权金额（元）', '25,000,000.00', false],
+                    ['抵押企业情况', '经营正常，抵押手续齐全。', false, true]
+                ],
+                files: ['不动产权证.pdf', '抵押物现场照片.jpg', '资产评估报告.pdf']
+            },
+            pledge: {
+                title: '查看质押物',
+                sectionTitle: '质押物完整信息',
+                fields: [
+                    ['类别', '股权', true],
+                    ['质押物描述', '产业投资集团持有的1000万股股权', false],
+                    ['名称', '产业投资集团持有的1000万股股权', true],
+                    ['评估公司', '山东中评恒信资产评估有限公司', false],
+                    ['评估时间', '2026-07-08', false],
+                    ['评估价值（元）', '10,000,000.00', true],
+                    ['质押人类型', '企业', false],
+                    ['质押人', '商河县产业投资开发集团有限公司', true],
+                    ['质押人证件类型', '企业营业执照', false],
+                    ['质押人证件号码', '91370126MA3R7X8K5M', false],
+                    ['质押物数量', '1', false],
+                    ['质押编号', 'ZY20260302001', false],
+                    ['质押价值（元）', '10,000,000.00', false],
+                    ['登记日期', '2026-07-13', false],
+                    ['有效时间', '2026-07-10 至 2028-07-10', false],
+                    ['备注', '质押登记资料完整，状态正常。', false, true]
+                ],
+                files: ['股权质押登记证明.jpg', '股权价值评估报告.pdf']
+            },
+            guarantor: {
+                title: '查看担保人',
+                sectionTitle: '担保人完整信息',
+                fields: [
+                    ['担保人姓名', '昌晋升', true],
+                    ['身份证号', '370126198111091216', true],
+                    ['年龄', '44', true],
+                    ['与客户关系', '企业负责人', false],
+                    ['联系方式', '15908843351', true],
+                    ['联系地址', '山东省 / 济南市 / 商河县', true],
+                    ['担保类型', '连带责任保证', false],
+                    ['担保名称', '商河县产业投资开发集团有限公司', false],
+                    ['职务', '董事长、党组织书记、法定代表人', false, true],
+                    ['年收入（元）', '0.00', false],
+                    ['家庭资产（元）', '0.00', false],
+                    ['保证开始时间', '2026-07-10', false],
+                    ['保证结束时间', '2028-07-10', false],
+                    ['保证人类型', '自然人', false],
+                    ['保证金额（元）', '25,000,000.00', false],
+                    ['登记时间', '2026-07-10', false],
+                    ['担保人描述', '个人信用状况良好，具备担保能力。', false, true],
+                    ['备注', '资料已核验。', false, true]
+                ],
+                files: ['担保人身份证.pdf', '个人征信报告.pdf'],
+                extraTitle: '固定资产',
+                extraHeaders: ['类型', '购买时间', '估值（元）', '备注', '地址', '附件']
+            },
+            guarantee: {
+                title: '查看担保',
+                sectionTitle: '担保企业完整信息',
+                fields: [
+                    ['担保企业名称', '商河县产业投资开发集团有限公司', true],
+                    ['统一社会信用代码', '91370126798891104N', true],
+                    ['近一年收入（元）', '1,611,249,300.00', false],
+                    ['担保价值（元）', '25,000,000.00', false],
+                    ['所在位置', '山东省 / 济南市 / 商河县', false],
+                    ['调查日期', '2026-07-08', false],
+                    ['登记时间', '2026-07-10', false],
+                    ['担保人类型', '企业', false],
+                    ['保证金额（元）', '25,000,000.00', false],
+                    ['保证开始时间', '2026-07-10', false],
+                    ['保证结束时间', '2028-07-10', false],
+                    ['担保描述', '为本项目提供连带责任保证担保。', false, true],
+                    ['备注', '担保企业经营正常，担保资料完整。', false, true]
+                ],
+                files: ['担保企业营业执照.pdf', '担保决议.pdf', '企业征信报告.pdf'],
+                extraTitle: '经营信息',
+                extraHeaders: ['核验时间', '在投余额（元）', '月还款（元）', '到期时间']
+            }
+        };
+        return configs[type] || null;
+    }
+
+    function buildAssetDetailMarkup(config) {
+        var html = '<section class="asset-detail-section"><h3>' + config.sectionTitle + '</h3><div class="asset-detail-grid">';
+        for (var i = 0; i < config.fields.length; i++) {
+            var field = config.fields[i];
+            html += '<div class="asset-detail-field' + (field[3] ? ' wide' : '') + '">' +
+                '<span' + (field[2] ? ' class="required"' : '') + '>' + field[0] + '</span>' +
+                '<div>' + field[1] + '</div></div>';
+        }
+        html += '</div></section>';
+
+        if (config.extraTitle && config.extraHeaders) {
+            html += '<section class="asset-detail-section"><h3>' + config.extraTitle + '</h3><div class="asset-detail-table-wrap"><table class="asset-detail-table"><thead><tr>';
+            for (var j = 0; j < config.extraHeaders.length; j++) {
+                html += '<th>' + config.extraHeaders[j] + '</th>';
+            }
+            html += '</tr></thead><tbody><tr><td colspan="' + config.extraHeaders.length + '">暂无数据</td></tr></tbody></table></div></section>';
+        }
+
+        html += '<section class="asset-detail-section"><h3>附件资料</h3><div class="asset-detail-files">';
+        for (var k = 0; k < config.files.length; k++) {
+            html += '<button type="button">⌕ ' + config.files[k] + '</button>';
+        }
+        html += '</div></section>';
+        return html;
+    }
+
+    window.openAssetDetail = function(type) {
+        var config = getAssetDetailConfig(type);
+        var modal = document.getElementById('asset-detail-modal');
+        var title = document.getElementById('asset-detail-title');
+        var body = document.getElementById('asset-detail-body');
+        if (!config || !modal || !title || !body) { return; }
+
+        title.textContent = config.title;
+        body.innerHTML = buildAssetDetailMarkup(config);
+        body.scrollTop = 0;
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeAssetDetail = function() {
+        var modal = document.getElementById('asset-detail-modal');
+        if (!modal) { return; }
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    function hydrateInvestigationOpinions(container, data) {
+        var section = findCreditSection(container, '授信审批意见');
+        var first = section ? section.querySelector('.credit-approval-opinion') : null;
+        if (!first) { return; }
+        var person = first.querySelector('.credit-opinion-person-cell span:last-child');
+        var text = first.querySelector('.credit-opinion-text');
+        var date = first.querySelector('.credit-opinion-date');
+        if (person) { person.textContent = '信贷一部/单士博'; }
+        if (text) {
+            text.innerHTML = '<p>同意给予' + data.companyName + '授信额度2300万元，授信期限两年，资金用于经营周转。</p><p>暂无附件~</p>';
+        }
+        if (date) { date.textContent = '2026-03-31 09:25:57'; }
+
+        var second = first.cloneNode(true);
+        var secondDot = second.querySelector('.credit-check-dot');
+        var secondPerson = second.querySelector('.credit-opinion-person-cell span:last-child');
+        var secondText = second.querySelector('.credit-opinion-text');
+        var secondDate = second.querySelector('.credit-opinion-date');
+        if (secondDot) {
+            secondDot.classList.add('rejected');
+            secondDot.textContent = '×';
+        }
+        if (secondPerson) { secondPerson.textContent = '信贷一部/黄冠'; }
+        if (secondText) { secondText.innerHTML = '<p>股权价值修改</p><p>暂无附件~</p>'; }
+        if (secondDate) { secondDate.textContent = '2026-03-31 09:34:52'; }
+        first.parentNode.appendChild(second);
+    }
 })();
