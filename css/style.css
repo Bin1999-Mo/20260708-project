@@ -101,8 +101,7 @@ body {
     background-color: #fff;
     border-bottom: 1px solid #e0e0e0;
     padding: 0 16px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: visible;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -112,7 +111,8 @@ body {
     display: none;
 }
 
-.nav-item {
+.nav-item,
+.nav-more-toggle {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
        -moz-box-flex: 0;
@@ -124,18 +124,24 @@ body {
     font-size: 15px;
     color: #666;
     position: relative;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
     -webkit-transition: color 0.3s;
        -moz-transition: color 0.3s;
          -o-transition: color 0.3s;
             transition: color 0.3s;
 }
 
-.nav-item.active {
+.nav-item.active,
+.nav-more-toggle.active {
     color: #1a5bc4;
     font-weight: 600;
 }
 
-.nav-item.active::after {
+.nav-item.active::after,
+.nav-more-toggle.active::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -148,6 +154,110 @@ body {
     width: 40px;
     height: 3px;
     background-color: #1a5bc4;
+}
+
+.nav-more {
+    position: relative;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+       -moz-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+}
+
+.nav-more-arrow {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin: 0 0 3px 7px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+    -webkit-transition: -webkit-transform 0.2s;
+         -o-transition: -o-transform 0.2s;
+            transition: transform 0.2s;
+}
+
+.nav-more.open .nav-more-arrow {
+    margin-bottom: -1px;
+    -webkit-transform: rotate(225deg);
+       -moz-transform: rotate(225deg);
+        -ms-transform: rotate(225deg);
+         -o-transform: rotate(225deg);
+            transform: rotate(225deg);
+}
+
+.nav-more-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 1000;
+    width: 168px;
+    padding: 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+}
+
+.nav-more.open .nav-more-menu {
+    display: block;
+}
+
+.nav-more-menu .nav-more-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: #374151;
+    font-size: 14px;
+    text-align: left;
+}
+
+.nav-more-menu .nav-more-item:hover,
+.nav-more-menu .nav-more-item:focus,
+.nav-more-menu .nav-more-item.active {
+    background-color: #eef5ff;
+    color: #1a5bc4;
+    outline: none;
+}
+
+.nav-more-menu .nav-more-item.active::after {
+    display: none;
+}
+
+.nav-more-badge {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background-color: #ff4757;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
 }
 
 .badge {
@@ -2946,6 +3056,11 @@ body {
 }
 
 .approval-action-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
        -moz-box-pack: center;
@@ -2954,6 +3069,11 @@ body {
     gap: 24px;
     padding: 18px 16px;
     background-color: #fff;
+    box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.08);
+}
+
+#change-detail-page .detail-page-content {
+    padding-bottom: 78px;
 }
 
 .btn {
@@ -5408,6 +5528,22 @@ textarea:focus {
     width: 74px;
 }
 
+.classification-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.classification-header-actions .batch-approve-btn {
+    width: auto;
+    padding: 0 20px;
+}
+
+.classification-approval-toolbar > div {
+    margin-left: auto;
+}
+
 .classification-approval-card {
     grid-template-columns: 22px minmax(0, 1.5fr) minmax(220px, 0.7fr) minmax(180px, 0.5fr) 110px 34px;
 }
@@ -6948,7 +7084,7 @@ textarea:focus {
 }
 
 .credit-empty-table {
-    min-width: 1260px;
+    min-width: 720px;
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
@@ -7473,6 +7609,11 @@ textarea:focus {
 
 
 .project-detail-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
     display: flex;
     align-items: center;
     gap: 24px;
@@ -7481,6 +7622,10 @@ textarea:focus {
     border-top: 1px solid #e4e7ef;
     background-color: rgba(255, 255, 255, 0.96);
     box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.06);
+}
+
+#project-approval-page .project-detail-content {
+    padding-bottom: 78px;
 }
 
 .project-detail-footer .btn {
@@ -7977,7 +8122,7 @@ textarea:focus {
 
 .loan-empty-table {
     width: 100%;
-    min-width: 1200px;
+    min-width: 720px;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -11176,9 +11321,1745 @@ textarea:focus {
     }
 
     #change-detail-page .approval-action-bar {
-        position: sticky;
+        position: fixed;
+        left: 0;
+        right: 0;
         bottom: 0;
-        z-index: 5;
+        z-index: 900;
         background-color: #fff;
+    }
+}
+
+/* 页面返回操作统一为左箭头 */
+.page-back-arrow {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+       -moz-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 32px;
+       -moz-box-flex: 0;
+        -ms-flex: 0 0 32px;
+            flex: 0 0 32px;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #111827;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    -webkit-transition: background-color 0.2s, color 0.2s;
+         -o-transition: background-color 0.2s, color 0.2s;
+            transition: background-color 0.2s, color 0.2s;
+}
+
+.page-back-arrow:hover {
+    background-color: #f3f4f6;
+    color: #0b65d8;
+}
+
+.page-back-arrow:focus-visible {
+    outline: 2px solid rgba(26, 91, 196, 0.35);
+    outline-offset: 2px;
+}
+
+.page-back-arrow span {
+    display: block;
+    pointer-events: none;
+}
+
+.back-btn.page-back-arrow::after {
+    content: none;
+}
+
+.loan-detail-footer .page-back-arrow-footer {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 38px;
+       -moz-box-flex: 0;
+        -ms-flex: 0 0 38px;
+            flex: 0 0 38px;
+    width: 38px;
+    min-width: 38px;
+}
+
+/* 投后回访处理使用独立详情页 */
+.post-visit-handle-page {
+    padding: 0;
+    background-color: #f4f7fb;
+}
+
+.post-visit-handle-page .post-visit-handle-content {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.post-visit-handle-page .post-visit-handle-header {
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+       -moz-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    gap: 10px;
+    height: 56px;
+    padding: 0 24px;
+    border-bottom: 1px solid #dfe5ef;
+    background-color: rgba(255, 255, 255, 0.96);
+    color: #111827;
+}
+
+.post-visit-handle-page .post-visit-handle-header strong {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.post-visit-handle-page .post-visit-handle-header .post-visit-handle-back {
+    position: static;
+    top: auto;
+    right: auto;
+    -webkit-transform: none;
+       -moz-transform: none;
+        -ms-transform: none;
+         -o-transform: none;
+            transform: none;
+    color: #111827;
+    font-size: 22px;
+}
+
+.post-visit-handle-page .post-visit-handle-body {
+    height: auto;
+    min-height: calc(100vh - 114px);
+    padding-bottom: 78px;
+    overflow: visible;
+}
+
+.post-visit-handle-page .post-visit-handle-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
+    -webkit-box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.08);
+}
+
+@media (max-width: 767px) {
+    .post-visit-handle-page .post-visit-handle-header {
+        height: 52px;
+        padding: 0 12px;
+    }
+
+    .post-visit-handle-page .post-visit-handle-body {
+        min-height: calc(100vh - 110px);
+        padding: 14px 10px 78px;
+        overflow-x: hidden;
+    }
+
+    .post-visit-handle-page .post-visit-handle-footer {
+        padding: 0 12px;
+    }
+
+    .post-visit-handle-page .post-visit-section,
+    .post-visit-handle-page .post-visit-attachment {
+        overflow: visible;
+    }
+
+    .post-visit-handle-page .post-visit-form-table,
+    .post-visit-handle-page .post-visit-form-table tbody,
+    .post-visit-handle-page .post-visit-form-table tr,
+    .post-visit-handle-page .post-visit-form-table th,
+    .post-visit-handle-page .post-visit-form-table td {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .post-visit-handle-page .post-visit-form-table {
+        border: 0;
+        background-color: transparent;
+    }
+
+    .post-visit-handle-page .post-visit-form-table tbody {
+        display: grid;
+        gap: 10px;
+    }
+
+    .post-visit-handle-page .post-visit-form-table tr {
+        overflow: hidden;
+        border: 1px solid #d8e1ee;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .post-visit-handle-page .post-visit-form-table th,
+    .post-visit-handle-page .post-visit-form-table td {
+        height: auto;
+        min-height: 40px;
+        padding: 10px 12px;
+        border: 0;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .post-visit-handle-page .post-visit-form-table th {
+        background-color: #eef3fb;
+        color: #5f6b7a;
+        font-size: 12px;
+    }
+
+    .post-visit-handle-page .post-visit-form-table th:not(:first-child) {
+        border-top: 1px solid #d8e1ee;
+    }
+
+    .post-visit-handle-page .post-visit-form-table td {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #eef2f7;
+        background-color: #fff;
+        color: #172033;
+        font-size: 14px;
+    }
+
+    .post-visit-handle-page .post-visit-textarea-field textarea {
+        min-height: 96px;
+        border-radius: 8px;
+    }
+
+    .post-visit-handle-page .post-visit-empty-section {
+        min-height: 128px;
+    }
+
+    .post-visit-handle-page .post-empty-state {
+        min-height: 94px;
+    }
+}
+
+/* 业务全流程：客户名称后的当前阶段标签 */
+#business-flow .company-stage-title {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+       -moz-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    gap: 7px;
+    min-width: 0;
+}
+
+#business-flow .company-stage-title .company-name {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 1 auto;
+       -moz-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+    color: #1559c0;
+    cursor: pointer;
+    -webkit-transition: color 0.2s;
+         -o-transition: color 0.2s;
+            transition: color 0.2s;
+}
+
+#business-flow .company-stage-title .company-name:hover {
+    color: #0b3f96;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+#business-flow .current-stage-badge {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+       -moz-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+       -moz-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+    min-height: 24px;
+    padding: 1px 8px;
+    border: 1px solid #b9d2ff;
+    border-radius: 12px;
+    background: -webkit-linear-gradient(315deg, #eaf2ff, #f8fbff);
+    background: -moz-linear-gradient(315deg, #eaf2ff, #f8fbff);
+    background: -o-linear-gradient(315deg, #eaf2ff, #f8fbff);
+    background: linear-gradient(135deg, #eaf2ff, #f8fbff);
+    color: #1a5bc4;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    -webkit-box-shadow: 0 2px 6px rgba(26, 91, 196, 0.1);
+            box-shadow: 0 2px 6px rgba(26, 91, 196, 0.1);
+    font-family: inherit;
+    cursor: pointer;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    -webkit-transition: border-color 0.2s, background-color 0.2s, color 0.2s, -webkit-transform 0.2s, -webkit-box-shadow 0.2s;
+         -o-transition: border-color 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.2s, -o-transform 0.2s;
+            transition: border-color 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+#business-flow .current-stage-badge:hover {
+    border-color: #7eaeff;
+    color: #0b4ca8;
+    -webkit-box-shadow: 0 4px 10px rgba(26, 91, 196, 0.18);
+            box-shadow: 0 4px 10px rgba(26, 91, 196, 0.18);
+    -webkit-transform: translateY(-1px);
+       -moz-transform: translateY(-1px);
+        -ms-transform: translateY(-1px);
+         -o-transform: translateY(-1px);
+            transform: translateY(-1px);
+}
+
+#business-flow .current-stage-badge:focus-visible {
+    outline: 2px solid rgba(26, 91, 196, 0.35);
+    outline-offset: 2px;
+}
+
+#business-flow .current-stage-badge.stage-initiation {
+    border-color: #a7e5d7;
+    background: -webkit-linear-gradient(315deg, #e8faf5, #f6fffc);
+    background: -moz-linear-gradient(315deg, #e8faf5, #f6fffc);
+    background: -o-linear-gradient(315deg, #e8faf5, #f6fffc);
+    background: linear-gradient(135deg, #e8faf5, #f6fffc);
+    color: #087b68;
+    -webkit-box-shadow: 0 2px 6px rgba(8, 123, 104, 0.1);
+            box-shadow: 0 2px 6px rgba(8, 123, 104, 0.1);
+}
+
+#business-flow .current-stage-badge.stage-initiation:hover {
+    border-color: #61cbb4;
+    color: #056453;
+    -webkit-box-shadow: 0 4px 10px rgba(8, 123, 104, 0.18);
+            box-shadow: 0 4px 10px rgba(8, 123, 104, 0.18);
+}
+
+@media (max-width: 767px) {
+    #business-flow .company-stage-title {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 100%;
+           -moz-box-flex: 1;
+            -ms-flex: 1 1 100%;
+                flex: 1 1 100%;
+    }
+
+    #business-flow .current-stage-badge {
+        min-height: 22px;
+        padding: 0 7px;
+        font-size: 11px;
+    }
+}
+
+/* 业务阶段详情：仅展示当前阶段及已完成阶段 */
+.stage-shot-sidebar .stage-shot-side-item {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+.stage-shot-sidebar .stage-shot-side-item[hidden] {
+    display: none;
+}
+
+.stage-shot-sidebar .stage-shot-side-item.last-visible::before {
+    display: none;
+}
+
+.stage-shot-sidebar .stage-shot-side-item:focus-visible {
+    outline: 2px solid rgba(30, 79, 210, 0.3);
+    outline-offset: 2px;
+}
+
+.stage-shot-sidebar .stage-shot-side-item.current-stage:not(.active) {
+    color: #1e4fd2;
+    font-weight: 600;
+}
+
+.stage-shot-sidebar .stage-shot-side-item.active {
+    padding: 0 12px;
+    background-color: #1e4fd2;
+    color: #fff;
+    font-weight: 600;
+}
+
+@media (max-width: 767px) {
+    .stage-shot-sidebar .stage-shot-side-item {
+        width: auto;
+        padding: 7px 10px;
+        border: 1px solid #d7dfeb;
+        background-color: #fff;
+    }
+
+    .stage-shot-sidebar .stage-shot-side-item.active {
+        padding: 7px 12px;
+    }
+}
+
+/* 业务全流程阶段详情复用立项、尽调完整表单 */
+#stage-project-info.stage-rich-content {
+    padding: 0;
+}
+
+#stage-project-info.stage-rich-content > .project-section,
+#stage-project-info.stage-rich-content > .credit-section {
+    margin: 0 0 16px;
+    border-right: 0;
+    border-left: 0;
+}
+
+#stage-project-info.stage-rich-content > .project-section {
+    min-height: calc(100vh - 106px);
+}
+
+#stage-project-info .project-form-panel,
+#stage-project-info .credit-form-panel {
+    background-color: rgba(255, 255, 255, 0.72);
+}
+
+#stage-project-info .stage-file-list {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    gap: 8px 12px;
+    min-height: 40px;
+}
+
+#stage-project-info .stage-file-chip {
+    display: inline-block;
+    max-width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d7dfeb;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #1677ff;
+    font-size: 13px;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#stage-project-info .stage-file-download {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #d7dfeb;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #607087;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#stage-project-info .stage-table-edit,
+#stage-project-info .stage-table-delete {
+    min-width: 48px;
+    height: 30px;
+    margin: 2px 4px;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#stage-project-info .stage-table-edit {
+    background-color: #73b8f6;
+}
+
+#stage-project-info .stage-table-delete {
+    background-color: #f7a3a8;
+}
+
+#stage-project-info .credit-check-dot.rejected {
+    background-color: #ff4d4f;
+}
+
+@media (max-width: 767px) {
+    #stage-project-info .stage-file-chip {
+        width: 100%;
+    }
+}
+
+/* 业务全流程新增阶段标签 */
+#business-flow .current-stage-badge.stage-contract {
+    border-color: #c8b8f4;
+    background: linear-gradient(135deg, #f1edff, #fbfaff);
+    color: #6842b8;
+}
+
+#business-flow .current-stage-badge.stage-loan {
+    border-color: #ffd09d;
+    background: linear-gradient(135deg, #fff3df, #fffaf2);
+    color: #c66708;
+}
+
+#business-flow .current-stage-badge.stage-repayment {
+    border-color: #f5b8ca;
+    background: linear-gradient(135deg, #fff0f5, #fff9fb);
+    color: #b93862;
+}
+
+/* 合同阶段 */
+.stage-contract-section {
+    min-height: calc(100vh - 106px);
+    border: 1px solid #cbd6ec;
+    background-color: rgba(255, 255, 255, 0.78);
+}
+
+.stage-contract-title {
+    min-height: 52px;
+    margin: 0;
+    padding: 0 20px;
+    background-color: #edf2fc;
+    color: #0644bd;
+    font-size: 18px;
+    line-height: 52px;
+}
+
+.stage-contract-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    gap: 18px 20px;
+    padding: 22px 20px 30px;
+}
+
+.stage-contract-field {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    color: #111827;
+    font-size: 14px;
+}
+
+.stage-contract-field > span {
+    font-weight: 700;
+}
+
+.stage-contract-field.required > span::after {
+    content: '*';
+    margin-left: 2px;
+    color: #f5222d;
+}
+
+.stage-contract-field input[type="text"],
+.stage-contract-field select,
+.stage-contract-composite b {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #d5ddea;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #1f2937;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 42px;
+}
+
+.stage-contract-unit {
+    position: relative;
+}
+
+.stage-contract-unit input {
+    padding-right: 42px;
+}
+
+.stage-contract-unit em {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    color: #374151;
+    font-style: normal;
+    line-height: 42px;
+}
+
+.stage-contract-amount {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+}
+
+.stage-contract-amount b {
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.stage-contract-radio {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    min-height: 42px;
+    color: #1677ff;
+}
+
+.stage-contract-radio label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.stage-contract-radio input[type="radio"] {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #1677ff;
+}
+
+.stage-contract-composite {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr auto 0.7fr;
+    align-items: center;
+    gap: 8px;
+}
+
+.stage-contract-composite em {
+    font-style: normal;
+}
+
+.stage-contract-files {
+    grid-column: 1 / -1;
+}
+
+/* 放款阶段 */
+#stage-project-info.stage-rich-content > .loan-section {
+    margin: 0 0 18px;
+    border-right: 0;
+    border-left: 0;
+}
+
+#stage-project-info .stage-loan-files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* 还款阶段 */
+.stage-repayment-section {
+    min-height: calc(100vh - 106px);
+    padding: 0 16px 24px;
+    background-color: rgba(255, 255, 255, 0.78);
+}
+
+.stage-repayment-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 52px;
+    margin: 0 -16px 18px;
+    padding: 0 20px;
+    background-color: #edf2fc;
+    color: #0644bd;
+}
+
+.stage-repayment-heading h3 {
+    margin: 0;
+    font-size: 17px;
+}
+
+.stage-repayment-heading button,
+.stage-plan-toolbar button {
+    margin-left: 8px;
+    border: 0;
+    background-color: transparent;
+    color: #1677ff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.stage-repayment-info-table,
+.stage-plan-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.stage-repayment-info-table th,
+.stage-repayment-info-table td,
+.stage-plan-summary-table th,
+.stage-plan-summary-table td {
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #cfd7e8;
+    color: #111827;
+    font-size: 13px;
+    text-align: left;
+}
+
+.stage-repayment-info-table th,
+.stage-plan-summary-table th {
+    width: 9%;
+    background-color: #f1f4fc;
+    font-weight: 500;
+}
+
+.stage-repayment-opinion {
+    margin-top: 18px;
+    border: 1px solid #cfd7e8;
+}
+
+.stage-repayment-opinion > h3 {
+    min-height: 50px;
+    margin: 0;
+    padding: 0 18px;
+    background-color: #edf2fc;
+    color: #0644bd;
+    line-height: 50px;
+}
+
+.stage-repayment-opinion-row {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    margin: 10px 18px;
+    border: 1px solid #d7dfeb;
+}
+
+.stage-repayment-opinion-row > div,
+.stage-repayment-opinion-row > p {
+    min-height: 42px;
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 13px;
+}
+
+.stage-repayment-opinion-row > div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f2f5fb;
+}
+
+/* 还款计划独立页面 */
+.stage-repayment-plan-page {
+    position: fixed;
+    inset: 0;
+    z-index: 1500;
+    padding: 0;
+    overflow: auto;
+    background-color: #f4f7fb;
+}
+
+.stage-repayment-plan-content {
+    min-height: 100vh;
+    overflow: visible;
+}
+
+.stage-repayment-plan-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 64px;
+    padding: 0 20px;
+    border-bottom: 1px solid #dfe5ef;
+    background-color: rgba(255, 255, 255, 0.96);
+}
+
+.stage-repayment-plan-header strong {
+    font-size: 18px;
+}
+
+.stage-repayment-plan-body {
+    padding: 16px 20px 28px;
+}
+
+.stage-plan-toolbar {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+}
+
+.stage-plan-toolbar button:first-child {
+    margin-left: 0;
+}
+
+.stage-plan-table-wrap {
+    overflow: auto;
+    border: 1px solid #d7dfeb;
+}
+
+.stage-plan-detail-table {
+    width: 100%;
+    min-width: 1900px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.stage-plan-detail-table th,
+.stage-plan-detail-table td {
+    height: 42px;
+    padding: 8px;
+    border: 1px solid #e0e6f0;
+    color: #344054;
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.stage-plan-detail-table th {
+    background-color: #f1f4fc;
+    font-weight: 600;
+}
+
+.stage-plan-detail-table tbody tr:nth-child(even) td {
+    background-color: #fbfcff;
+}
+
+@media (max-width: 1100px) {
+    .stage-contract-grid {
+        grid-template-columns: repeat(2, minmax(240px, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .stage-contract-grid {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 14px 12px 22px;
+    }
+
+    .stage-contract-files {
+        grid-column: auto;
+    }
+
+    .stage-contract-amount {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .stage-contract-amount b {
+        white-space: normal;
+    }
+
+    .stage-repayment-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px;
+    }
+
+    .stage-repayment-opinion-row {
+        grid-template-columns: 1fr;
+        margin: 8px;
+    }
+
+    .stage-repayment-plan-body {
+        padding: 10px;
+    }
+
+    .stage-plan-summary-table {
+        min-width: 880px;
+    }
+}
+
+/* ===== 移动端底部导航与更多操作弹层 ===== */
+@media (max-width: 767px) {
+    .nav-tabs {
+        align-items: stretch;
+        justify-content: stretch;
+        overflow: visible;
+    }
+
+    .nav-tabs > .nav-item,
+    .nav-tabs > .nav-more {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .nav-more {
+        display: flex;
+        align-items: stretch;
+    }
+
+    .nav-more-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: 0;
+        min-height: 60px;
+        padding: 11px 2px 8px;
+        font-size: 11px;
+        line-height: 1.2;
+    }
+
+    .nav-more-toggle.active::after {
+        top: 0;
+        bottom: auto;
+        width: 24px;
+        height: 2px;
+    }
+
+    .nav-more-menu {
+        position: fixed;
+        top: auto;
+        right: 10px;
+        bottom: calc(68px + env(safe-area-inset-bottom));
+        left: 10px;
+        z-index: 1000;
+        width: auto;
+        max-height: calc(100dvh - 96px - env(safe-area-inset-bottom));
+        padding: 8px;
+        overflow-y: auto;
+        border-color: #dbe5f2;
+        border-radius: 14px;
+        box-shadow: 0 16px 38px rgba(15, 23, 42, 0.2);
+    }
+
+    .nav-more.open .nav-more-menu {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .nav-more-menu .nav-more-item {
+        justify-content: center;
+        min-height: 48px;
+        padding: 10px 12px;
+        border: 1px solid #e5ebf4;
+        border-radius: 9px;
+        background-color: #f8faff;
+        font-size: 14px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .nav-more-menu .nav-more-item:active,
+    .nav-more-menu .nav-more-item.active {
+        border-color: #b9d1f5;
+        background-color: #eaf3ff;
+    }
+
+    .nav-more-badge {
+        margin-left: 8px;
+    }
+
+    .tab-content {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #approval-center > .center-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+        margin: 0 0 12px;
+        padding: 0;
+        overflow: visible;
+        white-space: normal;
+    }
+
+    #approval-center > .center-tabs .center-tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+        padding: 9px 3px;
+        border-right: 1px solid #eef1f5;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    #approval-center > .center-tabs .center-tab:nth-child(3n) {
+        border-right: 0;
+    }
+
+    #approval-center > .center-tabs .center-tab:nth-child(-n + 3) {
+        border-bottom: 1px solid #eef1f5;
+    }
+
+    #approval-center > .center-tabs .center-badge {
+        flex: 0 0 auto;
+        margin-left: 1px;
+    }
+
+    .classification-header-actions {
+        width: 100%;
+        margin-left: 0;
+        gap: 8px;
+    }
+
+    .classification-header-actions .handled-record-btn,
+    .classification-header-actions .batch-approve-btn {
+        flex: 1 1 0;
+        width: auto;
+        min-width: 0;
+        padding: 0 10px;
+    }
+
+    .classification-approval-toolbar > div {
+        margin-left: 0;
+    }
+
+    .post-manage-pagination {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .post-manage-pagination select {
+        flex: 1 1 96px;
+        min-width: 0;
+    }
+
+    .post-manage-pagination input {
+        width: 48px;
+    }
+}
+
+@media (max-width: 360px) {
+    .nav-more.open .nav-more-menu {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== 底层资产与增信措施详情 ===== */
+.stage-table-detail-link {
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    color: #1677ff;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.asset-detail-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2200;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background-color: rgba(15, 23, 42, 0.55);
+}
+
+.asset-detail-modal.show {
+    display: flex;
+}
+
+.asset-detail-dialog {
+    display: flex;
+    flex-direction: column;
+    width: min(1180px, calc(100vw - 36px));
+    max-height: calc(100dvh - 36px);
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #f7f9fc;
+    box-shadow: 0 22px 55px rgba(15, 23, 42, 0.25);
+}
+
+.asset-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 52px;
+    padding: 0 16px;
+    border-bottom: 1px solid #d9e1ed;
+    background-color: #1749c7;
+    color: #fff;
+}
+
+.asset-detail-header .page-back-arrow {
+    color: #fff;
+}
+
+.asset-detail-header strong {
+    font-size: 17px;
+}
+
+.asset-detail-body {
+    padding: 16px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.asset-detail-section {
+    margin-bottom: 14px;
+    overflow: hidden;
+    border: 1px solid #d9e1ed;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.94);
+}
+
+.asset-detail-section > h3 {
+    margin: 0;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e3e9f2;
+    background-color: #edf2fc;
+    color: #1749c7;
+    font-size: 15px;
+}
+
+.asset-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 18px;
+    padding: 14px;
+}
+
+.asset-detail-field {
+    display: grid;
+    grid-template-columns: 138px minmax(0, 1fr);
+    align-items: stretch;
+    min-width: 0;
+    border: 1px solid #dbe3ef;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.asset-detail-field.wide {
+    grid-column: 1 / -1;
+}
+
+.asset-detail-field > span,
+.asset-detail-field > div {
+    min-height: 40px;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.asset-detail-field > span {
+    background-color: #f1f4fa;
+    color: #5e6b7d;
+    font-weight: 600;
+}
+
+.asset-detail-field > span.required::before {
+    content: '*';
+    margin-right: 3px;
+    color: #f04438;
+}
+
+.asset-detail-field > div {
+    min-width: 0;
+    background-color: #fff;
+    color: #172033;
+    word-break: break-word;
+}
+
+.asset-detail-table-wrap {
+    padding: 14px;
+    overflow-x: auto;
+}
+
+.asset-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.asset-detail-table th,
+.asset-detail-table td {
+    min-height: 40px;
+    padding: 10px 8px;
+    border: 1px solid #e0e6f0;
+    color: #5e6b7d;
+    font-size: 12px;
+    text-align: center;
+}
+
+.asset-detail-table th {
+    background-color: #f1f4fa;
+}
+
+.asset-detail-table td {
+    height: 66px;
+    background-color: #fff;
+}
+
+.asset-detail-files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px;
+}
+
+.asset-detail-files button {
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 1px solid #cfdced;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #1677ff;
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .asset-detail-modal {
+        align-items: stretch;
+        padding: 0;
+        background-color: #f4f7fb;
+    }
+
+    .asset-detail-dialog {
+        width: 100%;
+        max-height: 100dvh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .asset-detail-header {
+        flex-basis: 52px;
+        padding: 0 10px;
+    }
+
+    .asset-detail-body {
+        padding: 10px;
+    }
+
+    .asset-detail-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .asset-detail-field,
+    .asset-detail-field.wide {
+        grid-column: auto;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .asset-detail-field > span,
+    .asset-detail-field > div {
+        min-height: 38px;
+        padding: 9px 11px;
+    }
+
+    .asset-detail-field > div {
+        border-top: 1px solid #e3e9f2;
+    }
+
+    .asset-detail-table {
+        table-layout: auto;
+    }
+
+    .asset-detail-table th,
+    .asset-detail-table td {
+        min-width: 106px;
+    }
+
+    .asset-detail-files {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        padding: 10px;
+    }
+
+    .asset-detail-files button {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+/* ===== 投放管理与客户详情返回操作 ===== */
+.invest-view-header,
+.invest-classification-content > .invest-detail-header,
+.client-detail-header {
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.invest-view-header .invest-view-back,
+.invest-classification-content > .invest-detail-header .invest-classification-back,
+.client-detail-header .client-detail-back {
+    position: static;
+    top: auto;
+    right: auto;
+    transform: none;
+    color: inherit;
+    font-size: 22px;
+}
+
+.invest-view-header,
+.invest-classification-content > .invest-detail-header {
+    padding: 0 12px;
+}
+
+.client-detail-header strong,
+.invest-view-header strong,
+.invest-classification-content > .invest-detail-header strong {
+    font-size: 16px;
+}
+
+/* 带提交、返回、拒绝的审批页操作栏固定在页面尾部 */
+.credit-detail-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
+}
+
+.credit-detail-layout {
+    padding-bottom: 82px;
+}
+
+@media (max-width: 767px) {
+    /* 放款审批：桌面表格转为纵向字段卡片 */
+    .loan-detail-page .loan-section,
+    .loan-detail-page .loan-empty-table-wrap {
+        overflow: visible;
+    }
+
+    .loan-detail-page .loan-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .loan-detail-page .loan-section-tools {
+        flex-wrap: wrap;
+        gap: 8px 14px;
+    }
+
+    .loan-detail-page .loan-info-table,
+    .loan-detail-page .loan-info-table tbody,
+    .loan-detail-page .loan-info-table tr,
+    .loan-detail-page .loan-info-table th,
+    .loan-detail-page .loan-info-table td {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .loan-detail-page .loan-info-table {
+        width: calc(100% - 20px) !important;
+        margin: 0 10px 14px;
+        border: 0;
+        background-color: transparent;
+    }
+
+    .loan-detail-page .loan-info-table tbody {
+        display: grid;
+        gap: 10px;
+    }
+
+    .loan-detail-page .loan-info-table tr {
+        overflow: hidden;
+        border: 1px solid #d8e1ee;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .loan-detail-page .loan-info-table th,
+    .loan-detail-page .loan-info-table td {
+        height: auto;
+        min-height: 40px;
+        padding: 10px 12px;
+        border: 0;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .loan-detail-page .loan-info-table th {
+        border-top: 1px solid #d8e1ee;
+        background-color: #eef3fb;
+        color: #5f6b7a;
+        font-size: 12px;
+    }
+
+    .loan-detail-page .loan-info-table th:first-child {
+        border-top: 0;
+    }
+
+    .loan-detail-page .loan-info-table td {
+        border-top: 1px solid #eef2f7;
+        background-color: #fff;
+        color: #172033;
+        font-size: 14px;
+    }
+
+    .loan-detail-page .loan-empty-table {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .loan-detail-page .loan-empty-table thead {
+        display: none;
+    }
+
+    .loan-detail-page .loan-empty-table tbody,
+    .loan-detail-page .loan-empty-table tr,
+    .loan-detail-page .loan-empty-table td {
+        display: block;
+        width: 100% !important;
+        min-width: 0;
+    }
+
+    /* 投后回访详情：信息纵向排列 */
+    .invest-view-modal .post-visit-section,
+    .invest-view-modal .post-visit-empty-section {
+        overflow: visible;
+    }
+
+    .invest-view-modal .post-visit-form-table,
+    .invest-view-modal .post-visit-form-table tbody,
+    .invest-view-modal .post-visit-form-table tr,
+    .invest-view-modal .post-visit-form-table th,
+    .invest-view-modal .post-visit-form-table td {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .invest-view-modal .post-visit-form-table {
+        border: 0;
+        background-color: transparent;
+    }
+
+    .invest-view-modal .post-visit-form-table tbody {
+        display: grid;
+        gap: 10px;
+    }
+
+    .invest-view-modal .post-visit-form-table tr {
+        overflow: hidden;
+        border: 1px solid #d8e1ee;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .invest-view-modal .post-visit-form-table th,
+    .invest-view-modal .post-visit-form-table td {
+        height: auto;
+        min-height: 40px;
+        padding: 10px 12px;
+        border: 0;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .invest-view-modal .post-visit-form-table th {
+        border-top: 1px solid #d8e1ee;
+        background-color: #eef3fb;
+        color: #5f6b7a;
+        font-size: 12px;
+    }
+
+    .invest-view-modal .post-visit-form-table th:first-child {
+        border-top: 0;
+    }
+
+    .invest-view-modal .post-visit-form-table td {
+        border-top: 1px solid #eef2f7;
+        background-color: #fff;
+        color: #172033;
+        font-size: 14px;
+    }
+
+    /* 投放管理五级分类详情：信息纵向排列 */
+    .invest-classification-modal .invest-detail-body {
+        height: calc(100dvh - 96px);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .invest-classification-modal .classification-info-table,
+    .invest-classification-modal .classification-info-table tbody,
+    .invest-classification-modal .classification-info-table tr,
+    .invest-classification-modal .classification-info-table th,
+    .invest-classification-modal .classification-info-table td {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .invest-classification-modal .classification-info-table {
+        border: 0;
+        background-color: transparent;
+    }
+
+    .invest-classification-modal .classification-info-table tbody {
+        display: grid;
+        gap: 10px;
+    }
+
+    .invest-classification-modal .classification-info-table tr {
+        overflow: hidden;
+        border: 1px solid #d8e1ee;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .invest-classification-modal .classification-info-table th,
+    .invest-classification-modal .classification-info-table td {
+        height: auto;
+        min-height: 40px;
+        padding: 10px 12px;
+        border: 0;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .invest-classification-modal .classification-info-table th {
+        border-top: 1px solid #d8e1ee;
+        background-color: #eef3fb;
+        color: #5f6b7a;
+        font-size: 12px;
+    }
+
+    .invest-classification-modal .classification-info-table th:first-child {
+        border-top: 0;
+    }
+
+    .invest-classification-modal .classification-info-table td {
+        border-top: 1px solid #eef2f7;
+        background-color: #fff;
+        color: #172033;
+        font-size: 14px;
+    }
+
+    .credit-detail-footer {
+        gap: 8px;
+        height: auto;
+        min-height: 58px;
+        padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+    }
+
+    .credit-detail-footer .btn {
+        flex: 1 1 0;
+        width: auto;
+        min-width: 0;
+        height: 38px;
+    }
+
+    .credit-detail-layout {
+        padding-bottom: 88px;
+    }
+
+    /* Repayment approval: present all detail tables as vertical field cards. */
+    .repayment-detail-page .repayment-section {
+        overflow: visible;
+    }
+
+    .repayment-detail-page .repayment-detail-title {
+        flex: 1 1 auto;
+        width: auto;
+        max-width: 100%;
+    }
+
+    .repayment-detail-page .repayment-detail-title strong {
+        flex: 1 1 auto;
+    }
+
+    #change-detail-page .modal-header .back-btn.page-back-arrow {
+        position: static;
+        top: auto;
+        left: auto;
+        z-index: 1;
+        transform: none;
+    }
+
+    #change-detail-page .modal-header .modal-title {
+        min-width: 0;
+        padding-right: 0;
+    }
+
+    .repayment-detail-page .repayment-info-table,
+    .repayment-detail-page .repayment-info-table tbody,
+    .repayment-detail-page .repayment-info-table tr,
+    .repayment-detail-page .repayment-info-table th,
+    .repayment-detail-page .repayment-info-table td {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .repayment-detail-page .repayment-info-table {
+        width: calc(100% - 20px) !important;
+        margin: 10px;
+        border: 0;
+        background-color: transparent;
+    }
+
+    .repayment-detail-page .repayment-info-table tbody {
+        display: grid;
+        gap: 10px;
+    }
+
+    .repayment-detail-page .repayment-info-table tr {
+        overflow: hidden;
+        border: 1px solid #d8e1ee;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .repayment-detail-page .repayment-info-table th,
+    .repayment-detail-page .repayment-info-table td {
+        height: auto;
+        min-height: 40px;
+        padding: 10px 12px;
+        border: 0;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .repayment-detail-page .repayment-info-table th {
+        border-top: 1px solid #d8e1ee;
+        background-color: #eef3fb;
+        color: #5f6b7a;
+        font-size: 12px;
+    }
+
+    .repayment-detail-page .repayment-info-table th:first-child {
+        border-top: 0;
+    }
+
+    .repayment-detail-page .repayment-info-table td {
+        border-top: 1px solid #eef2f7;
+        background-color: #fff;
+        color: #172033;
+        font-size: 14px;
+    }
+
+    .repayment-detail-page .repayment-table-wrap {
+        width: auto;
+        max-width: none;
+        margin: 10px;
+        overflow: visible;
+    }
+
+    .repayment-detail-page .repayment-data-table.mobile-card-table,
+    .repayment-detail-page .repayment-data-table.mobile-card-table tbody,
+    .repayment-detail-page .repayment-data-table.mobile-card-table tr,
+    .repayment-detail-page .repayment-data-table.mobile-card-table td {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .repayment-detail-page .repayment-data-table.mobile-card-table {
+        display: block;
+        border: 0;
+        table-layout: auto;
+    }
+
+    .repayment-detail-page .repayment-data-table.mobile-card-table thead {
+        display: none;
+    }
+
+    .repayment-detail-page .repayment-data-table.mobile-card-table tbody {
+        display: grid;
+        gap: 10px;
+    }
+
+    .repayment-detail-page .repayment-data-table.mobile-card-table tr {
+        display: block;
+        overflow: hidden;
+        padding: 4px 12px;
+        border: 1px solid #d8e1ee;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 3px 10px rgba(26, 91, 196, 0.06);
+    }
+
+    .repayment-detail-page .repayment-data-table.mobile-card-table td {
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        height: auto;
+        min-height: 38px;
+        padding: 9px 0;
+        border: 0;
+        color: #172033;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .repayment-detail-page .repayment-data-table.mobile-card-table td + td {
+        border-top: 1px solid #eef2f7;
+    }
+
+    .repayment-detail-page .repayment-data-table.mobile-card-table td::before {
+        content: attr(data-label);
+        color: #5f6b7a;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.45;
     }
 }

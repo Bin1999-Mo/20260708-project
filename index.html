@@ -23,10 +23,19 @@
     <nav class="nav-tabs">
         <div class="nav-item active" data-tab="home-dashboard">首页</div>
         <div class="nav-item" data-tab="business-flow">业务全流程</div>
-        <div class="nav-item" data-tab="approval-center">审批中心<span class="badge">7</span></div>
-        <div class="nav-item" data-tab="invest-management">投放管理</div>
-        <div class="nav-item" data-tab="client-library">客户库</div>
-        <div class="nav-item" data-tab="photo-library">照片库</div>
+        <div class="nav-more">
+            <button type="button" class="nav-more-toggle" aria-expanded="false" aria-haspopup="true">
+                更多操作<span class="nav-more-arrow" aria-hidden="true"></span>
+            </button>
+            <div class="nav-more-menu" role="menu">
+                <button type="button" class="nav-item nav-more-item" data-tab="approval-center" role="menuitem">
+                    <span>审批中心</span><span class="nav-more-badge">7</span>
+                </button>
+                <button type="button" class="nav-item nav-more-item" data-tab="invest-management" role="menuitem">投放管理</button>
+                <button type="button" class="nav-item nav-more-item" data-tab="client-library" role="menuitem">客户库</button>
+                <button type="button" class="nav-item nav-more-item" data-tab="photo-library" role="menuitem">照片库</button>
+            </div>
+        </div>
     </nav>
 
     <div id="home-dashboard" class="tab-content active">
@@ -172,7 +181,10 @@
             <div class="business-card" data-id="1">
                 <div class="card-header">
                     <span class="tag emergency-tag">小额贷款</span>
-                    <span class="company-name" onclick="openStageDetail('E2025061100001','step-2')" style="cursor:pointer;color:#1a5bc4">北京易诚互动网络技术股份有限公司</span>
+                    <span class="company-stage-title">
+                        <span class="company-name" onclick="openStageDetail('E2025061100001','step-2')">北京易诚互动网络技术股份有限公司</span>
+                        <button class="current-stage-badge stage-investigation" type="button" onclick="openStageDetail('E2025061100001','step-2')" aria-label="查看尽调阶段详情">【尽调】</button>
+                    </span>
                 </div>
                 <div class="card-body">
                     <div class="info-row">
@@ -182,15 +194,6 @@
                     <div class="info-row">
                         <span class="label">客户号：</span>
                         <span class="value">E2025061100001</span>
-                    </div>
-                    <div class="process-bar step-2">
-                        <div class="process-item completed"><div class="process-dot"></div><span class="process-label">立项</span></div>
-                        <div class="process-item active"><div class="process-dot"></div><span class="process-label">尽调</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">审批</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">合同</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">放款</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">还款</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">结清</span></div>
                     </div>
                     <div class="process-info">
                         <span class="dept">负责部门: 业务部</span>
@@ -207,7 +210,10 @@
             <div class="business-card" data-id="2">
                 <div class="card-header">
                     <span class="tag emergency-tag">小额贷款</span>
-                    <span class="company-name" onclick="openStageDetail('E2025061100003','step-1')" style="cursor:pointer;color:#1a5bc4">浙江臻善科技股份有限公司</span>
+                    <span class="company-stage-title">
+                        <span class="company-name" onclick="openStageDetail('E2025061100003','step-1')">浙江臻善科技股份有限公司</span>
+                        <button class="current-stage-badge stage-initiation" type="button" onclick="openStageDetail('E2025061100003','step-1')" aria-label="查看立项阶段详情">【立项】</button>
+                    </span>
                 </div>
                 <div class="card-body">
                     <div class="info-row">
@@ -217,15 +223,6 @@
                     <div class="info-row">
                         <span class="label">客户号：</span>
                         <span class="value">E2025061100003</span>
-                    </div>
-                    <div class="process-bar step-1">
-                        <div class="process-item active"><div class="process-dot"></div><span class="process-label">立项</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">尽调</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">审批</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">合同</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">放款</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">还款</span></div>
-                        <div class="process-item"><div class="process-dot"></div><span class="process-label">结清</span></div>
                     </div>
                     <div class="process-info">
                         <span class="dept">负责部门: 业务部</span>
@@ -238,10 +235,58 @@
                     </div>
                 </div>
             </div>
+
+            <div class="business-card" data-id="3">
+                <div class="card-header">
+                    <span class="tag emergency-tag">小额贷款</span>
+                    <span class="company-stage-title">
+                        <span class="company-name" onclick="openStageDetail('E2026032700004','step-4')">济南联合百川园区运营有限公司</span>
+                        <button class="current-stage-badge stage-contract" type="button" onclick="openStageDetail('E2026032700004','step-4')" aria-label="查看合同阶段详情">【合同】</button>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="label">客户名称：</span><span class="value">济南联合百川园区运营有限公司/91370100MA3N8X6P2Q</span></div>
+                    <div class="info-row"><span class="label">客户号：</span><span class="value">E2026032700004</span></div>
+                    <div class="process-info"><span class="dept">负责部门: 业务部</span><span class="manager">负责人: 董瑾</span><span class="manager">当前审批人: 单士博</span></div>
+                    <div class="time-info"><span>立项时间: 2026-03-11</span><span class="main-manager">主办业务经理: 董瑾</span></div>
+                </div>
+            </div>
+
+            <div class="business-card" data-id="4">
+                <div class="card-header">
+                    <span class="tag emergency-tag">小额贷款</span>
+                    <span class="company-stage-title">
+                        <span class="company-name" onclick="openStageDetail('E2026033100005','step-5')">商河县产业投资开发集团有限公司</span>
+                        <button class="current-stage-badge stage-loan" type="button" onclick="openStageDetail('E2026033100005','step-5')" aria-label="查看放款阶段详情">【放款】</button>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="label">客户名称：</span><span class="value">商河县产业投资开发集团有限公司/91370126MA3R7X8K5M</span></div>
+                    <div class="info-row"><span class="label">客户号：</span><span class="value">E2026033100005</span></div>
+                    <div class="process-info"><span class="dept">负责部门: 业务部</span><span class="manager">负责人: 董瑾</span><span class="manager">当前审批人: 黄冠</span></div>
+                    <div class="time-info"><span>立项时间: 2026-03-12</span><span class="main-manager">主办业务经理: 单士博</span></div>
+                </div>
+            </div>
+
+            <div class="business-card" data-id="5">
+                <div class="card-header">
+                    <span class="tag emergency-tag">小额贷款</span>
+                    <span class="company-stage-title">
+                        <span class="company-name" onclick="openStageDetail('E2026040800006','step-6')">济南金控产业发展有限公司</span>
+                        <button class="current-stage-badge stage-repayment" type="button" onclick="openStageDetail('E2026040800006','step-6')" aria-label="查看还款阶段详情">【还款】</button>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="label">客户名称：</span><span class="value">济南金控产业发展有限公司/91370100MA3Q6Y9L8N</span></div>
+                    <div class="info-row"><span class="label">客户号：</span><span class="value">E2026040800006</span></div>
+                    <div class="process-info"><span class="dept">负责部门: 业务部</span><span class="manager">负责人: 董瑾</span><span class="manager">当前审批人: 高妙馨</span></div>
+                    <div class="time-info"><span>立项时间: 2026-03-13</span><span class="main-manager">主办业务经理: 单士博</span></div>
+                </div>
+            </div>
         </div>
 
         <div class="pagination">
-            <span class="total">共 2 条</span>
+            <span class="total">共 5 条</span>
             <div class="page-controls">
                 <button class="page-btn disabled">上一页</button>
                 <button class="page-btn active">1</button>
@@ -538,7 +583,7 @@
         <div class="detail-page-content">
             <div class="report-detail-header">
                 <div class="report-detail-title">
-                    <button class="back-btn" onclick="goBack()"></button>
+                    <button class="back-btn page-back-arrow" type="button" onclick="goBack()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
                     <span class="report-module-title">报表上报</span>
                     <span class="report-dept">业务部</span>
                 </div>
@@ -628,7 +673,6 @@
             <div class="post-approval-page post-visit-approval-page">
                 <div class="post-approval-header">
                     <div class="post-approval-title">
-                        <span>←</span>
                         <strong>投后回访</strong>
                         <em>济南金控小额贷款有限公司</em>
                     </div>
@@ -656,7 +700,7 @@
                             <span>提交时间</span>
                             <strong>2026-07-08 17:23:39</strong>
                         </div>
-                        <button class="orange-handle-btn" type="button" onclick="showPostVisitHandleModal()">去处理</button>
+                        <button class="orange-handle-btn" type="button" onclick="openPostVisitHandlePage()">去处理</button>
                     </article>
                 </div>
                 <div class="post-manage-pagination">
@@ -672,14 +716,15 @@
             <div class="post-approval-page classification-approval-page">
                 <div class="post-approval-header">
                     <div class="post-approval-title">
-                        <span>←</span>
                         <strong>五级分类</strong>
                         <em>信贷一部</em>
                     </div>
-                    <button class="handled-record-btn" onclick="showClassificationRecordModal()">已办理记录</button>
+                    <div class="classification-header-actions">
+                        <button class="handled-record-btn" onclick="showClassificationRecordModal()">已办理记录</button>
+                        <button class="batch-approve-btn">批量审批</button>
+                    </div>
                 </div>
-                <div class="post-approval-toolbar">
-                    <button class="batch-approve-btn">批量审批</button>
+                <div class="post-approval-toolbar classification-approval-toolbar">
                     <div>
                         <input type="text" placeholder="请输入项目名称" class="post-filter-input">
                         <button class="search-btn">查询</button>
@@ -719,7 +764,6 @@
             <div class="post-approval-page repayment-approval-page">
                 <div class="post-approval-header">
                     <div class="post-approval-title">
-                        <span>←</span>
                         <strong>还款审批</strong>
                         <em>济南金控小额贷款有限公司</em>
                     </div>
@@ -959,11 +1003,11 @@
         </div>
     </div>
 
-    <div id="post-visit-handle-modal" class="modal post-visit-handle-modal">
-        <div class="modal-content post-visit-handle-content">
+    <div id="post-visit-handle-page" class="detail-page post-visit-handle-page">
+        <div class="detail-page-content post-visit-handle-content">
             <div class="post-visit-handle-header">
-                <span>投后回访新增</span>
-                <button type="button" onclick="closePostVisitHandleModal()">×</button>
+                <button class="post-visit-handle-back page-back-arrow" type="button" onclick="closePostVisitHandlePage()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
+                <strong>投后回访新增</strong>
             </div>
             <div class="post-visit-handle-body">
                 <h2>贷后检查工作记录单</h2>
@@ -1055,7 +1099,7 @@
                 </section>
             </div>
             <div class="post-visit-handle-footer">
-                <button class="post-cancel-btn" type="button" onclick="closePostVisitHandleModal()">取消</button>
+                <button class="post-cancel-btn" type="button" onclick="closePostVisitHandlePage()">取消</button>
                 <button class="post-save-btn" type="button" onclick="savePostVisitHandle()">保存</button>
                 <button class="post-submit-btn" type="button" onclick="submitPostVisitHandle()">提交</button>
             </div>
@@ -1064,9 +1108,9 @@
 
     <div id="post-visit-detail-modal" class="modal post-visit-handle-modal invest-view-modal">
         <div class="modal-content post-visit-handle-content invest-view-content">
-            <div class="post-visit-handle-header">
-                <span>投后回访详情</span>
-                <button type="button" onclick="closePostVisitDetailModal()">×</button>
+            <div class="post-visit-handle-header invest-view-header">
+                <button class="invest-view-back page-back-arrow" type="button" onclick="closePostVisitDetailModal()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
+                <strong>投后回访详情</strong>
             </div>
             <div class="post-visit-handle-body invest-view-body">
                 <h2>贷后检查工作记录单</h2>
@@ -1186,8 +1230,8 @@
     <div id="invest-classification-detail-modal" class="modal invest-classification-modal">
         <div class="modal-content invest-classification-content">
             <div class="invest-detail-header">
-                <span>五级分类详情</span>
-                <button type="button" onclick="closeInvestClassificationDetail()">×</button>
+                <button class="invest-classification-back page-back-arrow" type="button" onclick="closeInvestClassificationDetail()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
+                <strong>五级分类详情</strong>
             </div>
             <div class="invest-detail-actions">
                 <button type="button" onclick="showInvestClassificationApprovalRecord()">审批记录</button>
@@ -1301,8 +1345,7 @@
     <div id="classification-detail-page" class="detail-page classification-detail-page">
         <div class="detail-page-content classification-detail-content">
             <div class="classification-detail-header">
-                <button class="classification-back-btn" type="button" onclick="goBack()">←</button>
-                <strong>返回</strong>
+                <button class="classification-back-btn page-back-arrow" type="button" onclick="goBack()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
             </div>
             <div class="classification-detail-body">
                 <section class="classification-info-section">
@@ -1364,7 +1407,7 @@
         <div class="detail-page-content repayment-detail-content">
             <div class="repayment-detail-header">
                 <div class="repayment-detail-title">
-                    <button class="repayment-detail-back" type="button" onclick="goBack()">←</button>
+                    <button class="repayment-detail-back page-back-arrow" type="button" onclick="goBack()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
                     <strong>中住建设集团有限公司</strong>
                     <span class="business-approval-tag tag-orange">还款审批</span>
                 </div>
@@ -2160,7 +2203,7 @@
     <div id="change-detail-page" class="detail-page change-detail-page">
         <div class="detail-page-content">
             <div class="modal-header">
-                <button class="back-btn" onclick="goBack()"></button>
+                <button class="back-btn page-back-arrow" type="button" onclick="goBack()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
                 <span class="modal-title">云集数字科技（山东）股份有限公司</span>
                 <span class="tag approval-tag">还款</span>
             </div>
@@ -2263,7 +2306,7 @@
         <div class="detail-page-content loan-approval-detail-content">
             <div class="loan-detail-header">
                 <div class="loan-detail-title">
-                    <button class="loan-detail-back" onclick="goBack()" type="button">←</button>
+                    <button class="loan-detail-back page-back-arrow" onclick="goBack()" type="button" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
                     <strong>李霖</strong>
                     <span class="business-approval-tag tag-orange">放款</span>
                 </div>
@@ -2274,7 +2317,6 @@
                 <div class="detail-tab active" data-loan-detail-tab="loan-project">项目信息</div>
                 <div class="detail-tab" data-loan-detail-tab="loan-customer">客户信息</div>
                 <div class="detail-tab" data-loan-detail-tab="loan-flow">审批流程</div>
-                <div class="detail-tab" data-loan-detail-tab="loan-risk">风险报告</div>
             </div>
 
             <div class="loan-detail-layout">
@@ -2362,10 +2404,10 @@
                                 <table class="loan-empty-table">
                                     <thead>
                                         <tr>
-                                            <th>序号</th><th>类别</th><th>权属人</th><th>权利证号</th><th>坐落</th><th>面积(㎡)</th><th>登记时间</th><th>评估价值(元)</th><th>评估公司</th><th>是否一押</th><th>债权人</th><th>债权金额(元)</th>
+                                            <th>序号</th><th>类别</th><th>权利人证件号码</th><th>权利证号</th><th>权利人</th><th><button class="table-add-btn" type="button">新增</button></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td colspan="12">暂无数据</td></tr></tbody>
+                                    <tbody><tr><td colspan="6">暂无数据</td></tr></tbody>
                                 </table>
                             </div>
                             <div class="loan-subpanel-title">质押物信息</div>
@@ -2373,10 +2415,10 @@
                                 <table class="loan-empty-table">
                                     <thead>
                                         <tr>
-                                            <th>序号</th><th>类别</th><th>名称</th><th>评估价值(元)</th><th>权属人</th><th>有效日期</th>
+                                            <th>序号</th><th>类别</th><th>名称</th><th>评估价值</th><th>质押人</th><th>质押编号</th><th><button class="table-add-btn" type="button">新增</button></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td colspan="6">暂无数据</td></tr></tbody>
+                                    <tbody><tr><td colspan="7">暂无数据</td></tr></tbody>
                                 </table>
                             </div>
                         </section>
@@ -2388,10 +2430,10 @@
                                 <table class="loan-empty-table">
                                     <thead>
                                         <tr>
-                                            <th>序号</th><th>担保人姓名</th><th>身份证号</th><th>年龄</th><th>联系方式</th><th>与客户关系</th><th>担保人描述</th><th>联系地址</th><th>家庭资产（元）</th><th>备注</th>
+                                            <th>序号</th><th>担保人姓名</th><th>身份证号</th><th>年龄</th><th>联系方式</th><th><button class="table-add-btn" type="button">新增</button></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td colspan="10">暂无数据</td></tr></tbody>
+                                    <tbody><tr><td colspan="6">暂无数据</td></tr></tbody>
                                 </table>
                             </div>
                             <div class="loan-subpanel-title">担保信息</div>
@@ -2399,10 +2441,10 @@
                                 <table class="loan-empty-table">
                                     <thead>
                                         <tr>
-                                            <th>序号</th><th>担保企业名称</th><th>统一社会信用代码</th><th>近一年收入（元）</th><th>担保价值（元）</th><th>担保描述</th><th>所在位置</th><th>调查时间</th><th>备注</th>
+                                            <th>序号</th><th>担保企业名称</th><th>统一社会信用代码</th><th>担保价值</th><th>担保描述</th><th><button class="table-add-btn" type="button">新增</button></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td colspan="9">暂无数据</td></tr></tbody>
+                                    <tbody><tr><td colspan="6">暂无数据</td></tr></tbody>
                                 </table>
                             </div>
                         </section>
@@ -2431,9 +2473,6 @@
                         <div class="loan-placeholder-panel">暂无数据</div>
                     </div>
 
-                    <div id="loan-risk" class="loan-detail-content">
-                        <div class="loan-placeholder-panel">暂无数据</div>
-                    </div>
                 </main>
 
                 <aside class="loan-detail-sidebar">
@@ -2446,7 +2485,7 @@
 
             <div class="loan-detail-footer">
                 <button class="loan-submit-btn" type="button" onclick="showApproveModal()">提交</button>
-                <button class="loan-return-btn" type="button" onclick="goBack()">返回</button>
+                <button class="loan-return-btn page-back-arrow page-back-arrow-footer" type="button" onclick="goBack()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
             </div>
         </div>
     </div>
@@ -2455,7 +2494,7 @@
         <div class="detail-page-content credit-detail-content">
             <div class="credit-detail-header">
                 <div class="credit-detail-title">
-                    <button class="credit-back-btn" onclick="goBack()" type="button">←</button>
+                    <button class="credit-back-btn page-back-arrow" onclick="goBack()" type="button" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
                     <strong>安徽省小小科技股份有限公司</strong>
                     <span class="business-approval-tag tag-orange">授信审批</span>
                 </div>
@@ -2466,7 +2505,6 @@
                 <div class="detail-tab active" data-detail-tab="project">项目信息</div>
                 <div class="detail-tab" data-detail-tab="customer">客户信息</div>
                 <div class="detail-tab" data-detail-tab="approval-flow-tab">审批流程</div>
-                <div class="detail-tab" data-detail-tab="risk-report-tab">风险报告</div>
                 <div class="detail-tab" data-detail-tab="business-change-tab">业务变更</div>
             </div>
 
@@ -2610,13 +2648,13 @@
                             <h3 class="credit-section-title">底层资产</h3>
                             <div class="credit-subtitle">抵押物信息</div>
                             <div class="credit-table-scroll">
-                                <table class="credit-empty-table wide">
+                                <table class="credit-empty-table">
                                     <thead>
                                         <tr>
-                                            <th>序号</th><th>类别</th><th>权利人证件号码</th><th>权利证号</th><th>权利人类型</th><th>权利人</th><th>权利人证件类型</th><th>城市</th><th>坐落</th><th>面积(㎡)</th><th>预评估价值(元)</th><th>评估公司</th><th>评估时间</th><th>抵押开始时间</th><th><button class="table-add-btn" type="button">新增</button></th>
+                                            <th>序号</th><th>类别</th><th>权利人证件号码</th><th>权利证号</th><th>权利人</th><th><button class="table-add-btn" type="button">新增</button></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td colspan="15">暂无数据</td></tr></tbody>
+                                    <tbody><tr><td colspan="6">暂无数据</td></tr></tbody>
                                 </table>
                             </div>
                             <div class="credit-subtitle">质押物信息</div>
@@ -2624,10 +2662,10 @@
                                 <table class="credit-empty-table">
                                     <thead>
                                         <tr>
-                                            <th>序号</th><th>类别</th><th>名称</th><th>评估价值(元)</th><th>质押人</th><th>有效日期</th><th>登记日期</th><th>质押编号</th><th>质押价值</th><th>备注</th><th><button class="table-add-btn" type="button">新增</button></th>
+                                            <th>序号</th><th>类别</th><th>名称</th><th>评估价值</th><th>质押人</th><th>质押编号</th><th><button class="table-add-btn" type="button">新增</button></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td colspan="11">暂无数据</td></tr></tbody>
+                                    <tbody><tr><td colspan="7">暂无数据</td></tr></tbody>
                                 </table>
                             </div>
                         </section>
@@ -2639,21 +2677,21 @@
                                 <table class="credit-empty-table">
                                     <thead>
                                         <tr>
-                                            <th>序号</th><th>担保人姓名</th><th>身份证号</th><th>年龄</th><th>联系方式</th><th>与客户关系</th><th>担保人描述</th><th>保证开始时间</th><th>保证结束时间</th><th>保证人类型</th><th>保证金额</th><th>登记时间</th><th><button class="table-add-btn" type="button">新增</button></th>
+                                            <th>序号</th><th>担保人姓名</th><th>身份证号</th><th>年龄</th><th>联系方式</th><th><button class="table-add-btn" type="button">新增</button></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td colspan="13">暂无数据</td></tr></tbody>
+                                    <tbody><tr><td colspan="6">暂无数据</td></tr></tbody>
                                 </table>
                             </div>
                             <div class="credit-subtitle">担保信息</div>
                             <div class="credit-table-scroll">
-                                <table class="credit-empty-table wide">
+                                <table class="credit-empty-table">
                                     <thead>
                                         <tr>
-                                            <th>序号</th><th>担保企业名称</th><th>统一社会信用代码</th><th>近一年收入（元）</th><th>担保价值（元）</th><th>担保描述</th><th>所在位置</th><th>调查时间</th><th>登记时间</th><th>担保人类型</th><th>保证金额</th><th>保证开始时间</th><th>保证结束时间</th><th><button class="table-add-btn" type="button">新增</button></th>
+                                            <th>序号</th><th>担保企业名称</th><th>统一社会信用代码</th><th>担保价值</th><th>担保描述</th><th><button class="table-add-btn" type="button">新增</button></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td colspan="14">暂无数据</td></tr></tbody>
+                                    <tbody><tr><td colspan="6">暂无数据</td></tr></tbody>
                                 </table>
                             </div>
                         </section>
@@ -2695,13 +2733,6 @@
                         </section>
                     </div>
 
-                    <div id="risk-report-tab" class="detail-content">
-                        <section class="credit-section">
-                            <h3 class="credit-section-title">风险报告</h3>
-                            <div class="credit-placeholder">风险报告内容展示区</div>
-                        </section>
-                    </div>
-
                     <div id="business-change-tab" class="detail-content">
                         <section class="credit-section">
                             <h3 class="credit-section-title">业务变更</h3>
@@ -2731,7 +2762,7 @@
         <div class="detail-page-content project-detail-content">
             <div class="project-detail-header">
                 <div class="project-detail-title">
-                    <button class="project-back-btn" onclick="goBack()" type="button">←</button>
+                    <button class="project-back-btn page-back-arrow" onclick="goBack()" type="button" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
                     <strong id="project-approval-company">滨州农村商业银行股份有限公司</strong>
                     <span class="business-approval-tag tag-gold">立项</span>
                 </div>
@@ -2741,7 +2772,7 @@
             <div class="project-detail-tabs">
                 <button class="active" type="button" data-project-tab="project-info-panel">项目信息</button>
                 <button type="button" data-project-tab="project-customer-panel">客户信息</button>
-                <button type="button" data-project-tab="project-risk-panel">风控报告</button>
+                <button type="button" data-project-tab="project-change-panel">业务变更</button>
             </div>
 
             <div class="project-detail-layout">
@@ -2836,10 +2867,10 @@
                         </section>
                     </div>
 
-                    <div class="project-tab-panel" id="project-risk-panel">
+                    <div class="project-tab-panel" id="project-change-panel">
                         <section class="project-section">
-                            <h3 class="project-section-title">风控报告</h3>
-                            <div class="project-placeholder">风控报告内容展示区</div>
+                            <h3 class="project-section-title">业务变更</h3>
+                            <div class="project-placeholder">业务变更内容展示区</div>
                         </section>
                     </div>
                 </main>
@@ -2937,7 +2968,7 @@
     <div id="stage-detail-page" class="detail-page stage-detail-page stage-shot-page">
         <div class="detail-page-content stage-shot-content">
             <div class="stage-shot-header">
-                <button class="stage-shot-back" onclick="closeStageDetail()" type="button">←</button>
+                <button class="stage-shot-back page-back-arrow" onclick="closeStageDetail()" type="button" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
                 <strong class="stage-shot-title" id="stage-company-title">商河县产业投资开发集团有限公司</strong>
                 <span class="stage-shot-badge" id="stage-phase-tag">尽调调查</span>
                 <span class="stage-shot-current" id="stage-current-label">当前：尽调调查</span>
@@ -2946,7 +2977,7 @@
             <div class="stage-shot-tabs stage-tabs">
                 <button class="stage-shot-tab stage-tab active" type="button" data-stage-panel="stage-project-info">项目信息</button>
                 <button class="stage-shot-tab stage-tab" type="button" data-stage-panel="stage-customer-info">客户信息</button>
-                <button class="stage-shot-tab stage-tab" type="button" data-stage-panel="stage-risk-report">风险报告</button>
+                <button class="stage-shot-tab stage-tab" type="button" data-stage-panel="stage-business-change">业务变更</button>
             </div>
 
             <div class="stage-shot-layout">
@@ -2954,7 +2985,7 @@
                     <div class="stage-tab-content active" id="stage-project-info">
                         <section class="stage-shot-card">
                             <h3 class="stage-shot-section-title" id="stage-process-title">尽调信息</h3>
-                            <div class="stage-shot-form">
+                            <div class="stage-shot-form" id="stage-dynamic-form">
                                 <label class="stage-shot-field required">
                                     <span>尽调时间</span>
                                     <input type="text" placeholder="请选择尽调时间" readonly>
@@ -3020,18 +3051,66 @@
                             <p>客户名称、统一社会信用代码、注册地址、经营范围等信息。</p>
                         </section>
                     </div>
-                    <div class="stage-tab-content" id="stage-risk-report">
+                    <div class="stage-tab-content" id="stage-business-change">
                         <section class="stage-shot-card stage-shot-placeholder">
-                            <h3 class="stage-shot-section-title">风险报告</h3>
-                            <p>经营风险、担保风险、征信风险及综合风险评价。</p>
+                            <h3 class="stage-shot-section-title">业务变更</h3>
+                            <p>业务变更记录及相关审批信息。</p>
                         </section>
                     </div>
                 </main>
                 <aside class="stage-shot-sidebar">
-                    <div class="stage-shot-side-item stage-nav-item" data-stage-index="enterprise"><span class="stage-dot"></span>企业信息</div>
-                    <div class="stage-shot-side-item stage-nav-item" data-stage-index="0" onclick="switchStage(0)"><span class="stage-dot"></span>立项信息</div>
-                    <div class="stage-shot-side-item stage-nav-item active" data-stage-index="1" onclick="switchStage(1)"><span class="stage-dot active"></span>尽调调查</div>
+                    <button class="stage-shot-side-item stage-nav-item" type="button" data-stage-index="0" onclick="switchStage(0)"><span class="stage-dot"></span>企业信息</button>
+                    <button class="stage-shot-side-item stage-nav-item" type="button" data-stage-index="1" onclick="switchStage(1)"><span class="stage-dot"></span>立项</button>
+                    <button class="stage-shot-side-item stage-nav-item" type="button" data-stage-index="2" onclick="switchStage(2)"><span class="stage-dot"></span>尽调</button>
+                    <button class="stage-shot-side-item stage-nav-item" type="button" data-stage-index="3" onclick="switchStage(3)"><span class="stage-dot"></span>合同</button>
+                    <button class="stage-shot-side-item stage-nav-item" type="button" data-stage-index="4" onclick="switchStage(4)"><span class="stage-dot"></span>放款</button>
+                    <button class="stage-shot-side-item stage-nav-item" type="button" data-stage-index="5" onclick="switchStage(5)"><span class="stage-dot"></span>还款</button>
                 </aside>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="asset-detail-modal" class="asset-detail-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="asset-detail-title" onclick="if (event.target === this) closeAssetDetail()">
+        <div class="asset-detail-dialog">
+            <div class="asset-detail-header">
+                <button class="page-back-arrow" type="button" onclick="closeAssetDetail()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
+                <strong id="asset-detail-title">查看详情</strong>
+            </div>
+            <div id="asset-detail-body" class="asset-detail-body"></div>
+        </div>
+    </div>
+
+
+    <div id="stage-repayment-plan-page" class="detail-page stage-repayment-plan-page">
+        <div class="detail-page-content stage-repayment-plan-content">
+            <div class="stage-repayment-plan-header">
+                <button class="page-back-arrow" type="button" onclick="closeStageRepaymentPlanPage()" aria-label="返回还款详情" title="返回还款详情"><span aria-hidden="true">←</span></button>
+                <strong>还款计划</strong>
+            </div>
+            <div class="stage-repayment-plan-body">
+                <table class="stage-plan-summary-table">
+                    <tbody>
+                        <tr><th>客户名称</th><td id="stage-plan-client-name">济南金控产业发展有限公司</td><th>贷款金额</th><td>13,000,000.00 元</td><th>年利率</th><td>6.98 %</td></tr>
+                        <tr><th>借据号</th><td>J济金控小贷(2026)额度借第009号-01</td><th>放款日期</th><td>2026-03-31</td><th>到期日期</th><td>2027-03-30</td></tr>
+                        <tr><th>罚息率</th><td>13.96 %</td><td colspan="4"></td></tr>
+                    </tbody>
+                </table>
+                <div class="stage-plan-toolbar">
+                    <button type="button">↓ 下载</button>
+                    <button type="button">↥ 修改还款计划</button>
+                    <button type="button">更多操作⌄</button>
+                </div>
+                <div class="stage-plan-table-wrap">
+                    <table class="stage-plan-detail-table">
+                        <thead>
+                            <tr>
+                                <th>期次</th><th>计划还款日期</th><th>实际还款日期</th><th>还款状态</th><th>应收本金（元）</th><th>已收本金（元）</th><th>应收利息（元）</th><th>已收利息（元）</th><th>应收罚息（元）</th><th>已收罚息（元）</th><th>未收罚息（元）</th><th>已收违约金（元）</th><th>已收总合计（元）</th><th>诉讼费（元）</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stage-plan-detail-body"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -3153,8 +3232,8 @@
     <div id="enterprise-client-modal" class="modal client-detail-modal">
         <div class="modal-content client-detail-content enterprise-client-content">
             <div class="client-detail-header">
-                <span>客户信息</span>
-                <button type="button" onclick="closeEnterpriseClientDetail()">×</button>
+                <button class="client-detail-back page-back-arrow" type="button" onclick="closeEnterpriseClientDetail()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
+                <strong>客户信息</strong>
             </div>
             <div class="client-detail-body">
                 <div class="client-form-grid enterprise-client-form" data-client-export-title="企业客户信息">
@@ -3281,8 +3360,8 @@
     <div id="individual-client-modal" class="modal client-detail-modal">
         <div class="modal-content client-detail-content individual-client-content">
             <div class="client-detail-header">
-                <span>客户信息</span>
-                <button type="button" onclick="closeIndividualClientDetail()">×</button>
+                <button class="client-detail-back page-back-arrow" type="button" onclick="closeIndividualClientDetail()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
+                <strong>客户信息</strong>
             </div>
             <div class="client-detail-body">
                 <div class="client-form-grid individual-client-form" data-client-export-title="个人客户信息">
