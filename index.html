@@ -15,8 +15,23 @@
             <img src="images/logo.png" alt="logo" class="logo" onerror="this.style.display='none'">
             <span class="title">小贷业务管理系统</span>
         </div>
-        <div class="header-right">
-            <img src="images/avatar.png" alt="用户头像" class="avatar" onerror="this.style.display='none'">
+        <div class="header-right user-menu">
+            <button class="user-menu-trigger" type="button" aria-expanded="false" aria-haspopup="menu">
+                <img src="images/avatar.png" alt="husir 的头像" class="avatar" onerror="this.style.display='none'">
+                <span class="user-name">husir</span>
+                <span class="user-menu-arrow" aria-hidden="true"></span>
+            </button>
+            <div class="user-menu-panel" role="menu" aria-label="用户菜单">
+                <button class="user-product-switch" type="button" role="menuitem" data-user-action="switch-product">
+                    <span>小额贷款</span>
+                    <span class="user-switch-text">切换<i aria-hidden="true"></i></span>
+                </button>
+                <div class="user-menu-divider"></div>
+                <button class="user-menu-item" type="button" role="menuitem" data-user-action="change-avatar">修改头像</button>
+                <button class="user-menu-item" type="button" role="menuitem" data-user-action="change-password">修改密码</button>
+                <button class="user-menu-item user-menu-logout" type="button" role="menuitem" data-user-action="logout">退出登录</button>
+            </div>
+            <input class="user-avatar-input" type="file" accept="image/*" aria-label="选择新头像">
         </div>
     </header>
 

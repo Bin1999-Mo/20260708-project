@@ -91,6 +91,149 @@ body {
        object-fit: cover;
 }
 
+.header-right,
+.user-menu {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.user-menu-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 2px 4px;
+    border: 0;
+    border-radius: 20px;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.user-menu-trigger:hover,
+.user-menu-trigger:focus-visible,
+.user-menu.open .user-menu-trigger {
+    background-color: rgba(255, 255, 255, 0.12);
+    outline: none;
+}
+
+.user-name {
+    max-width: 120px;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-menu-arrow {
+    width: 7px;
+    height: 7px;
+    margin: -3px 5px 0 0;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s;
+}
+
+.user-menu.open .user-menu-arrow {
+    margin-top: 3px;
+    transform: rotate(225deg);
+}
+
+.user-menu-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 1100;
+    width: 176px;
+    padding: 8px 0;
+    border: 1px solid #e7ebf2;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #4b5563;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+}
+
+.user-menu-panel::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 34px;
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid #e7ebf2;
+    border-left: 1px solid #e7ebf2;
+    background-color: #fff;
+    transform: rotate(45deg);
+}
+
+.user-menu.open .user-menu-panel {
+    display: block;
+}
+
+.user-product-switch,
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 0;
+    background: transparent;
+    color: #4b5563;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.user-product-switch {
+    justify-content: space-between;
+    color: #374151;
+}
+
+.user-switch-text {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #6b7280;
+}
+
+.user-switch-text i {
+    width: 7px;
+    height: 7px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(45deg);
+}
+
+.user-product-switch:hover,
+.user-product-switch:focus-visible,
+.user-menu-item:hover,
+.user-menu-item:focus-visible {
+    background-color: #f3f6fb;
+    color: #1a5bc4;
+    outline: none;
+}
+
+.user-menu-divider {
+    height: 1px;
+    margin: 5px 0;
+    background-color: #eef1f5;
+}
+
+.user-menu-logout:hover,
+.user-menu-logout:focus-visible {
+    color: #d9363e;
+}
+
+.user-avatar-input {
+    display: none;
+}
+
 /* 功能导航 */
 .nav-tabs {
     display: -webkit-box;
@@ -9147,6 +9290,21 @@ textarea:focus {
     .avatar {
         width: 30px;
         height: 30px;
+    }
+
+    .user-menu-trigger {
+        min-height: 36px;
+        gap: 6px;
+    }
+
+    .user-name {
+        max-width: 72px;
+        font-size: 13px;
+    }
+
+    .user-menu-panel {
+        top: calc(100% + 8px);
+        width: 168px;
     }
 
     .title {
