@@ -5,6 +5,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         initTabs();
         initMoreActions();
+        initUserMenu();
         initCenterTabs();
         initDetailTabs();
         initProjectApprovalTabs();
@@ -140,6 +141,84 @@
             if (event.key === 'Escape' && more.classList.contains('open')) {
                 setOpen(false);
                 toggle.focus();
+            }
+        });
+    }
+
+    function initUserMenu() {
+        var menu = document.querySelector('.user-menu');
+        var trigger = menu ? menu.querySelector('.user-menu-trigger') : null;
+        var panel = menu ? menu.querySelector('.user-menu-panel') : null;
+        var avatarInput = menu ? menu.querySelector('.user-avatar-input') : null;
+
+        if (!menu || !trigger || !panel) {
+            return;
+        }
+
+        function setOpen(open) {
+            menu.classList.toggle('open', open);
+            trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+
+        trigger.addEventListener('click', function(event) {
+            event.stopPropagation();
+            setOpen(!menu.classList.contains('open'));
+        });
+
+        panel.addEventListener('click', function(event) {
+            var actionItem = event.target.closest('[data-user-action]');
+            if (!actionItem) {
+                return;
+            }
+
+            var action = actionItem.getAttribute('data-user-action');
+            setOpen(false);
+
+            if (action === 'change-avatar' && avatarInput) {
+                avatarInput.click();
+                return;
+            }
+
+            if (action === 'switch-product') {
+                showClientToast('产品切换功能为原型演示');
+            } else if (action === 'change-password') {
+                showClientToast('修改密码功能为原型演示');
+            } else if (action === 'logout') {
+                showClientToast('退出登录功能为原型演示');
+            }
+        });
+
+        if (avatarInput) {
+            avatarInput.addEventListener('change', function() {
+                var file = this.files && this.files[0];
+                if (!file || file.type.indexOf('image/') !== 0) {
+                    return;
+                }
+
+                var avatar = trigger.querySelector('.avatar');
+                var imageUrl = URL.createObjectURL(file);
+                if (avatar) {
+                    avatar.src = imageUrl;
+                    avatar.style.display = '';
+                    avatar.onload = function() {
+                        URL.revokeObjectURL(imageUrl);
+                    };
+                }
+                showClientToast('头像已更新');
+                this.value = '';
+            });
+        }
+
+        document.addEventListener('click', function(event) {
+            if (!menu.contains(event.target)) {
+                setOpen(false);
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && menu.classList.contains('open')) {
+                setOpen(false);
+                trigger.focus();
             }
         });
     }
