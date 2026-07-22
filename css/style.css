@@ -11975,26 +11975,6 @@ textarea:focus {
     cursor: pointer;
 }
 
-#stage-project-info .stage-table-edit,
-#stage-project-info .stage-table-delete {
-    min-width: 48px;
-    height: 30px;
-    margin: 2px 4px;
-    border: 0;
-    border-radius: 3px;
-    color: #fff;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-#stage-project-info .stage-table-edit {
-    background-color: #73b8f6;
-}
-
-#stage-project-info .stage-table-delete {
-    background-color: #f7a3a8;
-}
-
 #stage-project-info .credit-check-dot.rejected {
     background-color: #ff4d4f;
 }
@@ -12379,6 +12359,119 @@ textarea:focus {
 
     .stage-plan-summary-table {
         min-width: 880px;
+    }
+
+    /* 业务全流程：放款、还款详情在移动端按单字段逐行展示 */
+    #stage-project-info > .loan-section,
+    #stage-project-info .stage-repayment-section {
+        overflow: visible;
+    }
+
+    #stage-project-info .loan-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    #stage-project-info .loan-section-tools {
+        flex-wrap: wrap;
+        gap: 8px 14px;
+    }
+
+    #stage-project-info .loan-info-table,
+    #stage-project-info .loan-info-table tbody,
+    #stage-project-info .stage-repayment-info-table,
+    #stage-project-info .stage-repayment-info-table tbody {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    #stage-project-info .loan-info-table {
+        width: calc(100% - 20px) !important;
+        margin: 0 10px 14px;
+        border: 0;
+        table-layout: auto;
+    }
+
+    #stage-project-info .loan-info-table tbody,
+    #stage-project-info .stage-repayment-info-table tbody {
+        display: grid;
+        gap: 10px;
+    }
+
+    #stage-project-info .loan-info-table tr,
+    #stage-project-info .stage-repayment-info-table tr {
+        display: grid;
+        grid-template-columns: minmax(108px, 34%) minmax(0, 1fr);
+        width: 100%;
+        overflow: hidden;
+        border: 1px solid #d8e1ee;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    #stage-project-info .loan-info-table th,
+    #stage-project-info .loan-info-table td,
+    #stage-project-info .stage-repayment-info-table th,
+    #stage-project-info .stage-repayment-info-table td {
+        display: block;
+        width: auto !important;
+        min-width: 0 !important;
+        height: auto;
+        min-height: 42px;
+        padding: 10px 12px;
+        border: 0;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    #stage-project-info .loan-info-table th,
+    #stage-project-info .stage-repayment-info-table th {
+        border-right: 1px solid #e2e8f0;
+        background-color: #eef3fb;
+        color: #5f6b7a;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    #stage-project-info .loan-info-table td,
+    #stage-project-info .stage-repayment-info-table td {
+        background-color: #fff;
+        color: #172033;
+        font-size: 14px;
+    }
+
+    #stage-project-info .loan-info-table th:not(:first-child),
+    #stage-project-info .loan-info-table th:not(:first-child) + td,
+    #stage-project-info .stage-repayment-info-table th:not(:first-child),
+    #stage-project-info .stage-repayment-info-table th:not(:first-child) + td {
+        border-top: 1px solid #e8edf4;
+    }
+
+    #stage-project-info .stage-file-list {
+        min-width: 0;
+    }
+
+    #stage-project-info .loan-opinion-row {
+        grid-template-columns: minmax(0, 1fr);
+        margin: 10px;
+    }
+
+    #stage-project-info .loan-opinion-content,
+    #stage-project-info .loan-opinion-time {
+        border-top: 1px solid #e8edf4;
+    }
+
+    #stage-project-info .stage-repayment-section {
+        padding: 0 10px 18px;
+    }
+
+    #stage-project-info .stage-repayment-heading {
+        margin-right: -10px;
+        margin-left: -10px;
     }
 }
 
