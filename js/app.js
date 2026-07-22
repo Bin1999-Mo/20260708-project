@@ -4,6 +4,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         initTabs();
+        initHomeDashboard();
         initMoreActions();
         initUserMenu();
         initCenterTabs();
@@ -21,9 +22,190 @@
         initPhotoLibrary();
         initPagedLists();
         initMobileTableLabels();
+        initOverdueReportPage();
         initCloseAllMenus();
         hideZeroBadges();
     });
+
+    function initHomeDashboard() {
+        var home = document.getElementById('home-dashboard');
+        if (!home) {
+            return;
+        }
+        updateHomeDashboardShell(home.classList.contains('active') ? 'home-dashboard' : '');
+        drawHomeMetricChart();
+        var resizeFrame = null;
+        window.addEventListener('resize', function() {
+            if (resizeFrame) {
+                window.cancelAnimationFrame(resizeFrame);
+            }
+            resizeFrame = window.requestAnimationFrame(function() {
+                drawHomeMetricChart();
+                resizeFrame = null;
+            });
+        });
+    }
+
+    function updateHomeDashboardShell(tabId) {
+        var isHome = tabId === 'home-dashboard';
+        document.body.classList.toggle('home-dashboard-active', isHome);
+        if (isHome) {
+            window.requestAnimationFrame(drawHomeMetricChart);
+        }
+    }
+
+    function drawHomeMetricChart() {
+        var canvas = document.getElementById('home-metric-chart');
+        if (!canvas || !canvas.parentElement || !canvas.parentElement.clientWidth) {
+            return;
+        }
+        var width = canvas.parentElement.clientWidth;
+        var height = canvas.parentElement.clientHeight || 280;
+        var ratio = Math.max(1, window.devicePixelRatio || 1);
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        var ctx = canvas.getContext('2d');
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+
+        var data = [
+            { label: '新增投放项目数', month: 100, year: 150 },
+            { label: '回收项目数', month: 140, year: 100 },
+            { label: '在投项目数', month: 230, year: 200 }
+        ];
+        var colors = { month: '#4799ee', year: '#20cbd0' };
+        var left = width < 520 ? 34 : 46;
+        var right = 10;
+        var top = 52;
+        var bottom = 42;
+        var plotWidth = Math.max(1, width - left - right);
+        var plotHeight = Math.max(1, height - top - bottom);
+        var maxValue = 250;
+        var ticks = [0, 50, 100, 150, 200, 250];
+        ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif';
+        ctx.textBaseline = 'middle';
+
+        var legendY = 18;
+        var legendStart = Math.max(8, width / 2 - 58);
+        ctx.fillStyle = colors.month;
+        ctx.fillRect(legendStart, legendY - 6, 23, 12);
+        ctx.fillStyle = '#6f7783';
+        ctx.textAlign = 'left';
+        ctx.fillText('本月', legendStart + 29, legendY);
+        ctx.fillStyle = colors.year;
+        ctx.fillRect(legendStart + 65, legendY - 6, 23, 12);
+        ctx.fillStyle = '#6f7783';
+        ctx.fillText('本年', legendStart + 94, legendY);
+
+        for (var tickIndex = 0; tickIndex < ticks.length; tickIndex++) {
+            var tick = ticks[tickIndex];
+            var y = top + plotHeight - (tick / maxValue) * plotHeight;
+            ctx.strokeStyle = '#edf1f5';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(left, y);
+            ctx.lineTo(left + plotWidth, y);
+            ctx.stroke();
+            ctx.fillStyle = '#7e8792';
+            ctx.textAlign = 'right';
+            ctx.fillText(String(tick), left - 7, y);
+        }
+
+        ctx.strokeStyle = '#9ea7b3';
+        ctx.beginPath();
+        ctx.moveTo(left, top + plotHeight);
+        ctx.lineTo(left + plotWidth, top + plotHeight);
+        ctx.stroke();
+
+        var groupWidth = plotWidth / data.length;
+        var barWidth = Math.max(13, Math.min(24, groupWidth * 0.22));
+        var barGap = 3;
+        for (var i = 0; i < data.length; i++) {
+            var center = left + groupWidth * (i + 0.5);
+            var monthHeight = data[i].month / maxValue * plotHeight;
+            var yearHeight = data[i].year / maxValue * plotHeight;
+            var monthX = center - barWidth - barGap / 2;
+            var yearX = center + barGap / 2;
+            var monthY = top + plotHeight - monthHeight;
+            var yearY = top + plotHeight - yearHeight;
+            ctx.fillStyle = colors.month;
+            ctx.fillRect(monthX, monthY, barWidth, monthHeight);
+            ctx.fillStyle = colors.year;
+            ctx.fillRect(yearX, yearY, barWidth, yearHeight);
+
+            ctx.font = '10px -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = colors.month;
+            ctx.fillText(String(data[i].month), monthX + barWidth / 2, Math.max(top + 6, monthY - 8));
+            ctx.fillStyle = colors.year;
+            ctx.fillText(String(data[i].year), yearX + barWidth / 2, Math.max(top + 6, yearY - 8));
+            ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif';
+            ctx.fillStyle = '#6f7783';
+            ctx.fillText(data[i].label, center, top + plotHeight + 20);
+        }
+    }
+
+    function initOverdueReportPage() {
+        var page = document.getElementById('report-detail-page');
+        if (!page) {
+            return;
+        }
+
+        var unitButtons = page.querySelectorAll('[data-report-unit]');
+        var unitLabels = page.querySelectorAll('[data-report-unit-label]');
+        for (var i = 0; i < unitButtons.length; i++) {
+            unitButtons[i].addEventListener('click', function() {
+                for (var j = 0; j < unitButtons.length; j++) {
+                    unitButtons[j].classList.remove('active');
+                }
+                this.classList.add('active');
+                var unit = this.getAttribute('data-report-unit');
+                for (var k = 0; k < unitLabels.length; k++) {
+                    unitLabels[k].textContent = unit;
+                }
+            });
+        }
+
+        var actionButtons = page.querySelectorAll('[data-report-action]');
+        for (var actionIndex = 0; actionIndex < actionButtons.length; actionIndex++) {
+            actionButtons[actionIndex].addEventListener('click', function() {
+                var action = this.getAttribute('data-report-action');
+                if (action === 'reset') {
+                    var fields = page.querySelectorAll('[data-overdue-filter]');
+                    for (var fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) {
+                        if (fields[fieldIndex].tagName === 'SELECT') {
+                            fields[fieldIndex].selectedIndex = 0;
+                        } else {
+                            fields[fieldIndex].value = '';
+                        }
+                    }
+                    showClientToast('筛选条件已重置');
+                    return;
+                }
+                if (action === 'query') {
+                    showClientToast('查询完成，共 1 条记录');
+                    return;
+                }
+                if (action === 'export') {
+                    showClientToast('逾期项目台账已导出');
+                    return;
+                }
+                if (action === 'view') {
+                    showClientToast('正在查看项目详情');
+                }
+            });
+        }
+
+        var tableScroller = page.querySelector('.overdue-table-wrap');
+        var summaryScroller = page.querySelector('.overdue-summary-viewport');
+        if (tableScroller && summaryScroller) {
+            tableScroller.addEventListener('scroll', function() {
+                summaryScroller.scrollLeft = tableScroller.scrollLeft;
+            }, { passive: true });
+        }
+    }
 
     function initTabs() {
         var navItems = document.querySelectorAll('.nav-tabs .nav-item');
@@ -57,14 +239,17 @@
                         moreToggle.classList.add('active');
                     }
                     var tabId = this.getAttribute('data-tab');
+                    updateHomeDashboardShell(tabId);
                     var detailPage = document.getElementById('detail-page');
                     var projectApprovalPage = document.getElementById('project-approval-page');
                     var loanDetailPage = document.getElementById('loan-detail-page');
                     var changeDetailPage = document.getElementById('change-detail-page');
+                    var reportDetailPage = document.getElementById('report-detail-page');
                     var classificationDetailPage = document.getElementById('classification-detail-page');
                     var repaymentDetailPage = document.getElementById('repayment-detail-page');
                     var postVisitHandlePage = document.getElementById('post-visit-handle-page');
                     var stageRepaymentPlanPage = document.getElementById('stage-repayment-plan-page');
+                    var photoAddPage = document.getElementById('photo-add-page');
                     if (stageDetailPage) {
                         stageDetailPage.classList.remove('show');
                     }
@@ -80,6 +265,9 @@
                     if (changeDetailPage) {
                         changeDetailPage.classList.remove('show');
                     }
+                    if (reportDetailPage) {
+                        reportDetailPage.classList.remove('show');
+                    }
                     if (classificationDetailPage) {
                         classificationDetailPage.classList.remove('show');
                     }
@@ -91,6 +279,9 @@
                     }
                     if (stageRepaymentPlanPage) {
                         stageRepaymentPlanPage.classList.remove('show');
+                    }
+                    if (photoAddPage) {
+                        photoAddPage.classList.remove('show');
                     }
                     document.body.style.overflow = '';
 
@@ -457,7 +648,7 @@
     }
 
     function initHandleButtons() {
-        var handleButtons = document.querySelectorAll('#approval-center .handle-btn:not(.change-approve-btn)');
+        var handleButtons = document.querySelectorAll('#business-approval .business-handle-btn:not(.change-approve-btn)');
 
         for (var i = 0; i < handleButtons.length; i++) {
             handleButtons[i].addEventListener('click', function(e) {
@@ -683,6 +874,43 @@
             resetChangeDetailTabs();
             detailPage.classList.add('show');
             document.body.style.overflow = '';
+        }
+    };
+
+    window.openReportDetailPage = function() {
+        var appHeader = document.querySelector('.header');
+        var navTabs = document.querySelector('.nav-tabs');
+        var tabContents = document.querySelectorAll('.tab-content');
+        var approvalCenter = document.getElementById('approval-center');
+        var approvalSections = approvalCenter ? approvalCenter.querySelectorAll('.center-content') : [];
+        var detailPage = document.getElementById('report-detail-page');
+        currentDetailSource = 'report-approval';
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
+
+        if (navTabs) {
+            navTabs.style.display = 'none';
+        }
+
+        for (var i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+
+        if (approvalCenter) {
+            approvalCenter.classList.add('active');
+            approvalCenter.classList.add('report-detail-mode');
+        }
+
+        for (var j = 0; j < approvalSections.length; j++) {
+            approvalSections[j].classList.remove('active');
+        }
+
+        if (detailPage) {
+            detailPage.classList.add('show');
+            document.body.style.overflow = '';
+            window.scrollTo(0, 0);
         }
     };
 
@@ -1188,12 +1416,14 @@
     window.goBack = function() {
         var appHeader = document.querySelector('.header');
         var navTabs = document.querySelector('.nav-tabs');
+        var approvalCenter = document.getElementById('approval-center');
         var navItems = document.querySelectorAll('.nav-tabs .nav-item');
         var tabContents = document.querySelectorAll('.tab-content');
         var detailPage = document.getElementById('detail-page');
         var projectApprovalPage = document.getElementById('project-approval-page');
         var loanDetailPage = document.getElementById('loan-detail-page');
         var changeDetailPage = document.getElementById('change-detail-page');
+        var reportDetailPage = document.getElementById('report-detail-page');
         var stageDetailPage = document.getElementById('stage-detail-page');
         var classificationDetailPage = document.getElementById('classification-detail-page');
         var repaymentDetailPage = document.getElementById('repayment-detail-page');
@@ -1216,6 +1446,9 @@
             changeDetailPage.classList.remove('show');
         }
 
+        if (reportDetailPage) {
+            reportDetailPage.classList.remove('show');
+        }
         if (stageDetailPage) {
             stageDetailPage.classList.remove('show');
         }
@@ -1230,6 +1463,9 @@
         }
         if (stageRepaymentPlanPage) {
             stageRepaymentPlanPage.classList.remove('show');
+        }
+        if (approvalCenter) {
+            approvalCenter.classList.remove('report-detail-mode');
         }
 
         if (navTabs) {
@@ -1250,6 +1486,7 @@
 
         var isApproval = currentDetailSource === 'business-approval'
             || currentDetailSource === 'loan-management'
+            || currentDetailSource === 'report-approval'
             || currentDetailSource === 'post-visit-approval'
             || currentDetailSource === 'classification-approval'
             || currentDetailSource === 'repayment-approval';
@@ -1525,36 +1762,259 @@
 
     var currentPhotoContext = null;
     var photoStore = {};
+    var pendingPhotoFiles = [];
+    var pendingPhotoContext = null;
+    var photoUsageDraft = [];
 
     function initPhotoLibrary() {
         var photoLibrary = document.getElementById('photo-library');
-        var uploadInput = document.getElementById('photo-upload-input');
 
-        if (!photoLibrary || !uploadInput) {
+        if (!photoLibrary) {
             return;
         }
 
         var detailButtons = photoLibrary.querySelectorAll('.photo-detail-btn[data-client]');
         for (var i = 0; i < detailButtons.length; i++) {
-            detailButtons[i].addEventListener('click', function() {
-                currentPhotoContext = {
-                    client: this.getAttribute('data-client') || '--',
-                    manager: this.getAttribute('data-manager') || '--',
-                    stage: this.getAttribute('data-stage') || '--',
-                    button: this
-                };
-                openPhotoDetailModal();
+            bindPhotoDetailButton(detailButtons[i]);
+        }
+
+        var projectKeyword = document.getElementById('photo-project-keyword');
+        var projectQuery = document.getElementById('photo-project-query');
+        var projectResults = document.getElementById('photo-project-results');
+        var addUploadInput = document.getElementById('photo-add-upload-input');
+        var addCameraInput = document.getElementById('photo-add-camera-input');
+
+        if (projectQuery && projectKeyword && projectResults) {
+            projectQuery.addEventListener('click', runPhotoProjectQuery);
+            projectKeyword.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    runPhotoProjectQuery();
+                }
+            });
+
+            var projectOptions = projectResults.querySelectorAll('button[data-project]');
+            for (var optionIndex = 0; optionIndex < projectOptions.length; optionIndex++) {
+                projectOptions[optionIndex].addEventListener('click', function() {
+                    projectKeyword.value = this.getAttribute('data-project') || '';
+                    currentPhotoContext = {
+                        client: projectKeyword.value,
+                        manager: '--',
+                        stage: '立项',
+                        projectDate: this.getAttribute('data-date') || '',
+                        button: null
+                    };
+                    projectResults.hidden = true;
+                    projectKeyword.setAttribute('aria-expanded', 'false');
+                    renderPhotoAddList();
+                });
+            }
+
+            projectKeyword.addEventListener('input', function() {
+                if (currentPhotoContext && projectKeyword.value.trim() !== currentPhotoContext.client) {
+                    currentPhotoContext = null;
+                    renderPhotoAddList();
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                var searchRow = document.querySelector('.photo-add-search-row');
+                if (searchRow && !searchRow.contains(event.target)) {
+                    projectResults.hidden = true;
+                    projectKeyword.setAttribute('aria-expanded', 'false');
+                }
             });
         }
 
-        uploadInput.addEventListener('change', function() {
-            var files = Array.prototype.slice.call(this.files || []);
-            if (!files.length || !currentPhotoContext) {
-                return;
-            }
-            this.value = '';
-            addPhotosToCurrentContext(files);
+        if (addUploadInput) {
+            addUploadInput.addEventListener('change', function() {
+                handlePhotoInputFiles(this.files);
+                this.value = '';
+            });
+        }
+
+        if (addCameraInput) {
+            addCameraInput.addEventListener('change', function() {
+                handlePhotoInputFiles(this.files);
+                this.value = '';
+            });
+        }
+    }
+
+    function bindPhotoDetailButton(button) {
+        if (!button || button.getAttribute('data-photo-bound') === 'true') {
+            return;
+        }
+        button.setAttribute('data-photo-bound', 'true');
+        button.addEventListener('click', function() {
+            currentPhotoContext = {
+                client: this.getAttribute('data-client') || '--',
+                manager: this.getAttribute('data-manager') || '--',
+                stage: this.getAttribute('data-stage') || '--',
+                projectDate: this.getAttribute('data-project-date') || '',
+                button: this
+            };
+            openPhotoDetailModal();
         });
+    }
+
+    function runPhotoProjectQuery() {
+        var projectKeyword = document.getElementById('photo-project-keyword');
+        var projectResults = document.getElementById('photo-project-results');
+        if (!projectKeyword || !projectResults) {
+            return;
+        }
+
+        var keyword = projectKeyword.value.trim();
+        if (!keyword) {
+            projectResults.hidden = true;
+            projectKeyword.setAttribute('aria-expanded', 'false');
+            showClientToast('请输入项目名称');
+            return;
+        }
+
+        if (keyword.indexOf('云集') !== -1) {
+            projectResults.hidden = false;
+            projectKeyword.setAttribute('aria-expanded', 'true');
+            return;
+        }
+
+        projectResults.hidden = true;
+        projectKeyword.setAttribute('aria-expanded', 'false');
+        showClientToast('未查询到匹配项目');
+    }
+
+    window.openPhotoAddPage = function() {
+        var appHeader = document.querySelector('.header');
+        var navTabs = document.querySelector('.nav-tabs');
+        var tabContents = document.querySelectorAll('.tab-content');
+        var addPage = document.getElementById('photo-add-page');
+        var projectKeyword = document.getElementById('photo-project-keyword');
+        var projectResults = document.getElementById('photo-project-results');
+
+        if (appHeader) {
+            appHeader.style.display = 'none';
+        }
+        if (navTabs) {
+            navTabs.style.display = 'none';
+        }
+        for (var i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+        if (projectKeyword) {
+            projectKeyword.value = '';
+            projectKeyword.setAttribute('aria-expanded', 'false');
+        }
+        if (projectResults) {
+            projectResults.hidden = true;
+        }
+        currentPhotoContext = null;
+        pendingPhotoFiles = [];
+        pendingPhotoContext = null;
+        renderPhotoAddList();
+        setPhotoAddLocationNote('照片将添加拍摄时间和实时地点水印。');
+        if (addPage) {
+            addPage.classList.add('show');
+            window.scrollTo(0, 0);
+        }
+    };
+
+    window.closePhotoAddPage = function() {
+        var appHeader = document.querySelector('.header');
+        var navTabs = document.querySelector('.nav-tabs');
+        var addPage = document.getElementById('photo-add-page');
+        var photoLibrary = document.getElementById('photo-library');
+        var photoNav = document.querySelector('.nav-tabs .nav-item[data-tab="photo-library"]');
+        var moreToggle = document.querySelector('.nav-more-toggle');
+
+        if (addPage) {
+            addPage.classList.remove('show');
+        }
+        if (appHeader) {
+            appHeader.style.display = '';
+        }
+        if (navTabs) {
+            navTabs.style.display = '';
+        }
+        if (photoLibrary) {
+            photoLibrary.classList.add('active');
+        }
+        if (photoNav) {
+            photoNav.classList.add('active');
+        }
+        if (moreToggle) {
+            moreToggle.classList.add('active');
+        }
+        document.body.style.overflow = '';
+        window.scrollTo(0, 0);
+    };
+
+    window.triggerPhotoAddUpload = function() {
+        var projectKeyword = document.getElementById('photo-project-keyword');
+        var addUploadInput = document.getElementById('photo-add-upload-input');
+        if (!isPhotoProjectSelected(projectKeyword)) {
+            return;
+        }
+        if (addUploadInput) {
+            addUploadInput.click();
+        }
+    };
+
+    window.triggerPhotoCapture = function() {
+        var projectKeyword = document.getElementById('photo-project-keyword');
+        var cameraInput = document.getElementById('photo-add-camera-input');
+        if (!isPhotoProjectSelected(projectKeyword)) {
+            return;
+        }
+        if (cameraInput) {
+            cameraInput.click();
+        }
+    };
+
+    window.savePhotoAddPage = function() {
+        var projectKeyword = document.getElementById('photo-project-keyword');
+        if (!isPhotoProjectSelected(projectKeyword)) {
+            return;
+        }
+        if (!getPhotoList().length) {
+            showClientToast('请先上传或拍摄照片');
+            return;
+        }
+        ensurePhotoLibraryRow(currentPhotoContext);
+        showClientToast('照片保存成功');
+        window.closePhotoAddPage();
+    };
+
+    function isPhotoProjectSelected(projectKeyword) {
+        if (!projectKeyword || !projectKeyword.value.trim() || !currentPhotoContext ||
+            projectKeyword.value.trim() !== currentPhotoContext.client) {
+            showClientToast('请先查询并选择项目');
+            return false;
+        }
+        return true;
+    }
+
+    function setPhotoAddLocationNote(message) {
+        var note = document.getElementById('photo-add-location-note');
+        if (note) {
+            note.textContent = message;
+        }
+    }
+
+    function handlePhotoInputFiles(fileList) {
+        var files = Array.prototype.slice.call(fileList || []);
+        if (!files.length || !currentPhotoContext) {
+            return;
+        }
+        pendingPhotoFiles = files;
+        pendingPhotoContext = {
+            client: currentPhotoContext.client,
+            manager: currentPhotoContext.manager,
+            stage: currentPhotoContext.stage,
+            projectDate: currentPhotoContext.projectDate || '',
+            button: currentPhotoContext.button || null
+        };
+        requestPhotoLocation();
     }
 
     function formatPhotoTime(date) {
@@ -1577,15 +2037,16 @@
         }
     }
 
-    function getPhotoStoreKey() {
-        if (!currentPhotoContext) {
+    function getPhotoStoreKey(context) {
+        var targetContext = context || currentPhotoContext;
+        if (!targetContext) {
             return '';
         }
-        return currentPhotoContext.client + '|' + currentPhotoContext.stage;
+        return targetContext.client + '|' + targetContext.stage + '|' + (targetContext.projectDate || '');
     }
 
-    function getPhotoList() {
-        var key = getPhotoStoreKey();
+    function getPhotoList(context) {
+        var key = getPhotoStoreKey(context);
         if (!key) {
             return [];
         }
@@ -1597,55 +2058,46 @@
 
     function openPhotoDetailModal() {
         var modal = document.getElementById('photo-detail-modal');
-        var note = document.getElementById('photo-location-note');
         if (!currentPhotoContext || !modal) {
             return;
         }
         setPhotoPreviewText('photo-preview-client', currentPhotoContext.client);
         setPhotoPreviewText('photo-preview-manager', currentPhotoContext.manager);
         setPhotoPreviewText('photo-preview-stage', currentPhotoContext.stage);
-        if (note) {
-            note.textContent = '上传时会写入拍摄时间；若授权定位，将同步写入经度/纬度水印。';
-        }
-        renderPhotoUploadList();
+        photoUsageDraft = getPhotoList().map(function(photo) {
+            return Boolean(photo.used);
+        });
+        renderPhotoDetailGallery();
         modal.classList.add('show');
         document.body.style.overflow = 'hidden';
     }
 
-    window.triggerPhotoUpload = function() {
-        var uploadInput = document.getElementById('photo-upload-input');
-        if (uploadInput) {
-            uploadInput.click();
+    function requestPhotoLocation() {
+        if (!pendingPhotoFiles.length || !pendingPhotoContext) {
+            return;
         }
-    };
-
-    function addPhotosToCurrentContext(files) {
-        var note = document.getElementById('photo-location-note');
-        if (note) {
-            note.textContent = '正在获取实时坐标，请允许浏览器定位。';
-        }
+        setPhotoAddLocationNote('正在获取实时地点，请允许浏览器定位。');
 
         if (!navigator.geolocation) {
-            processPhotoFiles(files, '定位不可用');
-            if (note) {
-                note.textContent = '当前浏览器不支持定位，已保留拍摄时间水印。';
-            }
+            showPhotoLocationFallback('当前浏览器不支持定位。可继续上传并仅保留拍摄时间水印。');
             return;
         }
 
         navigator.geolocation.getCurrentPosition(function(position) {
             var longitude = position.coords.longitude.toFixed(6);
             var latitude = position.coords.latitude.toFixed(6);
-            processPhotoFiles(files, '经度 ' + longitude + ' / 纬度 ' + latitude);
-            if (note) {
-                note.textContent = '坐标已实时获取，并写入照片水印。';
-            }
+            var files = pendingPhotoFiles.slice();
+            var context = pendingPhotoContext;
+            pendingPhotoFiles = [];
+            pendingPhotoContext = null;
+            hidePhotoLocationFallback();
+            processPhotoFiles(files, '经度 ' + longitude + '，纬度 ' + latitude, context);
+            setPhotoAddLocationNote('实时地点已获取，照片将同时写入时间和地点水印。');
         }, function(error) {
-            var message = error && error.code === 1 ? '定位未授权' : '定位获取失败';
-            processPhotoFiles(files, message);
-            if (note) {
-                note.textContent = '无法获取经纬度，已保留拍摄时间水印。';
-            }
+            var message = error && error.code === 1
+                ? '定位权限未开启。请在浏览器地址栏旁的位置权限中选择“允许”，然后重新授权；也可以继续上传并仅保留拍摄时间水印。'
+                : '暂时无法获取实时地点。请检查系统定位或网络后重新授权；也可以继续上传并仅保留拍摄时间水印。';
+            showPhotoLocationFallback(message);
         }, {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -1653,40 +2105,85 @@
         });
     }
 
-    function processPhotoFiles(files, locationText) {
+    function showPhotoLocationFallback(message) {
+        var modal = document.getElementById('photo-location-modal');
+        var messageNode = document.getElementById('photo-location-message');
+        if (messageNode) {
+            messageNode.textContent = message;
+        }
+        if (modal) {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        setPhotoAddLocationNote('未获取到实时地点，请重新授权或选择继续上传。');
+    }
+
+    function hidePhotoLocationFallback() {
+        var modal = document.getElementById('photo-location-modal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+        document.body.style.overflow = '';
+    }
+
+    window.retryPhotoLocation = function() {
+        var messageNode = document.getElementById('photo-location-message');
+        if (messageNode) {
+            messageNode.textContent = '正在重新请求定位，请在浏览器提示中选择“允许”……';
+        }
+        requestPhotoLocation();
+    };
+
+    window.continuePhotoUploadWithoutLocation = function() {
+        var files = pendingPhotoFiles.slice();
+        var context = pendingPhotoContext;
+        pendingPhotoFiles = [];
+        pendingPhotoContext = null;
+        hidePhotoLocationFallback();
+        if (files.length && context) {
+            processPhotoFiles(files, '未获取定位', context);
+            setPhotoAddLocationNote('已继续上传：照片保留拍摄时间水印，地点标记为“未获取定位”。');
+        }
+    };
+
+    function processPhotoFiles(files, locationText, context) {
+        var targetContext = context || currentPhotoContext;
         for (var i = 0; i < files.length; i++) {
-            createWatermarkedPhoto(files[i], locationText, function(photo) {
-                getPhotoList().push(photo);
-                renderPhotoUploadList();
+            createWatermarkedPhoto(files[i], locationText, targetContext, function(photo) {
+                getPhotoList(targetContext).push(photo);
+                ensurePhotoLibraryRow(targetContext);
+                renderPhotoAddList();
+                renderPhotoDetailGallery();
             });
         }
     }
 
-    function createWatermarkedPhoto(file, locationText, done) {
+    function createWatermarkedPhoto(file, locationText, context, done) {
         var reader = new FileReader();
         reader.onload = function(event) {
             var image = new Image();
             image.onload = function() {
-                done(drawPhotoToDataUrl(image, file.name, locationText));
+                var takenAt = formatPhotoTime(new Date(file.lastModified || Date.now()));
+                done(drawPhotoToDataUrl(image, file.name, locationText, context, takenAt));
             };
             image.src = event.target.result;
         };
         reader.readAsDataURL(file);
     }
 
-    function drawPhotoToDataUrl(image, fileName, locationText) {
+    function drawPhotoToDataUrl(image, fileName, locationText, context, takenAt) {
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
         var maxWidth = 1080;
         var scale = Math.min(1, maxWidth / image.width);
         var width = Math.max(1, Math.round(image.width * scale));
         var height = Math.max(1, Math.round(image.height * scale));
-        var takenAt = formatPhotoTime(new Date());
+        var targetContext = context || currentPhotoContext;
         var lines = [
-            '客户名称：' + currentPhotoContext.client,
-            '所属环节：' + currentPhotoContext.stage,
+            '项目名称：' + targetContext.client,
+            '所属环节：' + targetContext.stage,
             '拍摄时间：' + takenAt,
-            '地点坐标：' + locationText
+            '实时地点：' + locationText
         ];
         var fontSize = Math.max(16, Math.round(width * 0.032));
         var padding = Math.max(16, Math.round(width * 0.028));
@@ -1710,29 +2207,177 @@
             name: fileName || '照片',
             time: takenAt,
             location: locationText,
+            used: false,
             src: canvas.toDataURL('image/jpeg', 0.86)
         };
     }
 
-    function renderPhotoUploadList() {
-        var list = document.getElementById('photo-upload-list');
+    function renderPhotoAddList() {
+        var list = document.getElementById('photo-add-upload-list');
         var photos = getPhotoList();
         if (!list) {
             return;
         }
+        list.innerHTML = '';
         if (!photos.length) {
-            list.innerHTML = '<div class="photo-empty">暂无照片，请点击“上传照片”。</div>';
+            var empty = document.createElement('div');
+            empty.className = 'photo-empty';
+            empty.textContent = '暂无照片，请点击“上传照片”。';
+            list.appendChild(empty);
             return;
         }
-        var html = '';
         for (var i = 0; i < photos.length; i++) {
-            html += '<div class="photo-upload-item">';
-            html += '<img src="' + photos[i].src + '" alt="' + photos[i].name + '">';
-            html += '<div><strong>' + photos[i].name + '</strong><span>' + photos[i].time + '</span><em>' + photos[i].location + '</em></div>';
-            html += '<button type="button" onclick="deleteUploadedPhoto(' + i + ')">删除</button>';
-            html += '</div>';
+            var item = document.createElement('div');
+            item.className = 'photo-upload-item';
+            var image = document.createElement('img');
+            image.src = photos[i].src;
+            image.alt = photos[i].name;
+            var meta = document.createElement('div');
+            var name = document.createElement('strong');
+            var time = document.createElement('span');
+            var location = document.createElement('em');
+            name.textContent = photos[i].name;
+            time.textContent = '拍摄时间：' + photos[i].time;
+            location.textContent = '实时地点：' + photos[i].location;
+            meta.appendChild(name);
+            meta.appendChild(time);
+            meta.appendChild(location);
+            var deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = '删除';
+            deleteButton.setAttribute('data-photo-index', i);
+            deleteButton.addEventListener('click', function() {
+                deleteUploadedPhoto(Number(this.getAttribute('data-photo-index')));
+            });
+            item.appendChild(image);
+            item.appendChild(meta);
+            item.appendChild(deleteButton);
+            list.appendChild(item);
         }
-        list.innerHTML = html;
+    }
+
+    function renderPhotoDetailGallery() {
+        var usedGallery = document.getElementById('photo-used-list');
+        var unusedGallery = document.getElementById('photo-unused-list');
+        var photos = getPhotoList();
+        if (!usedGallery || !unusedGallery) {
+            return;
+        }
+        usedGallery.innerHTML = '';
+        unusedGallery.innerHTML = '';
+        var usedCount = 0;
+        var unusedCount = 0;
+        for (var i = 0; i < photos.length; i++) {
+            var isUsed = typeof photoUsageDraft[i] === 'boolean' ? photoUsageDraft[i] : Boolean(photos[i].used);
+            if (isUsed) {
+                appendPhotoUsageItem(usedGallery, photos[i], i, true);
+                usedCount++;
+            } else {
+                appendPhotoUsageItem(unusedGallery, photos[i], i, false);
+                unusedCount++;
+            }
+        }
+        if (!usedCount) {
+            var empty = document.createElement('div');
+            empty.className = 'photo-empty';
+            empty.textContent = '暂无已使用照片。';
+            usedGallery.appendChild(empty);
+        }
+        if (!unusedCount) {
+            var unusedEmpty = document.createElement('div');
+            unusedEmpty.className = 'photo-empty';
+            unusedEmpty.textContent = '暂无未使用照片。';
+            unusedGallery.appendChild(unusedEmpty);
+        }
+        setPhotoPreviewText('photo-used-count', usedCount);
+        setPhotoPreviewText('photo-unused-count', unusedCount);
+    }
+
+    function appendPhotoUsageItem(gallery, photo, index, isUsed) {
+        var figure = document.createElement('figure');
+        figure.className = 'photo-detail-item';
+        var image = document.createElement('img');
+        image.src = photo.src;
+        image.alt = photo.name;
+        var caption = document.createElement('figcaption');
+        var name = document.createElement('strong');
+        var details = document.createElement('span');
+        var moveButton = document.createElement('button');
+        name.textContent = photo.name;
+        details.textContent = photo.time + ' · ' + photo.location;
+        moveButton.type = 'button';
+        moveButton.className = 'photo-usage-move-btn';
+        moveButton.textContent = isUsed ? '移至未使用' : '设为已使用';
+        moveButton.setAttribute('data-photo-index', index);
+        moveButton.addEventListener('click', function() {
+            togglePhotoUsage(Number(this.getAttribute('data-photo-index')));
+        });
+        caption.appendChild(name);
+        caption.appendChild(details);
+        caption.appendChild(moveButton);
+        figure.appendChild(image);
+        figure.appendChild(caption);
+        gallery.appendChild(figure);
+    }
+
+    window.togglePhotoUsage = function(index) {
+        var photos = getPhotoList();
+        if (index < 0 || index >= photos.length) {
+            return;
+        }
+        var currentValue = typeof photoUsageDraft[index] === 'boolean'
+            ? photoUsageDraft[index]
+            : Boolean(photos[index].used);
+        photoUsageDraft[index] = !currentValue;
+        renderPhotoDetailGallery();
+    };
+
+    window.savePhotoDetailUsage = function() {
+        var photos = getPhotoList();
+        for (var i = 0; i < photos.length; i++) {
+            if (typeof photoUsageDraft[i] === 'boolean') {
+                photos[i].used = photoUsageDraft[i];
+            }
+        }
+        showClientToast('图片使用状态保存成功');
+        window.closePhotoDetailModal();
+    };
+
+    function ensurePhotoLibraryRow(context) {
+        var tableBody = document.querySelector('#photo-library .photo-table tbody');
+        if (!tableBody || !context) {
+            return;
+        }
+        var buttons = tableBody.querySelectorAll('.photo-detail-btn[data-client]');
+        for (var i = 0; i < buttons.length; i++) {
+            if (buttons[i].getAttribute('data-client') === context.client &&
+                (buttons[i].getAttribute('data-project-date') || '') === (context.projectDate || '')) {
+                return;
+            }
+        }
+        var row = document.createElement('tr');
+        var clientCell = document.createElement('td');
+        var managerCell = document.createElement('td');
+        var stageCell = document.createElement('td');
+        var actionCell = document.createElement('td');
+        var button = document.createElement('button');
+        clientCell.textContent = context.client;
+        managerCell.textContent = context.manager || '--';
+        stageCell.textContent = context.projectDate ? context.stage + '（' + context.projectDate + '）' : context.stage;
+        button.className = 'photo-detail-btn';
+        button.type = 'button';
+        button.textContent = '图片详情';
+        button.setAttribute('data-client', context.client);
+        button.setAttribute('data-manager', context.manager || '--');
+        button.setAttribute('data-stage', context.stage);
+        button.setAttribute('data-project-date', context.projectDate || '');
+        bindPhotoDetailButton(button);
+        actionCell.appendChild(button);
+        row.appendChild(clientCell);
+        row.appendChild(managerCell);
+        row.appendChild(stageCell);
+        row.appendChild(actionCell);
+        tableBody.appendChild(row);
     }
 
     window.deleteUploadedPhoto = function(index) {
@@ -1740,7 +2385,8 @@
         if (index >= 0 && index < photos.length) {
             photos.splice(index, 1);
         }
-        renderPhotoUploadList();
+        renderPhotoAddList();
+        renderPhotoDetailGallery();
     };
 
     window.closePhotoDetailModal = function() {
@@ -1748,6 +2394,7 @@
         if (modal) {
             modal.classList.remove('show');
         }
+        photoUsageDraft = [];
         document.body.style.overflow = '';
     };
 

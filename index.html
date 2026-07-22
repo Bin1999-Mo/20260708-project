@@ -7,7 +7,8 @@
     <meta name="renderer" content="webkit">
     <meta name="format-detection" content="telephone=no">
     <title>小贷业务管理系统</title>
-    <link rel="stylesheet" href="css/style.css?v=20260722-3">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="css/style.css?v=20260722-14">
 </head>
 <body>
     <header class="header">
@@ -36,11 +37,11 @@
     </header>
 
     <nav class="nav-tabs">
-        <div class="nav-item active" data-tab="home-dashboard">首页</div>
-        <div class="nav-item" data-tab="business-flow">业务全流程</div>
+        <div class="nav-item active" data-tab="home-dashboard"><i class="nav-icon ri-home-5-fill" aria-hidden="true"></i><span class="nav-label">首页</span></div>
+        <div class="nav-item" data-tab="business-flow"><i class="nav-icon ri-bubble-chart-fill" aria-hidden="true"></i><span class="nav-label">业务流程</span></div>
         <div class="nav-more">
             <button type="button" class="nav-more-toggle" aria-expanded="false" aria-haspopup="true">
-                更多操作<span class="nav-more-arrow" aria-hidden="true"></span>
+                <i class="nav-icon ri-more-fill" aria-hidden="true"></i><span class="nav-label">更多操作</span><span class="nav-more-arrow" aria-hidden="true"></span>
             </button>
             <div class="nav-more-menu" role="menu">
                 <button type="button" class="nav-item nav-more-item" data-tab="approval-center" role="menuitem">
@@ -54,132 +55,47 @@
     </nav>
 
     <div id="home-dashboard" class="tab-content active">
-        <div class="dashboard-page">
-            <section class="dashboard-top-grid">
-                <div class="dashboard-section message-section">
-                    <div class="section-heading">
-                        <h2>消息中心</h2>
-                        <span>共 7 项待办</span>
-                    </div>
-                    <div class="message-list">
-                        <div class="message-item">
-                            <div>
-                                <strong>业务审批</strong>
-                                <span>授信审批、业务变更待处理</span>
-                            </div>
-                            <em>5</em>
-                            <button class="message-btn" onclick="switchToApprovalSub('business-approval')">查看</button>
-                        </div>
-                        <div class="message-item">
-                            <div>
-                                <strong>放款审批</strong>
-                                <span>待审批放款申请</span>
-                            </div>
-                            <em>1</em>
-                            <button class="message-btn" onclick="switchToApprovalSub('loan-management')">查看</button>
-                        </div>
-                        <div class="message-item">
-                            <div>
-                                <strong>报表上报审批</strong>
-                                <span>月度经营指标报表待审核</span>
-                            </div>
-                            <em>1</em>
-                            <button class="message-btn" onclick="switchToApprovalSub('report-approval')">查看</button>
-                        </div>
-                        <div class="message-item">
-                            <div>
-                                <strong>投后回访</strong>
-                                <span>投后回访待处理</span>
-                            </div>
-                            <em>1</em>
-                            <button class="message-btn" onclick="switchToApprovalSub('post-visit-approval')">查看</button>
-                        </div>
-                        <div class="message-item">
-                            <div>
-                                <strong>五级分类</strong>
-                                <span>五级分类待审批</span>
-                            </div>
-                            <em>1</em>
-                            <button class="message-btn" onclick="switchToApprovalSub('classification-approval')">查看</button>
-                        </div>
-                        <div class="message-item">
-                            <div>
-                                <strong>还款审批</strong>
-                                <span>还款申请待审批</span>
-                            </div>
-                            <em>1</em>
-                            <button class="message-btn" onclick="switchToApprovalSub('repayment-approval')">查看</button>
-                        </div>
-                    </div>
+        <div class="home-dashboard-new">
+            <section class="home-summary-card" aria-label="投放统计">
+                <div><strong>88</strong><span>累计投放总量</span></div>
+                <div><strong>435,689</strong><span>累计投放金额</span></div>
+                <div><strong>15</strong><span>今日新增投放量</span></div>
+            </section>
+
+            <section class="home-panel home-task-panel">
+                <div class="home-panel-title"><i class="ri-play-fill" aria-hidden="true"></i><h2>待办任务</h2></div>
+                <div class="home-task-grid">
+                    <button type="button" class="home-task-item" onclick="switchToApprovalSub('business-approval')"><span class="home-task-icon"><i class="ri-user-3-fill" aria-hidden="true"></i><em>5</em></span><strong>业务审批</strong></button>
+                    <button type="button" class="home-task-item" onclick="switchToApprovalSub('loan-management')"><span class="home-task-icon"><i class="ri-shield-check-fill" aria-hidden="true"></i><em>1</em></span><strong>放款审批</strong></button>
+                    <button type="button" class="home-task-item" onclick="switchToApprovalSub('report-approval')"><span class="home-task-icon"><i class="ri-file-chart-fill" aria-hidden="true"></i><em>1</em></span><strong>报表上报审批</strong></button>
+                    <button type="button" class="home-task-item" onclick="switchToApprovalSub('post-visit-approval')"><span class="home-task-icon"><i class="ri-file-search-fill" aria-hidden="true"></i><em>1</em></span><strong>投后回访</strong></button>
+                    <button type="button" class="home-task-item" onclick="switchToApprovalSub('classification-approval')"><span class="home-task-icon"><i class="ri-shield-flash-fill" aria-hidden="true"></i><em>1</em></span><strong>五级分类</strong></button>
+                    <button type="button" class="home-task-item" onclick="switchToApprovalSub('repayment-approval')"><span class="home-task-icon"><i class="ri-file-reduce-fill" aria-hidden="true"></i><em>1</em></span><strong>还款审批</strong></button>
                 </div>
             </section>
 
-            <section class="dashboard-section metric-section">
-                <div class="section-heading">
-                    <h2>运行指标</h2>
-                    <span>本月 / 本年</span>
-                </div>
-                <div class="metric-grid compact">
-                    <div class="metric-card metric-blue">
-                        <span class="metric-label">新增投放项目数</span>
-                        <div class="metric-orbit"><strong>17%</strong><span>同比</span></div>
-                        <div class="metric-values">
-                            <span><strong>8</strong><em>本月</em></span>
-                            <span><strong>46</strong><em>本年</em></span>
-                        </div>
-                        <div class="metric-track"><i style="width: 58%"></i></div>
-                    </div>
-                    <div class="metric-card metric-cyan">
-                        <span class="metric-label">回收项目数</span>
-                        <div class="metric-orbit"><strong>9%</strong><span>环比</span></div>
-                        <div class="metric-values">
-                            <span><strong>5</strong><em>本月</em></span>
-                            <span><strong>31</strong><em>本年</em></span>
-                        </div>
-                        <div class="metric-track"><i style="width: 44%"></i></div>
-                    </div>
-                    <div class="metric-card metric-green">
-                        <span class="metric-label">在投项目数</span>
-                        <div class="metric-orbit"><strong>62</strong><span>年度</span></div>
-                        <div class="metric-values">
-                            <span><strong>18</strong><em>本月</em></span>
-                            <span><strong>62</strong><em>本年</em></span>
-                        </div>
-                        <div class="metric-track"><i style="width: 72%"></i></div>
-                    </div>
+            <section class="home-panel home-metric-panel">
+                <div class="home-panel-title"><i class="ri-play-fill" aria-hidden="true"></i><h2>运行指标</h2></div>
+                <div class="home-chart-wrap">
+                    <canvas id="home-metric-chart" role="img" aria-label="本月与本年运行指标柱状图"></canvas>
                 </div>
             </section>
 
-            <section class="dashboard-section">
-                <div class="section-heading">
-                    <h2>累计服务成效</h2>
-                    <span>项目数 / 项目金额</span>
-                </div>
-                <div class="service-grid">
-                    <div class="service-card">
-                        <div class="service-icon">重</div>
-                        <div>
-                            <span>累计服务重点项目</span>
-                            <strong>126</strong>
-                            <em>项目金额 18.62 亿元</em>
-                        </div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon green">实</div>
-                        <div>
-                            <span>服务实体经济项目</span>
-                            <strong>94</strong>
-                            <em>项目金额 12.38 亿元</em>
-                        </div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon cyan">平</div>
-                        <div>
-                            <span>服务平台类项目</span>
-                            <strong>32</strong>
-                            <em>项目金额 6.24 亿元</em>
-                        </div>
-                    </div>
+            <section class="home-panel home-service-panel">
+                <div class="home-panel-title"><i class="ri-play-fill" aria-hidden="true"></i><h2>累计服务成效</h2></div>
+                <div class="home-service-grid">
+                    <article class="home-service-item is-blue">
+                        <span class="home-service-label">累计服务重点项目</span><strong class="home-service-count">126</strong><i class="home-service-line"></i>
+                        <div class="home-service-amount"><i class="ri-coins-line" aria-hidden="true"></i><span>项目金额<strong>1261.56<em>万元</em></strong></span></div>
+                    </article>
+                    <article class="home-service-item is-orange">
+                        <span class="home-service-label">服务实体经济项目</span><strong class="home-service-count">126</strong><i class="home-service-line"></i>
+                        <div class="home-service-amount"><i class="ri-money-dollar-circle-line" aria-hidden="true"></i><span>项目金额<strong>1261.56<em>万元</em></strong></span></div>
+                    </article>
+                    <article class="home-service-item is-green">
+                        <span class="home-service-label">服务平台类项目</span><strong class="home-service-count">56</strong><i class="home-service-line"></i>
+                        <div class="home-service-amount"><i class="ri-hand-coin-line" aria-hidden="true"></i><span>项目金额<strong>1261.56<em>万元</em></strong></span></div>
+                    </article>
                 </div>
             </section>
         </div>
@@ -550,7 +466,7 @@
                     <label class="report-filter-label">报表期</label>
                     <select class="loan-filter-input">
                         <option>报表期</option>
-                        <option>2025-06期</option>
+                        <option>2026-05期</option>
                     </select>
                     <button class="search-btn">查询</button>
                     <button class="reset-btn">重置</button>
@@ -561,23 +477,24 @@
                 <div class="approval-card report-approval-card">
                     <div class="approval-header">
                         <span class="tag approval-tag">报表上报</span>
-                        <span class="company-name">月度经营指标完成情况</span>
+                        <span class="company-name">逾期项目台账</span>
                     </div>
                     <div class="approval-body">
                         <div class="approval-info">
                             <div class="info-item">
                                 <span class="label">报表期：</span>
-                                <span class="value">2025-06期</span>
+                                <span class="value">2026-05期</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">上报时间：</span>
-                                <span class="value">2026-05-08 12:06:12</span>
+                                <span class="value">2026-07-22 14:54:57</span>
                             </div>
                             <div class="info-item">
                                 <span class="label">报表名称：</span>
-                                <span class="value report-name-link">月度经营指标完成情况</span>
+                                <span class="value report-name-link">逾期项目台账</span>
                             </div>
                         </div>
+                        <button type="button" class="handle-btn report-handle-btn" onclick="openReportDetailPage()">去审核</button>
                     </div>
                 </div>
             </div>
@@ -588,6 +505,205 @@
                     <button class="page-btn disabled">上一页</button>
                     <button class="page-btn active">1</button>
                     <button class="page-btn disabled">下一页</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="report-detail-page" class="detail-page report-detail-page overdue-report-page">
+        <div class="detail-page-content">
+            <div class="overdue-watermark-layer" aria-hidden="true">
+                <span>请勿外传</span><span>内部资料</span><span>请勿外传</span><span>内部资料</span>
+                <span>王晨晨</span><span>请勿外传</span><span>王晨晨</span><span>请勿外传</span>
+                <span>内部资料</span><span>王晨晨</span><span>内部资料</span><span>王晨晨</span>
+            </div>
+            <div class="report-detail-header">
+                <div class="report-detail-title">
+                    <button class="back-btn page-back-arrow" type="button" onclick="goBack()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
+                    <span class="report-module-title">报表上报</span>
+                </div>
+                <div class="report-title-pill">逾期类项目台账</div>
+                <div class="report-detail-actions">
+                    <button class="btn btn-approve" onclick="showApproveModal()">通过</button>
+                    <button class="btn btn-back" onclick="showBackModal()">退回</button>
+                </div>
+            </div>
+
+            <div class="report-detail-body overdue-report-body">
+                <h2 class="report-main-title">济南金控集团及权属子公司 逾期项目统计台账（截至2026年5月）</h2>
+                <div class="report-toolbar overdue-report-toolbar">
+                    <div class="report-tools">
+                        <div class="unit-switch">
+                            <button type="button" data-report-unit="元">元</button>
+                            <button type="button" class="active" data-report-unit="万元">万元</button>
+                        </div>
+                        <button type="button" class="report-export-btn" data-report-action="export">导出</button>
+                    </div>
+                </div>
+                <div class="overdue-filter-grid">
+                    <label class="overdue-filter-item">
+                        <span>报表期</span>
+                        <select data-overdue-filter><option value="">报表期</option><option>2026-05期</option></select>
+                    </label>
+                    <label class="overdue-filter-item">
+                        <span>项目主体</span>
+                        <input type="text" placeholder="项目主体" data-overdue-filter>
+                    </label>
+                    <label class="overdue-filter-item">
+                        <span>项目类型</span>
+                        <select data-overdue-filter><option value="">项目类型</option><option>流动资金贷款</option></select>
+                    </label>
+                    <label class="overdue-filter-item">
+                        <span>客户风险分类</span>
+                        <select data-overdue-filter><option value="">客户风险分类</option><option>正常</option><option>关注</option></select>
+                    </label>
+                    <label class="overdue-filter-item">
+                        <span>逾期时间</span>
+                        <input type="date" aria-label="逾期时间" data-overdue-filter>
+                    </label>
+                    <label class="overdue-filter-item">
+                        <span>是否结清</span>
+                        <select data-overdue-filter><option value="">是否结清</option><option>是</option><option>否</option></select>
+                    </label>
+                    <button type="button" class="overdue-query-btn" data-report-action="query">查询</button>
+                    <button type="button" class="overdue-reset-btn" data-report-action="reset">重置</button>
+                </div>
+                <div class="overdue-report-meta">
+                    <strong>提报人:XDchen</strong>
+                    <span>导入更新时间:暂无</span>
+                </div>
+                <div class="report-table-wrap overdue-table-wrap" tabindex="0" aria-label="逾期项目台账，可左右滑动查看完整内容">
+                    <table class="report-detail-table overdue-report-table">
+                        <colgroup>
+                            <col class="col-action"><col class="col-loan-no"><col class="col-company"><col class="col-project"><col class="col-controller">
+                            <col class="col-risk"><col class="col-project-money"><col class="col-project-money"><col class="col-type"><col class="col-date"><col class="col-date">
+                            <col class="col-guarantee"><col class="col-overdue-money"><col class="col-overdue-money"><col class="col-overdue-money">
+                            <col class="col-overdue-time"><col class="col-overdue-time"><col class="col-overdue-time"><col class="col-overdue-time">
+                            <col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money">
+                            <col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money">
+                            <col class="col-status"><col class="col-reason"><col class="col-measure"><col class="col-remark">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th rowspan="2">操作</th>
+                                <th rowspan="2">借据号</th>
+                                <th rowspan="2">项目所属子公司</th>
+                                <th rowspan="2">项目主体</th>
+                                <th rowspan="2">实际控制人</th>
+                                <th rowspan="2">客户风险分类<br>（选择项）</th>
+                                <th rowspan="2">项目金额</th>
+                                <th rowspan="2">项目余额</th>
+                                <th rowspan="2">项目类型<br>（列表选择）</th>
+                                <th rowspan="2">投放时间</th>
+                                <th rowspan="2">到期时间</th>
+                                <th rowspan="2">担保方式<br>（请详细列明担保主体、担保方式、抵/质押资产价值信息等）</th>
+                                <th colspan="3">逾期金额（<span data-report-unit-label>万元</span>）</th>
+                                <th colspan="4">逾期时间<br>（格式：年/月/日）</th>
+                                <th colspan="3">年初逾期金额</th>
+                                <th colspan="3">本年新增逾期金额</th>
+                                <th colspan="3">本年化解逾期金额</th>
+                                <th colspan="3">当前逾期金额</th>
+                                <th rowspan="2">是否结清</th>
+                                <th rowspan="2">逾期原因</th>
+                                <th rowspan="2">催收及处置措施</th>
+                                <th rowspan="2">备注</th>
+                            </tr>
+                            <tr>
+                                <th>本金</th>
+                                <th>利息</th>
+                                <th>罚息</th>
+                                <th>本金</th>
+                                <th>本金逾期天数</th>
+                                <th>利息</th>
+                                <th>利息逾期天数</th>
+                                <th>本金</th><th>利息</th><th>罚息</th>
+                                <th>本金</th><th>利息</th><th>罚息</th>
+                                <th>本金</th><th>利息</th><th>罚息</th>
+                                <th>本金</th><th>利息</th><th>罚息</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>J(2022)额度借第004号-06</td>
+                                <td>济南金控小额贷款有限公司</td>
+                                <td>青岛可恩口腔医院有限公司</td>
+                                <td></td>
+                                <td>正常</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>2022/03/24</td>
+                                <td>2023/03/23</td>
+                                <td class="overdue-cell-left">质押：1、名称：可恩口腔，评估价值1,800万元；保证：青岛可恩口腔医院管理有限公司</td>
+                                <td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td>
+                                <td>0.00</td><td>0.00</td><td>0.00</td>
+                                <td>0.00</td><td>0.00</td><td>0.00</td>
+                                <td>0.00</td><td>0.00</td><td>0.00</td>
+                                <td>0.00</td><td>0.00</td><td>0.00</td>
+                                <td>否</td><td></td><td></td><td></td>
+                            </tr>
+                            <tr class="overdue-summary-row">
+                                <td>合计</td><td>共 1 条</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                                <td>0.0000</td><td>0.0000</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                                <td>0.0000</td><td>0.0000</td><td>0.0000</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                                <td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td>
+                                <td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td>
+                                <td>—</td><td>—</td><td>—</td><td>—</td>
+                            </tr>
+                            <!-- Legacy monthly-index rows retained in source only.
+                            <tr><td>服务济南重点项目金额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>新增服务客户数</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>新增首次合作客户数</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>正常项目经营回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>存量逾期项目回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>新增逾期项目回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>个性指标1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>个性指标2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>个性指标3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="overdue-summary-viewport" aria-label="逾期项目台账汇总">
+                    <table class="report-detail-table overdue-report-table overdue-summary-table">
+                        <colgroup>
+                            <col class="col-action"><col class="col-loan-no"><col class="col-company"><col class="col-project"><col class="col-controller">
+                            <col class="col-risk"><col class="col-project-money"><col class="col-project-money"><col class="col-type"><col class="col-date"><col class="col-date">
+                            <col class="col-guarantee"><col class="col-overdue-money"><col class="col-overdue-money"><col class="col-overdue-money">
+                            <col class="col-overdue-time"><col class="col-overdue-time"><col class="col-overdue-time"><col class="col-overdue-time">
+                            <col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money">
+                            <col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money"><col class="col-money">
+                            <col class="col-status"><col class="col-reason"><col class="col-measure"><col class="col-remark">
+                        </colgroup>
+                        <tbody>
+                            <tr class="overdue-summary-row">
+                                <td>合计</td><td>共 1 条</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                                <td>0.0000</td><td>0.0000</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                                <td>0.0000</td><td>0.0000</td><td>0.0000</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                                <td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td>
+                                <td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td>
+                                <td>—</td><td>—</td><td>—</td><td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="detail-section report-opinion-section">
+                    <h3 class="section-title">审批意见</h3>
+                    <div class="credit-opinion-list">
+                        <div class="credit-opinion-row">
+                            <div class="credit-opinion-person">
+                                <span class="comment-avatar success">✓</span>
+                                <span>王晨晨</span>
+                            </div>
+                            <div class="credit-opinion-content">
+                                <p>111111</p>
+                                <p>暂无附件~</p>
+                            </div>
+                            <div class="credit-opinion-time">2026-07-22 14:54:57</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1758,7 +1874,7 @@
                 <div class="report-record-filter">
                     <select class="loan-filter-input">
                         <option>报表名称</option>
-                        <option>月度经营指标完成情况</option>
+                        <option>逾期项目台账</option>
                     </select>
                     <input class="loan-filter-input date-input" type="text" placeholder="报表期">
                     <select class="loan-filter-input">
@@ -1772,7 +1888,7 @@
                     <div class="approval-card report-record-card">
                         <div class="approval-header">
                             <span class="tag approval-tag">审批中</span>
-                            <span class="company-name">月度经营指标完成情况</span>
+                            <span class="company-name">逾期项目台账</span>
                             <div class="three-dot-wrapper">
                                 <button class="three-dot-btn" onclick="event.stopPropagation();toggleDotMenu(event,this)">⋮</button>
                                 <div class="dot-menu">
@@ -1785,23 +1901,23 @@
                             <div class="approval-info">
                                 <div class="info-item">
                                     <span class="label">报表期：</span>
-                                    <span class="value">2025-06</span>
+                                    <span class="value">2026-05</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="label">上报时间：</span>
-                                    <span class="value">2026-05-08 12:06:12</span>
+                                    <span class="value">2026-07-22 14:54:57</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="label">提交人：</span>
-                                    <span class="value">董瑾</span>
+                                    <span class="value">XDchen</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="label">当前审批人：</span>
-                                    <span class="value">董瑾</span>
+                                    <span class="value">王晨晨</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="label">审批时间：</span>
-                                    <span class="value">2026-05-08 12:06:12</span>
+                                    <span class="value">2026-07-22 14:54:57</span>
                                 </div>
                             </div>
                         </div>
@@ -3349,6 +3465,7 @@
                 <input type="text" placeholder="请输入客户名称" class="search-input" id="photo-client-keyword">
                 <button class="search-btn">查询</button>
                 <button class="reset-btn">重置</button>
+                <button type="button" class="photo-add-toolbar-btn" onclick="openPhotoAddPage()">新增</button>
             </div>
         </div>
         <div class="loan-table-wrapper data-table-scroll photo-table-wrapper" style="margin-top:12px">
@@ -3383,9 +3500,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="photo-upload-tip">点击“图片详情”可查看并维护照片；上传照片支持多选，缩略图可删除。</div>
-        <input id="photo-upload-input" class="photo-capture-input" type="file" accept="image/*" multiple>
-
+        <div class="photo-upload-tip">点击“图片详情”可查看该项目已上传的照片及照片水印信息。</div>
         <div id="photo-detail-modal" class="modal photo-preview-modal">
             <div class="modal-content photo-preview-content photo-detail-content">
                 <div class="loan-record-header">
@@ -3398,24 +3513,79 @@
                         <div><span>主办经理</span><strong id="photo-preview-manager">--</strong></div>
                         <div><span>所属环节</span><strong id="photo-preview-stage">--</strong></div>
                     </div>
-                    <div class="photo-upload-field">
-                        <span>上传照片</span>
-                        <button class="photo-upload-select-btn" type="button" onclick="triggerPhotoUpload()">+ 上传照片</button>
-                        <em>支持一次上传多张照片，上传后可删除。</em>
-                    </div>
-                    <div class="photo-upload-list" id="photo-upload-list">
-                        <div class="photo-empty">暂无照片，请点击“上传照片”。</div>
-                    </div>
-                    <p class="photo-location-note" id="photo-location-note">上传时会写入拍摄时间；若授权定位，将同步写入经度/纬度水印。</p>
+                    <section class="photo-detail-gallery-section" aria-labelledby="photo-detail-gallery-title">
+                        <h3 id="photo-detail-gallery-title">图片详情</h3>
+                        <div class="photo-usage-sections">
+                            <section class="photo-usage-panel" aria-labelledby="photo-used-title">
+                                <h4 id="photo-used-title">已使用 <span id="photo-used-count">0</span></h4>
+                                <div class="photo-detail-gallery" id="photo-used-list">
+                                    <div class="photo-empty">暂无已使用照片。</div>
+                                </div>
+                            </section>
+                            <section class="photo-usage-panel" aria-labelledby="photo-unused-title">
+                                <h4 id="photo-unused-title">未使用 <span id="photo-unused-count">0</span></h4>
+                                <div class="photo-detail-gallery" id="photo-unused-list">
+                                    <div class="photo-empty">暂无未使用照片。</div>
+                                </div>
+                            </section>
+                        </div>
+                    </section>
                 </div>
-                <div class="modal-footer action-footer">
-                    <button class="btn btn-confirm" onclick="closePhotoDetailModal()">确定</button>
-                    <button class="btn btn-cancel" onclick="closePhotoDetailModal()">取消</button>
+                <div class="modal-footer photo-detail-save-footer">
+                    <button type="button" class="btn photo-detail-save-btn" onclick="savePhotoDetailUsage()">保存</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="js/app.js?v=20260722-2"></script>
+    <div id="photo-add-page" class="detail-page photo-add-page">
+        <div class="photo-add-content">
+            <header class="photo-add-header">
+                <button type="button" class="back-btn page-back-arrow photo-add-back" onclick="closePhotoAddPage()" aria-label="返回照片库" title="返回照片库"><span aria-hidden="true">←</span></button>
+                <h2>新增</h2>
+            </header>
+            <div class="photo-add-search-row">
+                <label for="photo-project-keyword">项目名称：</label>
+                <div class="photo-project-input-wrap">
+                    <input id="photo-project-keyword" type="text" placeholder="请输入项目名称" autocomplete="off" aria-controls="photo-project-results" aria-expanded="false">
+                    <div id="photo-project-results" class="photo-project-results" role="listbox" aria-label="项目查询结果" hidden>
+                        <button type="button" role="option" data-project="云集数字科技有限公司" data-date="2026-06-30"><span>云集数字科技有限公司</span><em>立项时间：2026-06-30</em></button>
+                        <button type="button" role="option" data-project="云集数字科技有限公司" data-date="2026-05-12"><span>云集数字科技有限公司</span><em>立项时间：2026-05-12</em></button>
+                        <button type="button" role="option" data-project="云集数字科技有限公司" data-date="2026-05-10"><span>云集数字科技有限公司</span><em>立项时间：2026-05-10</em></button>
+                    </div>
+                </div>
+                <button id="photo-project-query" type="button" class="photo-project-query-btn">查询</button>
+            </div>
+            <div class="photo-add-actions">
+                <button type="button" class="photo-add-upload-btn" onclick="triggerPhotoAddUpload()">上传图片</button>
+                <button type="button" class="photo-add-camera-btn" onclick="triggerPhotoCapture()">拍照</button>
+            </div>
+            <p class="photo-add-upload-tip">支持一次上传多张照片，上传后可删除。</p>
+            <div class="photo-upload-list photo-add-upload-list" id="photo-add-upload-list" aria-live="polite">
+                <div class="photo-empty">暂无照片，请点击“上传照片”。</div>
+            </div>
+            <p class="photo-location-note photo-add-location-note" id="photo-add-location-note">照片将添加拍摄时间和实时地点水印。</p>
+            <button type="button" class="photo-page-save-btn" onclick="savePhotoAddPage()">保存</button>
+            <input id="photo-add-upload-input" class="photo-capture-input" type="file" accept="image/*" multiple>
+            <input id="photo-add-camera-input" class="photo-capture-input" type="file" accept="image/*" capture="environment">
+        </div>
+    </div>
+
+    <div id="photo-location-modal" class="modal photo-location-modal" role="dialog" aria-modal="true" aria-labelledby="photo-location-title">
+        <div class="modal-content photo-location-content">
+            <div class="loan-record-header">
+                <span id="photo-location-title">无法获取定位</span>
+            </div>
+            <div class="photo-location-body">
+                <p id="photo-location-message">请在浏览器地址栏中允许定位后重新授权，或继续上传并仅保留拍摄时间水印。</p>
+            </div>
+            <div class="modal-footer photo-location-actions">
+                <button type="button" class="btn btn-confirm" onclick="retryPhotoLocation()">重新授权</button>
+                <button type="button" class="btn btn-cancel" onclick="continuePhotoUploadWithoutLocation()">继续上传</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js?v=20260722-12"></script>
 </body>
 </html>
