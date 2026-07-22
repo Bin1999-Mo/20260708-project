@@ -7,7 +7,7 @@
     <meta name="renderer" content="webkit">
     <meta name="format-detection" content="telephone=no">
     <title>小贷业务管理系统</title>
-    <link rel="stylesheet" href="css/style.css?v=7c9ba74">
+    <link rel="stylesheet" href="css/style.css?v=20260722-2">
 </head>
 <body>
     <header class="header">
@@ -578,7 +578,6 @@
                                 <span class="value report-name-link">月度经营指标完成情况</span>
                             </div>
                         </div>
-                        <button class="handle-btn" onclick="openReportDetailPage()">去审核</button>
                     </div>
                 </div>
             </div>
@@ -589,96 +588,6 @@
                     <button class="page-btn disabled">上一页</button>
                     <button class="page-btn active">1</button>
                     <button class="page-btn disabled">下一页</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="report-detail-page" class="detail-page report-detail-page">
-        <div class="detail-page-content">
-            <div class="report-detail-header">
-                <div class="report-detail-title">
-                    <button class="back-btn page-back-arrow" type="button" onclick="goBack()" aria-label="返回上一页" title="返回上一页"><span aria-hidden="true">←</span></button>
-                    <span class="report-module-title">报表上报</span>
-                    <span class="report-dept">业务部</span>
-                </div>
-                <div class="report-title-pill">济南金控月度经营指标完成情况表</div>
-                <div class="report-detail-actions">
-                    <button class="btn btn-approve" onclick="showApproveModal()">通过</button>
-                    <button class="btn btn-back" onclick="showBackModal()">退回</button>
-                </div>
-            </div>
-
-            <div class="report-detail-body">
-                <h2 class="report-main-title">济南金控 2025年6月 经营指标完成情况表</h2>
-                <div class="report-toolbar">
-                    <div class="report-submitter">提报人:dongjin1</div>
-                    <div class="report-tools">
-                        <div class="unit-switch">
-                            <button>元</button>
-                            <button class="active">万元</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="report-update-time">导入更新时间:2026-05-08 12:06:01</div>
-                <div class="report-table-wrap">
-                    <table class="report-detail-table">
-                        <thead>
-                            <tr>
-                                <th>指标项目</th>
-                                <th>2025年计划数</th>
-                                <th>2025年6月计划数</th>
-                                <th>截至18日，6月当月完成数</th>
-                                <th>2025年6月预计完成数</th>
-                                <th>2025年6月完成数</th>
-                                <th>完成6月计划比例</th>
-                                <th>2025年1-6月完成数</th>
-                                <th>1-6月完成2025年计划比例</th>
-                                <th>下季度计划数</th>
-                                <th>07月计划数</th>
-                                <th>08月计划数</th>
-                                <th>09月计划数</th>
-                                <th>备注</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="section-row"><td colspan="14">一、主要经营指标</td></tr>
-                            <tr><td>营业收入</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>其中:金融企业口径</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>投资收益</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>其他收入</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>利润总额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>一般准备金计提金额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>新增投放额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>其中：首次投放金额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>服务济南重点项目金额</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>新增服务客户数</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>新增首次合作客户数</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>正常项目经营回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>存量逾期项目回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>新增逾期项目回款</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>个性指标1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>个性指标2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            <tr><td>个性指标3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="report-note">期货公司分别填写（日均客户权益总额；开发机构账户（户）；办理交割、质押、期转现等现货类业务（吨））3项指标完成情况；资产运营公司填写出租出售大厦1项指标完成情况；投资板块填写新增投资数目1项指标完成情况；供应链公司填写新增核心客户1项指标完成情况。</p>
-                <div class="detail-section report-opinion-section">
-                    <h3 class="section-title">审批意见</h3>
-                    <div class="credit-opinion-list">
-                        <div class="credit-opinion-row">
-                            <div class="credit-opinion-person">
-                                <span class="comment-avatar success">✓</span>
-                                <span>董瑾</span>
-                            </div>
-                            <div class="credit-opinion-content">
-                                <p>1</p>
-                                <p>暂无附件~</p>
-                            </div>
-                            <div class="credit-opinion-time">2026-05-08 12:06:12</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -3507,6 +3416,6 @@
         </div>
     </div>
 
-    <script src="js/app.js?v=7c9ba74"></script>
+    <script src="js/app.js?v=20260722-2"></script>
 </body>
 </html>
