@@ -14386,7 +14386,7 @@ textarea:focus {
 
 .home-summary-card {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     min-height: 92px;
     padding: 16px 10px;
 }
@@ -14416,6 +14416,7 @@ textarea:focus {
 .home-summary-card span {
     color: #7b8491;
     font-size: 13px;
+    line-height: 1.45;
     text-align: center;
 }
 
@@ -14682,18 +14683,18 @@ textarea:focus {
 
     .home-summary-card {
         width: calc(100% - 20px);
-        min-height: 88px;
+        min-height: 94px;
         margin-right: auto;
         margin-left: auto;
         padding: 12px 5px;
     }
 
     .home-summary-card strong {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .home-summary-card span {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .home-panel {
