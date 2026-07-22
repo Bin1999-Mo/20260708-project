@@ -13314,3 +13314,27 @@ textarea:focus {
         line-height: 1.45;
     }
 }
+
+/* 报表上报审批：移动端查询、重置按钮保持同一行 */
+@media (max-width: 767px) {
+    #report-approval .report-filter {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    #report-approval .report-filter-label,
+    #report-approval .report-filter .loan-filter-input {
+        grid-column: 1 / -1;
+        width: 100%;
+        min-width: 0;
+    }
+
+    #report-approval .report-filter .search-btn,
+    #report-approval .report-filter .reset-btn {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+    }
+}
