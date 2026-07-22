@@ -61,7 +61,6 @@
                     var projectApprovalPage = document.getElementById('project-approval-page');
                     var loanDetailPage = document.getElementById('loan-detail-page');
                     var changeDetailPage = document.getElementById('change-detail-page');
-                    var reportDetailPage = document.getElementById('report-detail-page');
                     var classificationDetailPage = document.getElementById('classification-detail-page');
                     var repaymentDetailPage = document.getElementById('repayment-detail-page');
                     var postVisitHandlePage = document.getElementById('post-visit-handle-page');
@@ -80,9 +79,6 @@
                     }
                     if (changeDetailPage) {
                         changeDetailPage.classList.remove('show');
-                    }
-                    if (reportDetailPage) {
-                        reportDetailPage.classList.remove('show');
                     }
                     if (classificationDetailPage) {
                         classificationDetailPage.classList.remove('show');
@@ -690,26 +686,6 @@
         }
     };
 
-    window.openReportDetailPage = function() {
-        var navTabs = document.querySelector('.nav-tabs');
-        var tabContents = document.querySelectorAll('.tab-content');
-        var detailPage = document.getElementById('report-detail-page');
-        currentDetailSource = 'report-approval';
-
-        if (navTabs) {
-            navTabs.style.display = 'none';
-        }
-
-        for (var i = 0; i < tabContents.length; i++) {
-            tabContents[i].classList.remove('active');
-        }
-
-        if (detailPage) {
-            detailPage.classList.add('show');
-            document.body.style.overflow = '';
-        }
-    };
-
     function resetLoanDetailTabs() {
         var detailTabs = document.querySelectorAll('#loan-detail-page .loan-detail-tabs .detail-tab');
         var detailContents = document.querySelectorAll('#loan-detail-page .loan-detail-content');
@@ -1218,7 +1194,6 @@
         var projectApprovalPage = document.getElementById('project-approval-page');
         var loanDetailPage = document.getElementById('loan-detail-page');
         var changeDetailPage = document.getElementById('change-detail-page');
-        var reportDetailPage = document.getElementById('report-detail-page');
         var stageDetailPage = document.getElementById('stage-detail-page');
         var classificationDetailPage = document.getElementById('classification-detail-page');
         var repaymentDetailPage = document.getElementById('repayment-detail-page');
@@ -1241,9 +1216,6 @@
             changeDetailPage.classList.remove('show');
         }
 
-        if (reportDetailPage) {
-            reportDetailPage.classList.remove('show');
-        }
         if (stageDetailPage) {
             stageDetailPage.classList.remove('show');
         }
@@ -1278,7 +1250,6 @@
 
         var isApproval = currentDetailSource === 'business-approval'
             || currentDetailSource === 'loan-management'
-            || currentDetailSource === 'report-approval'
             || currentDetailSource === 'post-visit-approval'
             || currentDetailSource === 'classification-approval'
             || currentDetailSource === 'repayment-approval';
