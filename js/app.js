@@ -2531,27 +2531,35 @@ window.closeStageDetail = function() {
     }
 
     function hydrateInvestigationTables(container) {
+        var addButtons = container.querySelectorAll('.credit-section .table-add-btn');
+        for (var i = 0; i < addButtons.length; i++) {
+            var actionHeader = addButtons[i].closest('th');
+            if (actionHeader && actionHeader.parentNode) {
+                actionHeader.parentNode.removeChild(actionHeader);
+            }
+        }
+
         var assetSection = findCreditSection(container, '底层资产');
         var assetTables = assetSection ? assetSection.querySelectorAll('table') : [];
         if (assetTables[0]) {
             assetTables[0].querySelector('tbody').innerHTML =
-                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'mortgage\')">房产</button></td><td>91370126MA3R7X8K5M</td><td>鲁（2026）商河县不动产权第001028号</td><td>商河县产业投资开发集团有限公司</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>';
+                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'mortgage\')">房产</button></td><td>91370126MA3R7X8K5M</td><td>鲁（2026）商河县不动产权第001028号</td><td>商河县产业投资开发集团有限公司</td></tr>';
         }
         if (assetTables[1]) {
             assetTables[1].querySelector('tbody').innerHTML =
-                '<tr><td>1</td><td>股权</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'pledge\')">产业投资集团持有的1000万股股权</button></td><td>10,000,000.00</td><td>产业投资集团有限公司</td><td>ZY20260302001</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>' +
-                '<tr><td>2</td><td>股权</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'pledge\')">产业投资集团持有的2300万股股权</button></td><td>23,000,000.00</td><td>产业投资集团有限公司</td><td>ZY20260302002</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>';
+                '<tr><td>1</td><td>股权</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'pledge\')">产业投资集团持有的1000万股股权</button></td><td>10,000,000.00</td><td>产业投资集团有限公司</td><td>ZY20260302001</td></tr>' +
+                '<tr><td>2</td><td>股权</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'pledge\')">产业投资集团持有的2300万股股权</button></td><td>23,000,000.00</td><td>产业投资集团有限公司</td><td>ZY20260302002</td></tr>';
         }
 
         var guaranteeSection = findCreditSection(container, '增信措施');
         var guaranteeTables = guaranteeSection ? guaranteeSection.querySelectorAll('table') : [];
         if (guaranteeTables[0]) {
             guaranteeTables[0].querySelector('tbody').innerHTML =
-                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'guarantor\')">昌晋升</button></td><td>370126198111091216</td><td>44</td><td>15908843351</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>';
+                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'guarantor\')">昌晋升</button></td><td>370126198111091216</td><td>44</td><td>15908843351</td></tr>';
         }
         if (guaranteeTables[1]) {
             guaranteeTables[1].querySelector('tbody').innerHTML =
-                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'guarantee\')">商河县产业投资开发集团有限公司</button></td><td>91370126798891104N</td><td>25,000,000.00</td><td>提供连带责任保证</td><td><button class="stage-table-edit" type="button">修改</button><button class="stage-table-delete" type="button">删除</button></td></tr>';
+                '<tr><td>1</td><td><button class="stage-table-detail-link" type="button" onclick="openAssetDetail(\'guarantee\')">商河县产业投资开发集团有限公司</button></td><td>91370126798891104N</td><td>25,000,000.00</td><td>提供连带责任保证</td></tr>';
         }
     }
 
